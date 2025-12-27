@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- FIXED CONFIGURATION FOR RL TRAFFIC CONTROL -->
+
+<sumoConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
+
+    <input>
+        <net-file value="osm.net.xml.gz"/>
+        <route-files value="osm_pt.rou.xml,osm.bus.trips.xml,osm.motorcycle.trips.xml,osm.passenger.trips.xml,osm.truck.trips.xml"/>
+        <additional-files value="osm.poly.xml.gz,osm_stops.add.xml,output.add.xml,generated_traffic_lights.add.xml"/>
+    </input>
+
+    <output>
+        <tripinfo-output value="tripinfos.xml"/>
+        <stop-output value="stopinfos.xml"/>
+        <statistic-output value="stats.xml"/>
+    </output>
+
+    <processing>
+        <ignore-route-errors value="true"/>
+        
+        <!-- CRITICAL FIX: Disable actuated TLS - we control them via TraCI -->
+        <tls.actuated.jam-threshold value="-1"/>
+        
+        <!-- Allow lane changing to prevent blockages -->
+        <lateral-resolution value="0.8"/>
+        
+        <!-- Collision detection and gridlock prevention -->
+        <collision.action value="warn"/>
+        <collision.mingap-factor value="0.5"/>
+        
+        <!-- Teleport vehicles that are stuck (prevents permanent gridlock) -->
+        <time-to-teleport value="300"/>
+        <time-to-teleport.highways value="0"/>
+        
+        <!-- Junction blocking prevention -->
+        <tls.all-off value="false"/>
+        <tls.actuated.show-detectors value="false"/>
+    </processing>
+
+    <routing>
+        <device.rerouting.adaptation-steps value="18"/>
+        <device.rerouting.adaptation-interval value="10"/>
+        
+        <!-- Help vehicles find alternative routes when blocked -->
+        <device.rerouting.probability value="1"/>
+        <device.rerouting.period value="300"/>
+    </routing>
+
+    <report>
+        <verbose value="true"/>
+        <duration-log.statistics value="true"/>
+        <no-step-log value="true"/>
+        
+        <!-- Suppress warnings that spam the console -->
+        <no-warnings value="false"/>
+    </report>
+
+    <gui_only>
+        <gui-settings-file value="osm.view.xml"/>
+    </gui_only>
+
+</sumoConfiguration>

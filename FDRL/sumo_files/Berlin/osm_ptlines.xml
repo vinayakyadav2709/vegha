@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2025-09-21 22:06:46 by Eclipse SUMO netconvert Version 1.24.0
+<netconvertConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/netconvertConfiguration.xsd">
+
+    <input>
+        <type-files value="${SUMO_HOME}/data/typemap/osmNetconvert.typ.xml,${SUMO_HOME}/data/typemap/osmNetconvertAerialway.typ.xml"/>
+        <osm-files value="osm_bbox.osm.xml.gz"/>
+    </input>
+
+    <output>
+        <output-file value="osm.net.xml.gz"/>
+        <output.street-names value="true"/>
+        <output.original-names value="true"/>
+        <ptstop-output value="osm_stops.add.xml"/>
+        <ptline-output value="osm_ptlines.xml"/>
+        <ptline-clean-up value="true"/>
+    </output>
+
+    <projection>
+        <proj.utm value="true"/>
+    </projection>
+
+    <processing>
+        <geometry.remove value="true"/>
+        <roundabouts.guess value="true"/>
+    </processing>
+
+    <tls_building>
+        <tls.discard-simple value="true"/>
+        <tls.join value="true"/>
+        <tls.guess-signals value="true"/>
+        <tls.default-type value="actuated"/>
+    </tls_building>
+
+    <ramp_guessing>
+        <ramps.guess value="true"/>
+    </ramp_guessing>
+
+    <junctions>
+        <junctions.join value="true"/>
+        <junctions.corner-detail value="5"/>
+    </junctions>
+
+    <railway>
+        <railway.topology.repair value="true"/>
+    </railway>
+
+</netconvertConfiguration>
+-->
+
+<ptLines xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/ptlines_file.xsd">
+    <ptLine id="1986097" name="Bus 200: Prenzlauer Berg, Michelangelostraße =&gt; S+U Zoologischer Garten" line="200" type="bus" vClass="bus" color="149,39,110" completeness="0.04" missingBefore="9" missingAfter="17">
+        <route edges="4613112 232070355#0 4790822 1101404262#0 24914141#1"/>
+        <busStop id="270720402" name="Mollstraße/Prenzlauer Allee"/>
+    </ptLine>
+    <ptLine id="1986098" name="Bus 200: S+U Zoologischer Garten =&gt; Prenzlauer Berg, Michelangelostraße" line="200" type="bus" vClass="bus" color="149,39,110" completeness="0.04" missingBefore="17" missingAfter="9">
+        <route edges="112128418#0 457031289 1020548406 1101404246#0 177372522 295445243"/>
+        <busStop id="3254638244" name="Mollstraße/Prenzlauer Allee"/>
+    </ptLine>
+    <ptLine id="2202596" name="Bus 142: S Ostbahnhof =&gt; U Leopoldplatz" line="142" type="bus" vClass="bus" color="149,39,110" completeness="0.09" missingBefore="10" missingAfter="19">
+        <route edges="4613112 232070355#0 153689810#0 319339414#1 319339413#0 319339413#1 319339413#2 319339413#3 319339413#4 1105526086 102983787#0 1101404342#0 312651884#1 312651884#2 312651884#5 312651884#6 312651884#7 -740848375 -320894149#4 -320894149#2 -320894149#0 -36689634#2 -73310501#2"/>
+        <busStop id="3918673868" name="Mollstraße/Prenzlauer Allee"/>
+        <busStop id="3918673892" name="U Rosa-Luxemburg-Platz"/>
+        <busStop id="3918673894" name="U Rosenthaler Platz"/>
+    </ptLine>
+    <ptLine id="2202597" name="Bus 142: U Leopoldplatz =&gt; S Ostbahnhof" line="142" type="bus" vClass="bus" color="149,39,110" completeness="0.09" missingBefore="20" missingAfter="10">
+        <route edges="73310501#0 36689634#0 320894149#0 320894149#2 320894149#4 740848375 1101404966#0 312654701#0 312654701#1 312654705#0 312654706#0 1105526087 309300321 1101404246#0 177372522 295445243"/>
+        <busStop id="3918673893" name="U Rosenthaler Platz"/>
+        <busStop id="3918673891" name="U Rosa-Luxemburg-Platz"/>
+        <busStop id="3254638244" name="Mollstraße/Prenzlauer Allee"/>
+    </ptLine>
+    <ptLine id="2206192" name="Bus N2: S+U Pankow =&gt; U Ruhleben" line="N2" type="bus" vClass="bus" nightService="only" color="89,91,98" completeness="0.04" missingBefore="8" missingAfter="36">
+        <route edges="25558788#0 25558788#1 31145654#1 1133761589#0 24326506#2 24326506#4 1133761618#1 41926994 102984483#0 102984483#1 1101404336 312654705#0 109819106#0 369223457 1098856744 369223461 1098856742 369223458#1 1157111072"/>
+        <busStop id="3965486278" name="U Senefelderplatz"/>
+        <busStop id="3918673889" name="U Rosa-Luxemburg-Platz"/>
+    </ptLine>
+    <ptLine id="2441959" name="Bus N8: Märkisches Viertel, Wilhelmsruher Damm =&gt; S+U Hermannstraße" line="N8" type="bus" vClass="bus" nightService="only" color="89,91,98" completeness="0.06" missingBefore="33" missingAfter="15">
+        <route edges="-1101405168 -201408461#1 -41927333#0 -83146232#3 -83146232#0 -46138135#2 -46138135#1 -46138135#0 -312645512#2 1101404963#0 46138134#1 1103300945 371927739#1 371927739#2 371927739#3 36892597#0"/>
+        <busStop id="-3918673862" name="Brunnenstraße/Invalidenstraße"/>
+        <busStop id="5081436984" name="U Rosenthaler Platz"/>
+        <busStop id="7312391560" name="U Weinmeisterstraße/Gipsstraße"/>
+    </ptLine>
+    <ptLine id="2441960" name="Bus N8: S+U Hermannstraße =&gt; Märkisches Viertel, Wilhelmsruher Damm" line="N8" type="bus" vClass="bus" nightService="only" color="89,91,98" completeness="0.04" missingBefore="15" missingAfter="34">
+        <route edges="-36892597#2 -1225924291#2 -371927739#2 -371927739#1 -371927739#0 -46138134#1 4610364#0 312645512#0 1121001234 46138135#1 46138135#2 83146232#0 83146232#1 1101405046#0 41927333#1 201408461#2"/>
+        <busStop id="2914927130" name="U Rosenthaler Platz"/>
+        <busStop id="2914606229" name="Brunnenstraße/Invalidenstraße"/>
+    </ptLine>
+    <ptLine id="2512806" name="Bus N40: S Karlshorst =&gt; S+U Hauptbahnhof" line="N40" type="bus" vClass="bus" nightService="only" color="89,91,98" completeness="0.05" missingBefore="28" missingAfter="14">
+        <route edges="-36892597#2 -1225924291#2 -371927739#2 -371927739#1 -371927739#0 -46138134#1 4610364#0 312645512#0 1121001234 46138135#1 46138135#2 83146232#0 83146232#1 -881921235#4 -881921235#1 -881921235#0 -11483256"/>
+        <busStop id="2914927130" name="U Rosenthaler Platz"/>
+        <busStop id="2914606225" name="Brunnenstraße/Invalidenstraße"/>
+    </ptLine>
+    <ptLine id="2512807" name="Bus N40: S+U Hauptbahnhof =&gt; S Karlshorst" line="N40" type="bus" vClass="bus" nightService="only" color="89,91,98" completeness="0.08" missingBefore="5" missingAfter="29">
+        <route edges="11483256 881921235#0 881921235#1 881921235#2 -83146232#3 -83146232#0 -46138135#2 -46138135#1 -46138135#0 -312645512#2 1101404963#0 46138134#1 1103300945 371927739#1 371927739#2 371927739#3 36892597#0"/>
+        <busStop id="3918673861" name="Brunnenstraße/Invalidenstraße"/>
+        <busStop id="5081436984" name="U Rosenthaler Platz"/>
+        <busStop id="7312391560" name="U Weinmeisterstraße/Gipsstraße"/>
+    </ptLine>
+    <ptLine id="28286" name="Bus N2: U Ruhleben =&gt; S+U Pankow" line="N2" type="bus" vClass="bus" nightService="only" color="89,91,98" completeness="0.04" missingBefore="37" missingAfter="8">
+        <route edges="-1157111072 -369223458#1 -369223458#0 1396608573#1 -1098856744 -369223457 369223459#0 42348713#0 -102984483#1 -102984483#0 -41926994 1094434971 4615362#0 4615362#1 238945930 1121505024#0 896703365 31145647#1 31145647#2"/>
+        <busStop id="3918673890" name="U Rosa-Luxemburg-Platz"/>
+        <busStop id="3965486277" name="U Senefelderplatz"/>
+    </ptLine>
+</ptLines>

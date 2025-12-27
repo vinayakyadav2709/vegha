@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2025-09-21 13:29:20 by Eclipse SUMO GUI Version 1.24.0
+<sumoConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
+
+    <input>
+        <net-file value="/home/vishwajit/Workspace/SIH2025/FDRL/sumo_files/2025-09-21-13-29-13/osm.net.xml.gz"/>
+        <route-files value="/home/vishwajit/Workspace/SIH2025/FDRL/sumo_files/2025-09-21-13-29-13/osm_pt.rou.xml,/home/vishwajit/Workspace/SIH2025/FDRL/sumo_files/2025-09-21-13-29-13/osm.bus.trips.xml,/home/vishwajit/Workspace/SIH2025/FDRL/sumo_files/2025-09-21-13-29-13/osm.motorcycle.trips.xml,/home/vishwajit/Workspace/SIH2025/FDRL/sumo_files/2025-09-21-13-29-13/osm.passenger.trips.xml,/home/vishwajit/Workspace/SIH2025/FDRL/sumo_files/2025-09-21-13-29-13/osm.truck.trips.xml"/>
+        <additional-files value="/home/vishwajit/Workspace/SIH2025/FDRL/sumo_files/2025-09-21-13-29-13/osm.poly.xml.gz,/home/vishwajit/Workspace/SIH2025/FDRL/sumo_files/2025-09-21-13-29-13/osm_stops.add.xml,/home/vishwajit/Workspace/SIH2025/FDRL/sumo_files/2025-09-21-13-29-13/output.add.xml"/>
+    </input>
+
+    <output>
+        <tripinfo-output value="/home/vishwajit/Workspace/SIH2025/FDRL/sumo_files/2025-09-21-13-29-13/tripinfos.xml"/>
+        <stop-output value="/home/vishwajit/Workspace/SIH2025/FDRL/sumo_files/2025-09-21-13-29-13/stopinfos.xml"/>
+        <statistic-output value="/home/vishwajit/Workspace/SIH2025/FDRL/sumo_files/2025-09-21-13-29-13/stats.xml"/>
+    </output>
+
+    <processing>
+        <ignore-route-errors value="true"/>
+        <tls.actuated.jam-threshold value="30"/>
+    </processing>
+
+    <routing>
+        <device.rerouting.adaptation-steps value="18"/>
+        <device.rerouting.adaptation-interval value="10"/>
+    </routing>
+
+    <report>
+        <verbose value="true"/>
+        <duration-log.statistics value="true"/>
+        <no-step-log value="true"/>
+    </report>
+
+    <gui_only>
+        <gui-settings-file value="/home/vishwajit/Workspace/SIH2025/FDRL/sumo_files/2025-09-21-13-29-13/osm.view.xml"/>
+    </gui_only>
+
+</sumoConfiguration>
+-->
+
+<statistics xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/statistic_file.xsd">
+    <performance clockBegin="1758441560.73" clockEnd="1758441844.56" clockDuration="283.83" traciDuration="78.60" realTimeFactor="49.37" vehicleUpdatesPerSecond="19753.14" personUpdatesPerSecond="0.00" begin="0.00" end="14013.00" duration="14013.00"/>
+    <vehicles loaded="3162" inserted="3160" running="0" waiting="2"/>
+    <teleports total="834" jam="326" yield="498" wrongLane="0"/>
+    <safety collisions="10" emergencyStops="0" emergencyBraking="0"/>
+    <persons loaded="0" running="0" jammed="0"/>
+    <personTeleports total="0" abortWait="0" wrongDest="0"/>
+    <vehicleTripStatistics count="3160" routeLength="1145.61" speed="4.55" duration="1774.18" waitingTime="1536.20" timeLoss="1656.83" departDelay="145.03" departDelayWaiting="-1.00" totalTravelTime="5606413.00" totalDepartDelay="458291.48"/>
+    <pedestrianStatistics number="0" routeLength="0.00" duration="0.00" timeLoss="0.00"/>
+    <rideStatistics number="0"/>
+    <transportStatistics number="0"/>
+</statistics>

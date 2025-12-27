@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2025-09-21 22:06:49.307398 by osmWebWizard.py UNKNOWN
+<configuration>
+    <net-file value="/home/vishwajit/Workspace/SIH2025/FDRL/sumo_files/2025-09-21-22-06-32/osm.net.xml.gz"/>
+    <ptlines-file value="/home/vishwajit/Workspace/SIH2025/FDRL/sumo_files/2025-09-21-22-06-32/osm_ptlines.xml"/>
+    <ptstops-file value="/home/vishwajit/Workspace/SIH2025/FDRL/sumo_files/2025-09-21-22-06-32/osm_stops.add.xml"/>
+    <output-file value="/home/vishwajit/Workspace/SIH2025/FDRL/sumo_files/2025-09-21-22-06-32/osm_pt.rou.xml"/>
+    <stopinfos-file value="/home/vishwajit/Workspace/SIH2025/FDRL/sumo_files/2025-09-21-22-06-32/stopinfos.xml"/>
+    <routes-file value="/home/vishwajit/Workspace/SIH2025/FDRL/sumo_files/2025-09-21-22-06-32/vehroutes.xml"/>
+    <trips-file value="/home/vishwajit/Workspace/SIH2025/FDRL/sumo_files/2025-09-21-22-06-32/trips.trips.xml"/>
+    <min-stops value="0"/>
+    <extend-to-fringe value="True"/>
+    <random-begin value="True"/>
+    <seed value="42"/>
+    <ignore-errors value="True"/>
+    <vtype-prefix value="pt_"/>
+    <verbose value="True"/>
+</configuration>
+-->
+
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
+    <vType id="pt_bus" vClass="bus"/>
+    <vType id="pt_tram" vClass="tram"/>
+    <vType id="pt_train" vClass="rail"/>
+    <vType id="pt_subway" vClass="subway"/>
+    <vType id="pt_light_rail" vClass="rail_urban"/>
+    <vType id="pt_monorail" vClass="rail_urban"/>
+    <vType id="pt_trolleybus" vClass="bus"/>
+    <vType id="pt_minibus" vClass="bus"/>
+    <vType id="pt_share_taxi" vClass="taxi"/>
+    <vType id="pt_aerialway" vClass="cable_car" length="2.5" width="2" personCapacity="4"/>
+    <vType id="pt_ferry" vClass="ship"/>
+    <route id="pt_bus_142:0" color="149,39,110" edges="4613112 232070355#0 153689810#0 319339414#1 319339413#0 319339413#1 319339413#2 319339413#3 319339413#4 1105526086 102983787#0 1101404342#0 312651884#1 312651884#2 312651884#5 312651884#6 312651884#7 -740848375 -320894149#4 -320894149#2 -320894149#0 -36689634#2 -73310501#2" >
+        <stop busStop="3918673868" duration="20" until="46.0"/> <!-- Mollstraße/Prenzlauer Allee -->
+        <stop busStop="3918673892" duration="20" until="174.0"/> <!-- U Rosa-Luxemburg-Platz -->
+        <stop busStop="3918673894" duration="20" until="264.0"/> <!-- U Rosenthaler Platz -->
+    </route>
+    <route id="pt_bus_142:1" color="149,39,110" edges="73310501#0 36689634#0 320894149#0 320894149#2 320894149#4 740848375 1101404966#0 312654701#0 312654701#1 312654705#0 312654706#0 1105526087 309300321 1101404246#0 177372522 295445243" >
+        <stop busStop="3918673893" duration="20" until="119.0"/> <!-- U Rosenthaler Platz -->
+        <stop busStop="3918673891" duration="20" until="240.0"/> <!-- U Rosa-Luxemburg-Platz -->
+        <stop busStop="3254638244" duration="20" until="333.0"/> <!-- Mollstraße/Prenzlauer Allee -->
+    </route>
+    <route id="pt_bus_200:0" color="149,39,110" edges="4613112 232070355#0 4790822 1101404262#0 24914141#1" >
+        <stop busStop="270720402" duration="20" until="70.0"/> <!-- Mollstraße/Prenzlauer Allee -->
+    </route>
+    <route id="pt_bus_200:1" color="149,39,110" edges="112128418#0 457031289 1020548406 1101404246#0 177372522 295445243" >
+        <stop busStop="3254638244" duration="20" until="61.0"/> <!-- Mollstraße/Prenzlauer Allee -->
+    </route>
+    <flow id="pt_bus_200:0" type="pt_bus" route="pt_bus_200:0" begin="15.0" end="3615.0" period="600" line="200:0" >
+        <param key="name" value="Bus 200: Prenzlauer Berg, Michelangelostraße =&gt; S+U Zoologischer Garten"/>
+        <param key="completeness" value="0.04"/>
+    </flow>
+    <flow id="pt_bus_200:1" type="pt_bus" route="pt_bus_200:1" begin="17.0" end="3617.0" period="600" line="200:1" >
+        <param key="name" value="Bus 200: S+U Zoologischer Garten =&gt; Prenzlauer Berg, Michelangelostraße"/>
+        <param key="completeness" value="0.04"/>
+    </flow>
+    <flow id="pt_bus_142:0" type="pt_bus" route="pt_bus_142:0" begin="52.0" end="3652.0" period="600" line="142:0" >
+        <param key="name" value="Bus 142: S Ostbahnhof =&gt; U Leopoldplatz"/>
+        <param key="completeness" value="0.09"/>
+    </flow>
+    <flow id="pt_bus_142:1" type="pt_bus" route="pt_bus_142:1" begin="133.0" end="3733.0" period="600" line="142:1" >
+        <param key="name" value="Bus 142: U Leopoldplatz =&gt; S Ostbahnhof"/>
+        <param key="completeness" value="0.09"/>
+    </flow>
+</routes>

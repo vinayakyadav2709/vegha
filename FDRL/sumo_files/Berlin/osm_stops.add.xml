@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2025-09-21 22:06:46 by Eclipse SUMO netconvert Version 1.24.0
+<netconvertConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/netconvertConfiguration.xsd">
+
+    <input>
+        <type-files value="${SUMO_HOME}/data/typemap/osmNetconvert.typ.xml,${SUMO_HOME}/data/typemap/osmNetconvertAerialway.typ.xml"/>
+        <osm-files value="osm_bbox.osm.xml.gz"/>
+    </input>
+
+    <output>
+        <output-file value="osm.net.xml.gz"/>
+        <output.street-names value="true"/>
+        <output.original-names value="true"/>
+        <ptstop-output value="osm_stops.add.xml"/>
+        <ptline-output value="osm_ptlines.xml"/>
+        <ptline-clean-up value="true"/>
+    </output>
+
+    <projection>
+        <proj.utm value="true"/>
+    </projection>
+
+    <processing>
+        <geometry.remove value="true"/>
+        <roundabouts.guess value="true"/>
+    </processing>
+
+    <tls_building>
+        <tls.discard-simple value="true"/>
+        <tls.join value="true"/>
+        <tls.guess-signals value="true"/>
+        <tls.default-type value="actuated"/>
+    </tls_building>
+
+    <ramp_guessing>
+        <ramps.guess value="true"/>
+    </ramp_guessing>
+
+    <junctions>
+        <junctions.join value="true"/>
+        <junctions.corner-detail value="5"/>
+    </junctions>
+
+    <railway>
+        <railway.topology.repair value="true"/>
+    </railway>
+
+</netconvertConfiguration>
+-->
+
+<additional xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/additional_file.xsd">
+    <busStop id="-3918673862" name="Brunnenstraße/Invalidenstraße" lane="-41927333#0_0" startPos="134.07" endPos="149.07" friendlyPos="true" lines="N8">
+        <access lane="-390601868_0" pos="104.61" length="112.87" friendlyPos="1"/>
+        <access lane="390601869_0" pos="0.00" length="109.73" friendlyPos="1"/>
+        <access lane="390601870_0" pos="0.00" length="116.28" friendlyPos="1"/>
+        <access lane="390601874_0" pos="57.53" length="106.58" friendlyPos="1"/>
+        <access lane="737028405_0" pos="0.00" length="205.91" friendlyPos="1"/>
+    </busStop>
+    <busStop id="270720402" name="Mollstraße/Prenzlauer Allee" lane="24914141#1_0" startPos="7.22" endPos="22.22" friendlyPos="true" lines="200">
+        <access lane="-598921625_0" pos="8.60" length="98.36" friendlyPos="1"/>
+        <access lane="-983264066_0" pos="40.43" length="128.84" friendlyPos="1"/>
+        <access lane="369224774_0" pos="24.79" length="22.50" friendlyPos="1"/>
+        <access lane="598921625_0" pos="42.63" length="93.39" friendlyPos="1"/>
+        <access lane="983264066_0" pos="0.00" length="133.10" friendlyPos="1"/>
+    </busStop>
+    <busStop id="2914606225" name="Brunnenstraße/Invalidenstraße" lane="46138135#2_0" startPos="0.00" endPos="15.00" friendlyPos="true" lines="N40">
+        <access lane="-390601868_0" pos="0.00" length="62.02" friendlyPos="1"/>
+        <access lane="390601869_0" pos="62.93" length="85.01" friendlyPos="1"/>
+        <access lane="390601870_0" pos="111.87" length="57.23" friendlyPos="1"/>
+        <access lane="737028397_0" pos="110.50" length="23.20" friendlyPos="1"/>
+        <access lane="737028405_0" pos="0.00" length="19.30" friendlyPos="1"/>
+    </busStop>
+    <busStop id="2914606229" name="Brunnenstraße/Invalidenstraße" lane="1101405046#0_0" startPos="37.41" endPos="52.41" friendlyPos="true" lines="N8">
+        <access lane="-390601868_0" pos="104.61" length="119.26" friendlyPos="1"/>
+        <access lane="390601869_0" pos="0.00" length="116.33" friendlyPos="1"/>
+        <access lane="390601870_0" pos="0.00" length="122.46" friendlyPos="1"/>
+        <access lane="390601874_0" pos="57.53" length="113.42" friendlyPos="1"/>
+        <access lane="699211942_0" pos="0.00" length="206.93" friendlyPos="1"/>
+    </busStop>
+    <busStop id="2914927130" name="U Rosenthaler Platz" lane="1121001234_0" startPos="43.90" endPos="58.90" friendlyPos="true" lines="N8 N40">
+        <access lane="-1158223854_0" pos="0.00" length="157.30" friendlyPos="1"/>
+        <access lane="-1158223856_0" pos="7.75" length="131.81" friendlyPos="1"/>
+        <access lane="-1158223858_0" pos="7.92" length="113.73" friendlyPos="1"/>
+        <access lane="1158223856_0" pos="0.00" length="128.55" friendlyPos="1"/>
+        <access lane="1158223858_0" pos="0.00" length="111.17" friendlyPos="1"/>
+    </busStop>
+    <busStop id="3254638244" name="Mollstraße/Prenzlauer Allee" lane="1101404246#0_0" startPos="69.50" endPos="84.50" friendlyPos="true" lines="200 142">
+        <access lane="-314433242_0" pos="0.00" length="61.31" friendlyPos="1"/>
+        <access lane="-460115469_0" pos="0.00" length="66.05" friendlyPos="1"/>
+        <access lane="-830724684_0" pos="0.00" length="96.95" friendlyPos="1"/>
+        <access lane="314433242_0" pos="71.05" length="63.18" friendlyPos="1"/>
+        <access lane="460115469_0" pos="69.32" length="65.64" friendlyPos="1"/>
+    </busStop>
+    <busStop id="3918673861" name="Brunnenstraße/Invalidenstraße" lane="11483256_0" startPos="29.19" endPos="44.19" friendlyPos="true" lines="N40">
+        <access lane="-390601868_0" pos="104.61" length="63.36" friendlyPos="1"/>
+        <access lane="390601869_0" pos="0.00" length="67.89" friendlyPos="1"/>
+        <access lane="390601870_0" pos="0.00" length="58.61" friendlyPos="1"/>
+        <access lane="390601874_0" pos="57.53" length="72.66" friendlyPos="1"/>
+        <access lane="737028397_0" pos="0.00" length="122.59" friendlyPos="1"/>
+    </busStop>
+    <busStop id="3918673868" name="Mollstraße/Prenzlauer Allee" lane="232070355#0_0" startPos="61.85" endPos="76.85" friendlyPos="true" lines="142">
+        <access lane="-105593532#0_0" pos="0.00" length="79.87" friendlyPos="1"/>
+        <access lane="-830724684_0" pos="0.00" length="35.64" friendlyPos="1"/>
+        <access lane="105593532#0_0" pos="8.30" length="75.93" friendlyPos="1"/>
+        <access lane="105593532#1_0" pos="0.00" length="79.22" friendlyPos="1"/>
+        <access lane="830724684_0" pos="28.21" length="39.94" friendlyPos="1"/>
+    </busStop>
+    <busStop id="3918673889" name="U Rosa-Luxemburg-Platz" lane="369223457_0" startPos="0.00" endPos="12.37" friendlyPos="true" lines="N2">
+        <access lane="-1157170977_0" pos="0.00" length="40.80" friendlyPos="1"/>
+        <access lane="-1396608571_0" pos="10.87" length="91.26" friendlyPos="1"/>
+        <access lane="1157170977_0" pos="13.27" length="36.84" friendlyPos="1"/>
+        <access lane="1396608571_0" pos="0.00" length="96.02" friendlyPos="1"/>
+        <access lane="1397609474_0" pos="0.00" length="101.95" friendlyPos="1"/>
+    </busStop>
+    <busStop id="3918673890" name="U Rosa-Luxemburg-Platz" lane="369223459#0_0" startPos="4.48" endPos="19.48" friendlyPos="true" lines="N2">
+        <access lane="-1157170977_0" pos="13.64" length="53.64" friendlyPos="1"/>
+        <access lane="-1157230994_0" pos="5.62" length="102.23" friendlyPos="1"/>
+        <access lane="1157170977_0" pos="0.00" length="48.84" friendlyPos="1"/>
+        <access lane="1157230994_0" pos="0.00" length="102.28" friendlyPos="1"/>
+        <access lane="1397609474_0" pos="0.00" length="89.30" friendlyPos="1"/>
+    </busStop>
+    <busStop id="3918673891" name="U Rosa-Luxemburg-Platz" lane="312654706#0_0" startPos="42.12" endPos="57.12" friendlyPos="true" lines="142">
+        <access lane="-1139684196_0" pos="18.85" length="139.79" friendlyPos="1"/>
+        <access lane="-1139684197_0" pos="0.00" length="135.39" friendlyPos="1"/>
+        <access lane="-1157170977_0" pos="13.64" length="50.69" friendlyPos="1"/>
+        <access lane="1157170977_0" pos="0.00" length="51.38" friendlyPos="1"/>
+        <access lane="1157170981_0" pos="0.00" length="138.94" friendlyPos="1"/>
+    </busStop>
+    <busStop id="3918673892" name="U Rosa-Luxemburg-Platz" lane="1101404342#0_0" startPos="31.91" endPos="46.91" friendlyPos="true" lines="142">
+        <access lane="-1157230994_0" pos="0.00" length="100.14" friendlyPos="1"/>
+        <access lane="-1157447870_0" pos="2.47" length="110.36" friendlyPos="1"/>
+        <access lane="-1157447873_0" pos="0.00" length="117.83" friendlyPos="1"/>
+        <access lane="1157230994_0" pos="5.62" length="97.52" friendlyPos="1"/>
+        <access lane="1157447870_0" pos="0.00" length="112.58" friendlyPos="1"/>
+    </busStop>
+    <busStop id="3918673893" name="U Rosenthaler Platz" lane="312654701#0_0" startPos="65.67" endPos="80.67" friendlyPos="true" lines="142">
+        <access lane="-1157412354_0" pos="1.98" length="112.11" friendlyPos="1"/>
+        <access lane="-1300561432_0" pos="0.00" length="75.15" friendlyPos="1"/>
+        <access lane="-474154193_0" pos="61.54" length="42.89" friendlyPos="1"/>
+        <access lane="1300561432_0" pos="7.00" length="71.05" friendlyPos="1"/>
+        <access lane="389253388_0" pos="0.00" length="45.56" friendlyPos="1"/>
+    </busStop>
+    <busStop id="3918673894" name="U Rosenthaler Platz" lane="312651884#7_0" startPos="9.08" endPos="24.08" friendlyPos="true" lines="142">
+        <access lane="-1158223854_0" pos="23.02" length="133.92" friendlyPos="1"/>
+        <access lane="-1300561432_0" pos="0.00" length="76.32" friendlyPos="1"/>
+        <access lane="-474154193_0" pos="61.54" length="30.96" friendlyPos="1"/>
+        <access lane="1300561432_0" pos="7.00" length="71.56" friendlyPos="1"/>
+        <access lane="389253388_0" pos="0.00" length="35.61" friendlyPos="1"/>
+    </busStop>
+    <busStop id="3965486277" name="U Senefelderplatz" lane="896703365_0" startPos="23.73" endPos="38.73" friendlyPos="true" lines="N2">
+        <access lane="-1138696725_0" pos="4.55" length="39.59" friendlyPos="1"/>
+        <access lane="-1139102392_0" pos="7.97" length="114.68" friendlyPos="1"/>
+        <access lane="1138696725_0" pos="0.00" length="34.86" friendlyPos="1"/>
+        <access lane="1139102392_0" pos="0.00" length="111.83" friendlyPos="1"/>
+        <access lane="1140760606_0" pos="5.93" length="133.68" friendlyPos="1"/>
+    </busStop>
+    <busStop id="3965486278" name="U Senefelderplatz" lane="31145654#1_0" startPos="31.23" endPos="46.23" friendlyPos="true" lines="N2">
+        <access lane="-232448638_0" pos="6.35" length="81.27" friendlyPos="1"/>
+        <access lane="-38421292_0" pos="0.00" length="63.12" friendlyPos="1"/>
+        <access lane="1140760607_0" pos="26.84" length="120.74" friendlyPos="1"/>
+        <access lane="232448637#1_0" pos="0.00" length="77.10" friendlyPos="1"/>
+        <access lane="38421292_0" pos="6.95" length="67.88" friendlyPos="1"/>
+    </busStop>
+    <busStop id="5081436984" name="U Rosenthaler Platz" lane="1101404963#0_0" startPos="43.27" endPos="58.27" friendlyPos="true" lines="N8 N40">
+        <access lane="-1157404776_0" pos="1.75" length="70.29" friendlyPos="1"/>
+        <access lane="-371927740_0" pos="44.37" length="63.07" friendlyPos="1"/>
+        <access lane="1157404776_0" pos="0.00" length="75.02" friendlyPos="1"/>
+        <access lane="1157412353_0" pos="0.00" length="74.57" friendlyPos="1"/>
+        <access lane="371927740_0" pos="116.67" length="57.50" friendlyPos="1"/>
+    </busStop>
+    <busStop id="7312391560" name="U Weinmeisterstraße/Gipsstraße" lane="371927739#3_0" startPos="41.26" endPos="56.26" friendlyPos="true" lines="N8 N40">
+        <access lane="-1157419551_0" pos="0.00" length="51.84" friendlyPos="1"/>
+        <access lane="-958218668#0_0" pos="25.86" length="56.23" friendlyPos="1"/>
+        <access lane="1157396745_0" pos="0.61" length="56.38" friendlyPos="1"/>
+        <access lane="1157419551_0" pos="1.84" length="52.51" friendlyPos="1"/>
+        <access lane="958218668#0_0" pos="0.00" length="52.46" friendlyPos="1"/>
+    </busStop>
+</additional>

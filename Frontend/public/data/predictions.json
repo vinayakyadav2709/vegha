@@ -1,0 +1,22 @@
+{
+  "predictions": [
+    {
+      "junction_id": 1,
+      "predicted_congestion": "severe",
+      "timeframe": "next_30_min",
+      "expected_wait_time_sec": 210
+    },
+    {
+      "junction_id": 2,
+      "predicted_congestion": "medium",
+      "timeframe": "next_30_min",
+      "expected_wait_time_sec": 120
+    },
+    {
+      "junction_id": 3,
+      "predicted_congestion": "light",
+      "timeframe": "next_30_min",
+      "expected_wait_time_sec": 60
+    }
+  ]
+}

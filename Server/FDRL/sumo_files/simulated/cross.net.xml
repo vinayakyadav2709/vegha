@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<net version="1.16" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/net_file.xsd">
+    <location netOffset="-250.00,-250.00" convBoundary="0.00,0.00,500.00,500.00" origBoundary="-1000.00,-1000.00,1000.00,1000.00" projParameter="!"/>
+    <edge id="E2center" from="E" to="center" priority="-1" numLanes="2" speed="13.89"/>
+    <edge id="N2center" from="N" to="center" priority="-1" numLanes="2" speed="13.89"/>
+    <edge id="S2center" from="S" to="center" priority="-1" numLanes="2" speed="13.89"/>
+    <edge id="W2center" from="W" to="center" priority="-1" numLanes="2" speed="13.89"/>
+    <edge id="center2E" from="center" to="E" priority="-1" numLanes="2" speed="13.89"/>
+    <edge id="center2N" from="center" to="N" priority="-1" numLanes="2" speed="13.89"/>
+    <edge id="center2S" from="center" to="S" priority="-1" numLanes="2" speed="13.89"/>
+    <edge id="center2W" from="center" to="W" priority="-1" numLanes="2" speed="13.89"/>
+    <junction id="E" type="dead_end" x="250.00" y="0.00" incLanes="center2E_0 center2E_1" intLanes="" shape="250.00,1.60 250.00,-1.60"/>
+    <junction id="N" type="dead_end" x="0.00" y="250.00" incLanes="center2N_0 center2N_1" intLanes="" shape="-1.60,250.00 1.60,250.00"/>
+    <junction id="S" type="dead_end" x="0.00" y="-250.00" incLanes="center2S_0 center2S_1" intLanes="" shape="1.60,-250.00 -1.60,-250.00"/>
+    <junction id="W" type="dead_end" x="-250.00" y="0.00" incLanes="center2W_0 center2W_1" intLanes="" shape="-250.00,-1.60 -250.00,1.60"/>
+    <junction id="center" type="traffic_light" x="0.00" y="0.00" incLanes="S2center_0 S2center_1 W2center_0 W2center_1 N2center_0 N2center_1 E2center_0 E2center_1" intLanes=":center_1_0 :center_1_1 :center_1_2 :center_1_3 :center_1_4 :center_1_5 :center_1_6 :center_1_7 :center_1_8 :center_1_9 :center_1_10 :center_1_11" shape="-1.60,1.60 1.60,1.60 1.60,-1.60 -1.60,-1.60"/>
+    <tlLogic id="center" type="static" programID="FDRL_Program" offset="0">
+        <!-- Phase 0: Green for Southbound traffic -->
+        <phase duration="30" state="GGGrrrrrrrrr"/>
+        <!-- Phase 1: Yellow for Southbound traffic -->
+        <phase duration="4"  state="yyyrrrrrrrrr"/>
+        <!-- Phase 2: Green for Westbound traffic -->
+        <phase duration="30" state="rrrGGGrrrrrr"/>
+        <!-- Phase 3: Yellow for Westbound traffic -->
+        <phase duration="4"  state="rrryyyrrrrrr"/>
+        <!-- Phase 4: Green for Northbound traffic -->
+        <phase duration="30" state="rrrrrrGGGrrr"/>
+        <!-- Phase 5: Yellow for Northbound traffic -->
+        <phase duration="4"  state="rrrrrryyyrrr"/>
+        <!-- Phase 6: Green for Eastbound traffic -->
+        <phase duration="30" state="rrrrrrrrrGGG"/>
+        <!-- Phase 7: Yellow for Eastbound traffic -->
+        <phase duration="4"  state="rrrrrrrrryyy"/>
+    </tlLogic>
+    <connection from="E2center" to="center2W" fromLane="1" toLane="1" via=":center_1_10" tl="center" linkIndex="10" dir="s" state="O"/>
+    <connection from="E2center" to="center2N" fromLane="0" toLane="0" via=":center_1_9" tl="center" linkIndex="9" dir="r" state="O"/>
+    <connection from="E2center" to="center2S" fromLane="1" toLane="1" via=":center_1_11" tl="center" linkIndex="11" dir="l" state="o"/>
+    <connection from="N2center" to="center2S" fromLane="1" toLane="1" via=":center_1_7" tl="center" linkIndex="7" dir="s" state="O"/>
+    <connection from="N2center" to="center2E" fromLane="0" toLane="0" via=":center_1_6" tl="center" linkIndex="6" dir="r" state="O"/>
+    <connection from="N2center" to="center2W" fromLane="1" toLane="1" via=":center_1_8" tl="center" linkIndex="8" dir="l" state="o"/>
+    <connection from="S2center" to="center2N" fromLane="1" toLane="1" via=":center_1_1" tl="center" linkIndex="1" dir="s" state="O"/>
+    <connection from="S2center" to="center2W" fromLane="0" toLane="0" via=":center_1_0" tl="center" linkIndex="0" dir="r" state="O"/>
+    <connection from="S2center" to="center2E" fromLane="1" toLane="1" via=":center_1_2" tl="center" linkIndex="2" dir="l" state="o"/>
+    <connection from="W2center" to="center2E" fromLane="1" toLane="1" via=":center_1_4" tl="center" linkIndex="4" dir="s" state="O"/>
+    <connection from="W2center" to="center2S" fromLane="0" toLane="0" via=":center_1_3" tl="center" linkIndex="3" dir="r" state="O"/>
+    <connection from="W2center" to="center2N" fromLane="1" toLane="1" via=":center_1_5" tl="center" linkIndex="5" dir="l" state="o"/>
+</net>

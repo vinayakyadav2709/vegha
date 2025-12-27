@@ -1,0 +1,32 @@
+# --- Flask & Socket ---
+Flask==2.3.3
+Flask-SocketIO==5.3.6
+python-engineio==4.8.0
+python-socketio==5.10.0
+simple-websocket>=0.5.1
+Werkzeug==2.3.8
+gunicorn==21.2.0
+eventlet==0.35.2
+PyYAML>=6.0.1
+
+# --- Torch / ML ---
+--extra-index-url https://download.pytorch.org/whl/cpu
+torch==2.4.0
+numpy>=1.26.0
+lightning==2.3.0
+
+
+# --- SUMO / Simulation ---
+traci==1.24.0
+
+# --- Utilities ---
+tqdm>=4.66.0
+
+
+# --- Optional: GPU builds (commented out) ---
+# For CUDA 12.1:
+# torch==2.4.0+cu121
+# For CUDA 11.8:
+# torch==2.4.0+cu118
+# (uncomment one of the above and ensure correct CUDA toolkit installed)
+

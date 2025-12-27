@@ -1,0 +1,18 @@
+{
+  "routes": [
+    {
+      "id": "r1",
+      "start": "Silk Board",
+      "end": "Hebbal",
+      "optimal_path": ["Silk Board", "MG Road", "Hebbal"],
+      "expected_time_min": 42
+    },
+    {
+      "id": "r2",
+      "start": "Electronic City",
+      "end": "Majestic",
+      "optimal_path": ["Electronic City", "Silk Board", "Majestic"],
+      "expected_time_min": 58
+    }
+  ]
+}

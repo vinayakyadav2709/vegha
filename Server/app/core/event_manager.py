@@ -1,0 +1,106 @@
+import traci
+
+class EventManager:
+    def __init__(self, sumo_manager):
+        self.sumo = sumo_manager
+        self.events = []
+        self.event_id_counter = 1
+    
+    def create_event(self, streets, start_time, end_time):
+        event = {
+            "id": self.event_id_counter,
+            "streets": streets,
+            "start_time": start_time,
+            "end_time": end_time,
+            "status": "Pending"
+        }
+        self.events.append(event)
+        self.event_id_counter += 1
+        print(f"📅 Event {event['id']}: {streets} [{start_time}s-{end_time}s]")
+        return event
+    
+    def update_event_statuses(self, current_time):
+        for event in self.events:
+            old_status = event.get("status", "Pending")
+            
+            if current_time < event["start_time"]:
+                new_status = "Pending"
+            elif current_time >= event["start_time"] and current_time < event["end_time"]:
+                new_status = "Active"
+            else:
+                new_status = "Finished"
+            
+            if old_status != new_status:
+                event["status"] = new_status
+                print(f"✅ Event {event['id']}: {old_status} → {new_status}")
+                
+                if new_status == "Active":
+                    self._activate_event(event)
+                elif new_status == "Finished":
+                    self._deactivate_event(event)
+    
+    def _activate_event(self, event):
+        for street in event["streets"]:
+            if street not in self.sumo.closed_streets:
+                try:
+                    traci.edge.setDisallowed(street, ["all"])
+                    
+                    for veh in traci.edge.getLastStepVehicleIDs(street):
+                        try:
+                            traci.vehicle.remove(veh)
+                        except:
+                            pass
+                    
+                    print(f"🚫 Event {event['id']}: Closed {street}")
+                except Exception as e:
+                    print(f"⚠️ Error: {e}")
+    
+    def _deactivate_event(self, event):
+        all_vtypes = [
+            "passenger", "taxi", "bus", "truck", "trailer",
+            "motorcycle", "moped", "bicycle", "pedestrian",
+            "emergency", "delivery"
+        ]
+        
+        for street in event["streets"]:
+            if street not in self.sumo.closed_streets:
+                try:
+                    traci.edge.setAllowed(street, all_vtypes)
+                    print(f"✅ Event {event['id']}: Opened {street}")
+                except Exception as e:
+                    print(f"⚠️ Error: {e}")
+    
+    def handle_manual_close(self, street):
+        for event in self.events:
+            if street in event["streets"]:
+                event["streets"].remove(street)
+        
+        try:
+            traci.edge.setDisallowed(street, ["all"])
+            for veh in traci.edge.getLastStepVehicleIDs(street):
+                try:
+                    traci.vehicle.remove(veh)
+                except:
+                    pass
+            self.sumo.closed_streets.add(street)
+            print(f"🚫 Manually closed: {street}")
+        except Exception as e:
+            print(f"⚠️ Error: {e}")
+    
+    def handle_manual_open(self, street):
+        all_vtypes = [
+            "passenger", "taxi", "bus", "truck", "trailer",
+            "motorcycle", "moped", "bicycle", "pedestrian",
+            "emergency", "delivery"
+        ]
+        
+        for event in self.events:
+            if street in event["streets"]:
+                event["streets"].remove(street)
+        
+        try:
+            traci.edge.setAllowed(street, all_vtypes)
+            self.sumo.closed_streets.discard(street)
+            print(f"✅ Manually opened: {street}")
+        except Exception as e:
+            print(f"⚠️ Error: {e}")

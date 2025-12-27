@@ -1,0 +1,70 @@
+{
+  "events": [
+    {
+      "id": 1,
+      "location": {
+        "lat": 12.9758,
+        "lng": 77.6056
+      },
+      "title": "Metro Construction - MG Road",
+      "severity": "high",
+      "type": "construction",
+      "timestamp": "2025-09-17T06:00:00+05:30"
+    },
+    {
+      "id": 2,
+      "location": {
+        "lat": 12.9508,
+        "lng": 77.5847
+      },
+      "title": "Ganesh Chaturthi Procession",
+      "severity": "critical",
+      "type": "religious_event",
+      "timestamp": "2025-09-17T18:00:00+05:30"
+    },
+    {
+      "id": 3,
+      "location": {
+        "lat": 12.9172,
+        "lng": 77.6225
+      },
+      "title": "Road Accident - Silk Board Junction",
+      "severity": "critical",
+      "type": "accident",
+      "timestamp": "2025-09-17T16:00:00+05:30"
+    },
+    {
+      "id": 4,
+      "location": {
+        "lat": 12.9569,
+        "lng": 77.7011
+      },
+      "title": "Road Maintenance - Outer Ring Road",
+      "severity": "medium",
+      "type": "maintenance",
+      "timestamp": "2025-09-18T10:00:00+05:30"
+    },
+    {
+      "id": 5,
+      "location": {
+        "lat": 12.9716,
+        "lng": 77.5946
+      },
+      "title": "Weather Alert - Heavy Rain Expected",
+      "severity": "high",
+      "type": "weather",
+      "timestamp": "2025-09-17T14:00:00+05:30"
+    },
+    {
+      "id": 6,
+      "location": {
+        "lat": 12.9791,
+        "lng": 77.5908
+      },
+      "title": "Student Protest - Vidhana Soudha",
+      "severity": "medium",
+      "type": "protest",
+      "timestamp": "2025-09-17T11:00:00+05:30"
+    }
+  ]
+}

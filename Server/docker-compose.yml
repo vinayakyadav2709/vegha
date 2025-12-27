@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  vegha-backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: vegha-backend
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV=production
+      - MODE=sumo_events
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - ./app:/app/app:Z
+      - ./Berlin:/app/Berlin:Z
+      - ./config.yaml:/app/config.yaml:Z
+    restart: unless-stopped
+    security_opt:
+      - label=disable

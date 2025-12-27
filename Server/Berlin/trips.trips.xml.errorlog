@@ -1,0 +1,4 @@
+Warning: At actuated tlLogic 'GS_21441737', linkIndex 6,7,8 has no controlling detector.
+Warning: At actuated tlLogic 'GS_659394041', linkIndex 11,12,13 has no controlling detector.
+Warning: At actuated tlLogic 'cluster_262476527_26871569_311718989_3836987635_#3more', linkIndex 7,8,9 has no controlling detector.
+Warning: At actuated tlLogic 'joinedS_cluster_262471375_343590422_cluster_29123430_3837028201_98978100', linkIndex 3,4,12,18,19,23,24 has no controlling detector.

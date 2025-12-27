@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2025-09-21 22:06:49 by Eclipse SUMO sumo Version 1.24.0
+<sumoConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
+
+    <input>
+        <net-file value="/home/vishwajit/Workspace/SIH2025/FDRL/sumo_files/2025-09-21-22-06-32/osm.net.xml.gz"/>
+        <route-files value="/home/vishwajit/Workspace/SIH2025/FDRL/sumo_files/2025-09-21-22-06-32/trips.trips.xml"/>
+        <additional-files value="/home/vishwajit/Workspace/SIH2025/FDRL/sumo_files/2025-09-21-22-06-32/osm_stops.add.xml"/>
+    </input>
+
+    <output>
+        <vehroute-output value="/home/vishwajit/Workspace/SIH2025/FDRL/sumo_files/2025-09-21-22-06-32/vehroutes.xml"/>
+        <stop-output value="/home/vishwajit/Workspace/SIH2025/FDRL/sumo_files/2025-09-21-22-06-32/stopinfos.xml"/>
+    </output>
+
+    <time>
+        <begin value="0.0"/>
+    </time>
+
+    <processing>
+        <ignore-route-errors value="true"/>
+        <time-to-teleport.disconnected value="0"/>
+    </processing>
+
+    <routing>
+        <device.rerouting.adaptation-interval value="0"/>
+    </routing>
+
+    <report>
+        <aggregate-warnings value="5"/>
+        <error-log value="/home/vishwajit/Workspace/SIH2025/FDRL/sumo_files/2025-09-21-22-06-32/trips.trips.xml.errorlog"/>
+        <no-step-log value="true"/>
+    </report>
+
+</sumoConfiguration>
+-->
+
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
+    <vehicle id="1_bus_200:1" type="pt_bus" depart="17.00" departLane="0" arrival="97.00">
+        <route edges="112128418#0 457031289 1020548406 1101404246#0 177372522 295445243"/>
+        <stop busStop="3254638244" duration="30.00"/>
+    </vehicle>
+
+    <vehicle id="0_bus_200:0" type="pt_bus" depart="15.00" departLane="2" arrival="100.00">
+        <route edges="4613112 232070355#0 4790822 1101404262#0 24914141#1"/>
+        <stop busStop="270720402" duration="30.00"/>
+    </vehicle>
+
+    <vehicle id="2_bus_142:0" type="pt_bus" depart="52.00" departLane="0" arrival="403.00">
+        <route edges="4613112 232070355#0 153689810#0 319339414#1 319339413#0 319339413#1 319339413#2 319339413#3 319339413#4 1105526086 102983787#0 1101404342#0 312651884#1 312651884#2 312651884#5 312651884#6 312651884#7 -740848375 -320894149#4 -320894149#2 -320894149#0 -36689634#2 -73310501#2"/>
+        <stop busStop="3918673868" duration="30.00"/>
+        <stop busStop="3918673892" duration="30.00"/>
+        <stop busStop="3918673894" duration="30.00"/>
+    </vehicle>
+
+    <vehicle id="3_bus_142:1" type="pt_bus" depart="133.00" departLane="0" arrival="484.00">
+        <route edges="73310501#0 36689634#0 320894149#0 320894149#2 320894149#4 740848375 1101404966#0 312654701#0 312654701#1 312654705#0 312654706#0 1105526087 309300321 1101404246#0 177372522 295445243"/>
+        <stop busStop="3918673893" duration="30.00"/>
+        <stop busStop="3918673891" duration="30.00"/>
+        <stop busStop="3254638244" duration="30.00"/>
+    </vehicle>
+
+</routes>

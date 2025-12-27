@@ -1,0 +1,57 @@
+[
+  {
+    "junction_id": 1,
+    "traffic_lights": [
+      { "lane": "north", "signal": "green", "remaining_time_sec": 32 },
+      { "lane": "south", "signal": "red", "remaining_time_sec": 45 },
+      { "lane": "east", "signal": "yellow", "remaining_time_sec": 8 },
+      { "lane": "west", "signal": "green", "remaining_time_sec": 20 }
+    ],
+    "average_wait_time_sec": 154,
+    "emergency_vehicle_priority": true
+  },
+  {
+    "junction_id": 2,
+    "traffic_lights": [
+      { "lane": "north", "signal": "red", "remaining_time_sec": 25 },
+      { "lane": "south", "signal": "green", "remaining_time_sec": 40 },
+      { "lane": "east", "signal": "red", "remaining_time_sec": 30 },
+      { "lane": "west", "signal": "green", "remaining_time_sec": 35 }
+    ],
+    "average_wait_time_sec": 89,
+    "emergency_vehicle_priority": false
+  },
+  {
+    "junction_id": 3,
+    "traffic_lights": [
+      { "lane": "north", "signal": "yellow", "remaining_time_sec": 5 },
+      { "lane": "south", "signal": "red", "remaining_time_sec": 60 },
+      { "lane": "east", "signal": "green", "remaining_time_sec": 25 },
+      { "lane": "west", "signal": "red", "remaining_time_sec": 55 }
+    ],
+    "average_wait_time_sec": 62,
+    "emergency_vehicle_priority": false
+  },
+  {
+    "junction_id": 4,
+    "traffic_lights": [
+      { "lane": "north", "signal": "green", "remaining_time_sec": 45 },
+      { "lane": "south", "signal": "red", "remaining_time_sec": 20 },
+      { "lane": "east", "signal": "red", "remaining_time_sec": 25 },
+      { "lane": "west", "signal": "yellow", "remaining_time_sec": 10 }
+    ],
+    "average_wait_time_sec": 78,
+    "emergency_vehicle_priority": false
+  },
+  {
+    "junction_id": 5,
+    "traffic_lights": [
+      { "lane": "north", "signal": "red", "remaining_time_sec": 0 },
+      { "lane": "south", "signal": "red", "remaining_time_sec": 0 },
+      { "lane": "east", "signal": "red", "remaining_time_sec": 0 },
+      { "lane": "west", "signal": "red", "remaining_time_sec": 0 }
+    ],
+    "average_wait_time_sec": 300,
+    "emergency_vehicle_priority": false
+  }
+]

@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='utf-8'?>
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
+
+    <input>
+        <net-file value="berlin.net.xml" />
+        
+        <route-files value="berlin.rou.xml" />
+        <additional-files value="rl_traffic_lights.add.xml,vehicle_types.add.xml"/>
+    </input>
+
+    <output>
+        
+        
+    </output>
+
+    <time>
+        <begin value="25200" /> 
+
+        <end value="72000" />
+    </time>
+<processing>
+    <route-steps value="200" />
+    <ignore-junction-blocker value="1" />
+    <time-to-teleport value="300" />
+    <time-to-teleport.highways value="0" />
+    <eager-insert value="false" />
+</processing>
+
+
+    <random_number>
+        <random value="false" />
+        <seed value="251920" />
+    </random_number>
+
+</configuration>

@@ -1,0 +1,14 @@
+.git
+.gitignore
+.venv
+__pycache__
+*.pyc
+*.pyo
+.pytest_cache
+.idea
+.vscode
+*.md
+.DS_Store
+models/saved_models/*
+Berlin/*.xml
+Berlin/*.net.xml

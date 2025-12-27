@@ -1,0 +1,19 @@
+{
+  "system_status": "operational",
+  "traffic_overview": {
+    "total_junctions": 127,
+    "active_junctions": 119,
+    "average_congestion": "heavy"
+  },
+  "current_metrics": {
+    "total_vehicles": 2847,
+    "emergency_vehicles": 3,
+    "active_events": 2,
+    "average_wait_time_sec": 156
+  },
+  "alerts": [
+    { "type": "critical", "message": "High congestion at Silk Board Junction" },
+    { "type": "warning", "message": "Signal delay at MG Road" },
+    { "type": "info", "message": "System maintenance scheduled for 11 PM" }
+  ]
+}

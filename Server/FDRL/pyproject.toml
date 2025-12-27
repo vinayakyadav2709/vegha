@@ -1,0 +1,29 @@
+[project]
+name = "fdrl"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "fastapi>=0.117.1",
+    "lightning>=2.5.5",
+    "matplotlib>=3.10.6",
+    "numpy>=2.3.3",
+    "pandas>=2.3.2",
+    "pydantic>=2.11.9",
+    "pyyaml>=6.0.2",
+    "requests>=2.32.5",
+    "ruamel-yaml>=0.18.15",
+    "torch>=2.5.0",
+    "traci>=1.24.0",
+    "uvicorn>=0.36.0",
+    "websockets>=15.0.1",
+]
+
+[[tool.uv.index]]
+name = "pytorch-cu121"
+url = "https://download.pytorch.org/whl/cu121"
+explicit = true
+
+[tool.uv.sources]
+torch = { index = "pytorch-cu121" }

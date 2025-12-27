@@ -1,0 +1,41 @@
+{
+  "active_emergency_vehicles": [
+    {
+      "id": "EMG001",
+      "type": "ambulance",
+      "location": { "lat": 28.6289, "lng": 77.2065 },
+      "destination": "AIIMS Hospital",
+      "priority": "critical",
+      "eta_min": 6,
+      "route": ["J002", "J008", "J014"],
+      "status": "en_route",
+      "registration": "DL-1Z-A-1234"
+    },
+    {
+      "id": "EMG002",
+      "type": "fire_truck",
+      "location": { "lat": 12.9352, "lng": 77.6245 },
+      "destination": "Whitefield Tech Park",
+      "priority": "high",
+      "eta_min": 8,
+      "route": ["J005", "J009", "J013"],
+      "status": "responding",
+      "registration": "KA-05-MZ-5678"
+    },
+    {
+      "id": "EMG003",
+      "type": "police",
+      "location": { "lat": 19.0760, "lng": 72.8777 },
+      "destination": "Bandra Station",
+      "priority": "medium",
+      "eta_min": 4,
+      "route": ["J018", "J022"],
+      "status": "patrolling",
+      "registration": "MH-01-CY-9012"
+    }
+  ],
+  "total_count": 3,
+  "priority_overrides_active": 2,
+  "vip_movement_alerts": [],
+  "timestamp": "2025-09-17T16:00:08+05:30"
+}

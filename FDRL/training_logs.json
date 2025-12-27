@@ -1,0 +1,302 @@
+[
+  {
+    "epoch": 1,
+    "cumulative_reward": -1924.409961039162,
+    "actor_loss": -0.06281153916303689,
+    "critic_loss": 0.995551602045695
+  },
+  {
+    "epoch": 2,
+    "cumulative_reward": -2656.3306812125415,
+    "actor_loss": -0.00820245834790209,
+    "critic_loss": 0.9978132287661234
+  },
+  {
+    "epoch": 3,
+    "cumulative_reward": -2989.258121725052,
+    "actor_loss": 0.03290832766409343,
+    "critic_loss": 1.0013781567414601
+  },
+  {
+    "epoch": 4,
+    "cumulative_reward": -3217.460876016857,
+    "actor_loss": 0.024746721596845114,
+    "critic_loss": 1.0019175350666045
+  },
+  {
+    "epoch": 5,
+    "cumulative_reward": -3373.4406332187837,
+    "actor_loss": 0.004861042701304541,
+    "critic_loss": 1.001029438773791
+  },
+  {
+    "epoch": 6,
+    "cumulative_reward": -3437.70565010133,
+    "actor_loss": -0.0035295422026441277,
+    "critic_loss": 0.9980192830165228
+  },
+  {
+    "epoch": 7,
+    "cumulative_reward": -3485.8937360225736,
+    "actor_loss": -0.0009740950614893032,
+    "critic_loss": 0.9960170418024064
+  },
+  {
+    "epoch": 8,
+    "cumulative_reward": -3517.596600738603,
+    "actor_loss": 0.0006298722713230139,
+    "critic_loss": 1.00189870595932
+  },
+  {
+    "epoch": 9,
+    "cumulative_reward": -3573.6194348267218,
+    "actor_loss": -0.004127123772923369,
+    "critic_loss": 0.9989523102839788
+  },
+  {
+    "epoch": 10,
+    "cumulative_reward": -3576.1432930498922,
+    "actor_loss": -0.0023403198904513073,
+    "critic_loss": 0.9980859816074371
+  },
+  {
+    "epoch": 11,
+    "cumulative_reward": -3409.722703471175,
+    "actor_loss": -0.007666939616471306,
+    "critic_loss": 1.0032016227642695
+  },
+  {
+    "epoch": 12,
+    "cumulative_reward": -3237.4574815293026,
+    "actor_loss": -0.0115418973742635,
+    "critic_loss": 1.0029406478007634
+  },
+  {
+    "epoch": 13,
+    "cumulative_reward": -3123.991120130918,
+    "actor_loss": -0.01134878875745926,
+    "critic_loss": 1.005091016491254
+  },
+  {
+    "epoch": 14,
+    "cumulative_reward": -2935.41381111589,
+    "actor_loss": -0.0058710100779232255,
+    "critic_loss": 0.9990404079357783
+  },
+  {
+    "epoch": 15,
+    "cumulative_reward": -2744.0226471112564,
+    "actor_loss": -1.2775069626513868e-05,
+    "critic_loss": 0.9973418364922205
+  },
+  {
+    "epoch": 16,
+    "cumulative_reward": -2673.9546520271338,
+    "actor_loss": 0.0021194482598123916,
+    "critic_loss": 0.9973882406949997
+  },
+  {
+    "epoch": 17,
+    "cumulative_reward": -2593.023055348092,
+    "actor_loss": 0.0017333611516126741,
+    "critic_loss": 0.9946376939614614
+  },
+  {
+    "epoch": 18,
+    "cumulative_reward": -2543.786691519721,
+    "actor_loss": 0.003651967165933456,
+    "critic_loss": 0.9973318487405777
+  },
+  {
+    "epoch": 19,
+    "cumulative_reward": -2533.0987243864533,
+    "actor_loss": 0.0049349352014057025,
+    "critic_loss": 0.9917803605397543
+  },
+  {
+    "epoch": 20,
+    "cumulative_reward": -2532.371827282001,
+    "actor_loss": -0.001257917010540647,
+    "critic_loss": 0.9992806255817414
+  },
+  {
+    "epoch": 21,
+    "cumulative_reward": -2524.9885093713488,
+    "actor_loss": -0.006189725440102241,
+    "critic_loss": 0.992815637588501
+  },
+  {
+    "epoch": 22,
+    "cumulative_reward": -2518.197859927682,
+    "actor_loss": 0.003644075906989504,
+    "critic_loss": 0.9975785811742147
+  },
+  {
+    "epoch": 23,
+    "cumulative_reward": -2518.8514623819783,
+    "actor_loss": 0.00834786638370133,
+    "critic_loss": 0.9333204430120532
+  },
+  {
+    "epoch": 24,
+    "cumulative_reward": -2461.8923334228393,
+    "actor_loss": 0.001732055706330963,
+    "critic_loss": 0.9981604446967443
+  },
+  {
+    "epoch": 25,
+    "cumulative_reward": -2401.762543063596,
+    "actor_loss": -0.011924815848760772,
+    "critic_loss": 0.9953093926111857
+  },
+  {
+    "epoch": 26,
+    "cumulative_reward": -2168.1122126571363,
+    "actor_loss": -0.026406389039281445,
+    "critic_loss": 0.997445160150528
+  },
+  {
+    "epoch": 27,
+    "cumulative_reward": -2171.627755385057,
+    "actor_loss": -0.037866919445938646,
+    "critic_loss": 1.0096140931049982
+  },
+  {
+    "epoch": 28,
+    "cumulative_reward": -2170.0591758968194,
+    "actor_loss": -0.01843063814449124,
+    "critic_loss": 1.0087872614463171
+  },
+  {
+    "epoch": 29,
+    "cumulative_reward": -2239.3723919923073,
+    "actor_loss": -0.012754600906434158,
+    "critic_loss": 1.0054006864627203
+  },
+  {
+    "epoch": 30,
+    "cumulative_reward": -2230.8432232593636,
+    "actor_loss": -0.0017354850822205966,
+    "critic_loss": 0.9944714764753978
+  },
+  {
+    "epoch": 31,
+    "cumulative_reward": -2231.471039192774,
+    "actor_loss": 0.0063266702021185965,
+    "critic_loss": 0.9971042503913243
+  },
+  {
+    "epoch": 32,
+    "cumulative_reward": -2227.107959818676,
+    "actor_loss": 0.010039125225739553,
+    "critic_loss": 0.9988613307476044
+  },
+  {
+    "epoch": 33,
+    "cumulative_reward": -2208.371378889941,
+    "actor_loss": 0.009986057746815883,
+    "critic_loss": 0.994606011112531
+  },
+  {
+    "epoch": 34,
+    "cumulative_reward": -2261.154010545572,
+    "actor_loss": 0.010174544229979194,
+    "critic_loss": 0.9970253864924113
+  },
+  {
+    "epoch": 35,
+    "cumulative_reward": -2273.1279255964837,
+    "actor_loss": 0.0014261300460323885,
+    "critic_loss": 0.9971631993850072
+  },
+  {
+    "epoch": 36,
+    "cumulative_reward": -2246.759378493623,
+    "actor_loss": -0.021016098252584926,
+    "critic_loss": 0.9936942110459009
+  },
+  {
+    "epoch": 37,
+    "cumulative_reward": -2114.0601923670215,
+    "actor_loss": -0.02843973921635552,
+    "critic_loss": 1.0069519837697347
+  },
+  {
+    "epoch": 38,
+    "cumulative_reward": -1984.3762765595088,
+    "actor_loss": -0.017059814482490766,
+    "critic_loss": 1.000840988755226
+  },
+  {
+    "epoch": 39,
+    "cumulative_reward": -2173.293267752643,
+    "actor_loss": -0.018905990249671354,
+    "critic_loss": 0.9990287959575653
+  },
+  {
+    "epoch": 40,
+    "cumulative_reward": -2172.0301650123047,
+    "actor_loss": 0.001655867889833947,
+    "critic_loss": 0.993329045176506
+  },
+  {
+    "epoch": 41,
+    "cumulative_reward": -2185.0734158110286,
+    "actor_loss": 0.020140669185631548,
+    "critic_loss": 0.993307630221049
+  },
+  {
+    "epoch": 42,
+    "cumulative_reward": -2188.3525853163733,
+    "actor_loss": 0.017617005579086253,
+    "critic_loss": 0.9995365887880325
+  },
+  {
+    "epoch": 43,
+    "cumulative_reward": -2174.84490403383,
+    "actor_loss": 0.007212286624417174,
+    "critic_loss": 0.9968314677476883
+  },
+  {
+    "epoch": 44,
+    "cumulative_reward": -2004.0835142331987,
+    "actor_loss": 0.003912489474168978,
+    "critic_loss": 0.9979631652434667
+  },
+  {
+    "epoch": 45,
+    "cumulative_reward": -1954.724681771083,
+    "actor_loss": 0.0071089077846409054,
+    "critic_loss": 0.9986797640721004
+  },
+  {
+    "epoch": 46,
+    "cumulative_reward": -1927.148695085046,
+    "actor_loss": 0.0014346340863994555,
+    "critic_loss": 0.9968229770660401
+  },
+  {
+    "epoch": 47,
+    "cumulative_reward": -1894.5707561181814,
+    "actor_loss": 0.0005140567411823819,
+    "critic_loss": 1.0067479580640792
+  },
+  {
+    "epoch": 48,
+    "cumulative_reward": -1840.9095755660016,
+    "actor_loss": 0.0006622260071405132,
+    "critic_loss": 0.9968697359164556
+  },
+  {
+    "epoch": 49,
+    "cumulative_reward": -1820.5820023045478,
+    "actor_loss": 0.0033500222999161148,
+    "critic_loss": 0.9988833169142405
+  },
+  {
+    "epoch": 50,
+    "cumulative_reward": -1821.3502777108727,
+    "actor_loss": 0.0025359414213501925,
+    "critic_loss": 0.9992264747619629
+  }
+]

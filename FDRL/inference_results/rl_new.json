@@ -1,0 +1,36 @@
+{
+    "model_type": "rl",
+    "duration_seconds": 10000,
+    "traffic_data": [
+        {
+            "vehicle_type": "passenger",
+            "no_of_vehicles": 6934,
+            "avg_waiting_time": 45.2
+        },
+        {
+            "vehicle_type": "truck",
+            "no_of_vehicles": 1527,
+            "avg_waiting_time": 46.46
+        },
+        {
+            "vehicle_type": "bus",
+            "no_of_vehicles": 681,
+            "avg_waiting_time": 43.01
+        },
+        {
+            "vehicle_type": "motorcycle",
+            "no_of_vehicles": 590,
+            "avg_waiting_time": 45.89
+        },
+        {
+            "vehicle_type": "ambulance",
+            "no_of_vehicles": 174,
+            "avg_waiting_time": 49.22
+        },
+        {
+            "vehicle_type": "any",
+            "no_of_vehicles": 9906,
+            "avg_waiting_time": 45.36
+        }
+    ]
+}

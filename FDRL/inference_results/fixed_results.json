@@ -1,0 +1,25 @@
+{
+  "model_type": "fixed",
+  "traffic_data": [
+    {
+      "vehicle_type": "private",
+      "no_of_vehicles": 30652,
+      "avg_waiting_time": 82.51
+    },
+    {
+      "vehicle_type": "public",
+      "no_of_vehicles": 6941,
+      "avg_waiting_time": 80.47
+    },
+    {
+      "vehicle_type": "emergency",
+      "no_of_vehicles": 4938,
+      "avg_waiting_time": 82.28
+    },
+    {
+      "vehicle_type": "any",
+      "no_of_vehicles": 42531,
+      "avg_waiting_time": 82.15
+    }
+  ]
+}

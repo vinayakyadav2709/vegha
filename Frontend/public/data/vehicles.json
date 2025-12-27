@@ -1,0 +1,8 @@
+{
+  "vehicles": [
+    { "junction_id": 1, "count": 340, "timestamp": "2025-09-21T09:00:00Z" },
+    { "junction_id": 1, "count": 410, "timestamp": "2025-09-21T09:05:00Z" },
+    { "junction_id": 2, "count": 280, "timestamp": "2025-09-21T09:00:00Z" },
+    { "junction_id": 3, "count": 190, "timestamp": "2025-09-21T09:00:00Z" }
+  ]
+}

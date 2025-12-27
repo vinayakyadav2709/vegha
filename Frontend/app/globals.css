@@ -1,0 +1,364 @@
+@import 'leaflet/dist/leaflet.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =========================================================
+   Urban Pulse Theme - CSS Variables (Muted & Professional)
+   ========================================================= */
+:root {
+  /* Primary - Blue (Traffic Intelligence) */
+  --color-primary: rgb(37, 99, 235); /* blue-600 */
+  --color-primary-500: rgb(59, 130, 246);
+  --color-primary-600: rgb(37, 99, 235);
+  --color-primary-700: rgb(29, 78, 216);
+  --color-primary-soft: rgb(219, 234, 254); /* blue-100 */
+  
+  /* Secondary - Teal (Flow & Optimization) */
+  --color-secondary: rgb(20, 184, 166); /* teal-500 */
+  --color-secondary-400: rgb(94, 234, 212);
+
+  --color-primary-500-rgb: 59, 130, 246;
+  --color-primary-700-rgb: 29, 78, 216;
+  
+  /* Background */
+  --color-bg: rgb(219, 235, 250); /* gray-50 */
+  
+  /* Surface / Cards */
+  --color-surface: rgb(255, 255, 255); /* white */
+  
+  /* Borders */
+  --color-border: rgb(152, 194, 35); /* gray-200 */
+  
+  /* Text */
+  --color-text: rgb(17, 24, 39); /* gray-900 */
+  --color-text-muted: rgb(0, 0, 0); /* gray-600 */
+  
+  /* Accent Colors - Muted & Professional */
+  --color-success: rgb(34, 197, 94); /* green-500 */
+  --color-success-soft: rgb(220, 252, 231); /* green-100 */
+  --color-success-muted: rgb(74, 222, 128); /* green-400 */
+  
+  --color-warning: rgb(245, 158, 11); /* amber-500 - more muted */
+  --color-warning-soft: rgb(254, 243, 199); /* amber-100 */
+  --color-warning-muted: rgb(251, 191, 36); /* amber-400 */
+  
+  --color-error: rgb(220, 38, 38); /* red-600 - less bright */
+  --color-error-soft: rgb(254, 226, 226); /* red-100 */
+  --color-error-muted: rgb(248, 113, 113); /* red-400 */
+  
+  --color-emergency: rgb(147, 51, 234); /* purple-600 - less bright */
+  --color-emergency-soft: rgb(243, 232, 255); /* purple-100 */
+  --color-emergency-muted: rgb(192, 132, 252); /* purple-300 */
+  
+  /* Severity Colors - Muted & Easy on Eyes */
+  --severity-critical: rgb(185, 28, 28); /* red-700 - darker, less bright */
+  --severity-critical-soft: rgb(254, 242, 242); /* red-50 */
+  --severity-critical-bg: rgb(254, 226, 226); /* red-100 */
+  
+  --severity-high: rgb(217, 119, 6); /* amber-600 - darker */
+  --severity-high-soft: rgb(255, 251, 235); /* amber-50 */
+  --severity-high-bg: rgb(254, 243, 199); /* amber-100 */
+  
+  --severity-medium: rgb(15, 118, 110); /* teal-700 - darker */
+  --severity-medium-soft: rgb(240, 253, 250); /* teal-50 */
+  --severity-medium-bg: rgb(204, 251, 241); /* teal-100 */
+  
+  --severity-low: rgb(30, 64, 175); /* blue-700 - darker */
+  --severity-low-soft: rgb(239, 246, 255); /* blue-50 */
+  --severity-low-bg: rgb(219, 234, 254); /* blue-100 */
+  
+  /* Status Colors - Muted */
+  --status-active: rgb(22, 163, 74); /* green-700 */
+  --status-active-soft: rgb(220, 252, 231); /* green-100 */
+  
+  --status-scheduled: rgb(37, 99, 235); /* blue-600 */
+  --status-scheduled-soft: rgb(219, 234, 254); /* blue-100 */
+  
+  --status-resolved: rgb(107, 114, 128); /* gray-500 */
+  --status-resolved-soft: rgb(243, 244, 246); /* gray-100 */
+}
+
+.dark {
+  /* Primary - Blue (Traffic Intelligence) */
+  --color-primary: rgb(59, 130, 246); /* blue-500 */
+  --color-primary-500: rgb(59, 130, 246);
+  --color-primary-600: rgb(59, 130, 246);
+  --color-primary-700: rgb(37, 99, 235);
+  --color-primary-soft: rgba(59, 130, 246, 0.15);
+  
+  /* Secondary - Teal (Flow & Optimization) */
+  --color-secondary: rgb(94, 234, 212); /* teal-400 */
+  --color-secondary-400: rgb(94, 234, 212);
+
+  --color-primary-500: rgb(59, 130, 246);
+  --color-primary-700: rgb(37, 99, 235);
+  
+  /* Background */
+  --color-bg: rgb(23, 32, 53); /* gray-900 */
+  
+  /* Surface / Cards */
+  --color-surface: rgb(31, 41, 55); /* gray-800 */
+  
+  /* Borders */
+  --color-border: rgb(55, 65, 81); /* gray-700 */
+  
+  /* Text */
+  --color-text: rgb(243, 244, 246); /* gray-100 */
+  --color-text-muted: rgb(156, 163, 175); /* gray-400 */
+  
+  /* Accent Colors - Muted & Professional */
+  --color-success: rgb(34, 197, 94); /* green-500 */
+  --color-success-soft: rgba(34, 197, 94, 0.15);
+  --color-success-muted: rgb(74, 222, 128); /* green-400 */
+  
+  --color-warning: rgb(251, 191, 36); /* amber-400 */
+  --color-warning-soft: rgba(251, 191, 36, 0.15);
+  --color-warning-muted: rgb(253, 224, 71); /* amber-300 */
+  
+  --color-error: rgb(248, 113, 113); /* red-400 - softer */
+  --color-error-soft: rgba(239, 68, 68, 0.15);
+  --color-error-muted: rgb(252, 165, 165); /* red-300 */
+  
+  --color-emergency: rgb(192, 132, 252); /* purple-300 - softer */
+  --color-emergency-soft: rgba(168, 85, 247, 0.15);
+  --color-emergency-muted: rgb(216, 180, 254); /* purple-200 */
+  
+  /* Severity Colors - Muted & Easy on Eyes */
+  --severity-critical: rgb(221, 2, 2); /* red-400 */
+  --severity-critical-soft: rgba(220, 38, 38, 0.15);
+  --severity-critical-bg: rgba(220, 38, 38, 0.2);
+  
+  --severity-high: rgb(255, 185, 8); /* amber-400 */
+  --severity-high-soft: rgba(217, 119, 6, 0.15);
+  --severity-high-bg: rgba(217, 119, 6, 0.2);
+  
+  --severity-medium: rgb(14, 156, 212); /* teal-400 */
+  --severity-medium-soft: rgba(15, 118, 110, 0.15);
+  --severity-medium-bg: rgba(15, 118, 110, 0.2);
+  
+  --severity-low: rgb(45, 240, 78); /* blue-400 */
+  --severity-low-soft: rgba(30, 64, 175, 0.15);
+  --severity-low-bg: rgba(30, 64, 175, 0.2);
+  
+  /* Status Colors - Muted */
+  --status-active: rgb(74, 222, 128); /* green-400 */
+  --status-active-soft: rgba(22, 163, 74, 0.2);
+  
+  --status-scheduled: rgb(96, 165, 250); /* blue-400 */
+  --status-scheduled-soft: rgba(37, 99, 235, 0.2);
+  
+  --status-resolved: rgb(156, 163, 175); /* gray-400 */
+  --status-resolved-soft: rgba(107, 114, 128, 0.2);
+}
+
+/* =========================================================
+   Calm Blue Professional Theme (Light)
+   ========================================================= */
+:root {
+  /* Primary – Calm Blue Accent */
+  --color-primary: rgb(37, 99, 235);       /* blue-600 */
+  --color-primary-hover: rgb(59, 130, 246);/* blue-500 */
+  --color-primary-soft: rgb(219, 234, 254);/* blue-100 */
+
+  /* Secondary – Subtle Teal (accent only) */
+  --color-secondary: rgb(4, 85, 76);    /* teal-500 */
+
+  /* Backgrounds */
+  --color-bg: rgb(248, 250, 252);          /* gray-50 */
+  --color-surface: rgb(255, 255, 255);     /* white */
+
+  /* Borders */
+  --color-border: rgb(229, 231, 235);       /* gray-200 */
+
+  /* Text */
+  --color-text: rgb(17, 24, 39);            /* gray-900 */
+  --color-text-muted: rgb(75, 85, 99);      /* gray-600 */
+
+  /* Status */
+  --color-success: rgb(34, 197, 94);
+  --color-warning: rgb(245, 158, 11);
+  --color-error: rgb(239, 68, 68);
+  --color-emergency: rgb(168, 85, 247);
+}
+
+/* =========================================================
+   Dark Theme
+   ========================================================= */
+.dark {
+  --color-primary: rgb(59, 130, 246);       /* blue-500 */
+  --color-primary-hover: rgb(96, 165, 250); /* blue-400 */
+  --color-primary-soft: rgba(59,130,246,0.25);
+
+  --color-secondary: rgb(94, 234, 212);     /* teal-400 */
+
+  --color-bg: rgb(19, 20, 26);
+  --color-surface: rgb(11, 20, 34);         /* gray-800 */
+  --color-border: rgb(55, 65, 81);          /* gray-700 */
+
+  --color-text: rgb(243, 244, 246);         /* gray-100 */
+  --color-text-muted: rgb(255, 255, 255);   /* gray-400 */
+
+  --color-success: rgb(34, 197, 94);
+  --color-warning: rgb(251, 191, 36);
+  --color-error: rgb(248, 113, 113);
+  --color-emergency: rgb(192, 132, 252);
+}
+
+/* =========================================================
+   Base Global Styles
+   ========================================================= */
+@layer base {
+  body {
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    font-family: Inter, system-ui, sans-serif;
+    line-height: 1.6;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-weight: 600;
+    color: var(--color-text);
+  }
+
+  p, span, li {
+    color: var(--color-text-muted);
+  }
+}
+
+/* =========================================================
+   Reusable Utility Classes
+   ========================================================= */
+@layer utilities {
+  /* Backgrounds */
+  .bg-theme-bg {
+    background-color: var(--color-bg);
+  }
+
+  .bg-theme-surface {
+    background-color: var(--color-surface);
+  }
+
+  .bg-theme-primary {
+    background-color: var(--color-primary);
+  }
+
+  .bg-theme-primary-soft {
+    background-color: var(--color-primary-soft);
+  }
+
+  /* Text */
+  .text-theme-text {
+    color: var(--color-text);
+  }
+
+  .text-theme-muted {
+    color: var(--color-text-muted);
+  }
+
+  .text-theme-primary {
+    color: var(--color-primary);
+  }
+
+  
+
+  /* Cards */
+  .card {
+    background-color: var(--color-surface);
+    border: 1px solid var(--color-border);
+    border-radius: 1rem;
+    padding: 1rem;
+  }
+
+  .card-hover {
+    transition: box-shadow 0.2s ease, transform 0.2s ease;
+  }
+
+  .card-hover:hover {
+    box-shadow: 0 10px 25px -12px rgba(0,0,0,0.15);
+    transform: translateY(-1px);
+  }
+
+  /* Events backgrounds */
+  .bg-events-page {
+    background-color: var(--color-events-bg);
+  }
+  .bg-events-surface {
+    background-color: var(--color-events-surface);
+  }
+
+  /* Events borders & text */
+  .border-events {
+    border-color: var(--color-events-border);
+  }
+  .text-events {
+    color: var(--color-events-text);
+  }
+  .text-events-muted {
+    color: var(--color-events-muted);
+  }
+
+  /* Events card */
+  .card-events {
+    background-color: var(--color-events-surface);
+    border: 1px solid var(--color-events-border);
+    border-radius: 0.75rem;
+    padding: 1rem;
+    color: var(--color-events-text);
+  }
+
+  .card-events-hover {
+    transition: box-shadow 0.18s ease, transform 0.12s ease;
+  }
+  .card-events-hover:hover {
+    box-shadow: 0 8px 20px -12px rgba(2,6,23,0.45);
+    transform: translateY(-4px);
+  }
+
+  /* Accent (use sparingly) */
+  .events-accent {
+    color: var(--color-events-accent);
+    background: linear-gradient(90deg, rgba( var(--color-events-accent-r, 99), var(--color-events-accent-g,102), var(--color-events-accent-b,241), 0.08) 0%, transparent 100%);
+  }
+
+  /* Remove white borders - use transparent or theme borders */
+  .border-none {
+    border: none;
+  }
+  
+  .border-transparent {
+    border-color: transparent;
+  }
+  
+  /* Remove borders from badges and small elements */
+  .badge-no-border {
+    border: none;
+  }
+}
+
+/* =========================================================
+   Z-Index Safety
+   ========================================================= */
+.relative.z-10 {
+  position: relative;
+  z-index: 10;
+}
+
+/* Adjust section backgrounds for better visibility over video */
+section {
+  background-color: rgba(255, 255, 255, 0.85) !important;
+}
+
+.dark section {
+  background-color: rgba(17, 24, 39, 0.85) !important;
+}
+
+/* Improve text contrast */
+.text-theme-text {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.dark .text-theme-text {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}

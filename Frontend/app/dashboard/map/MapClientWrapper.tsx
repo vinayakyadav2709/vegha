@@ -1,9 +1,8 @@
-'use client'
+'use client';
 
-import dynamic from 'next/dynamic'
-import type { Junction, JunctionStatus, Prediction, MapEvent } from './MapView'
+import dynamic from 'next/dynamic';
+import type { Junction, JunctionStatus, Prediction, MapEvent } from './MapView';
 
-// Dynamically import MapView with SSR disabled to avoid "window is not defined" errors
 const MapView = dynamic(() => import('./MapView'), {
   ssr: false,
   loading: () => (
@@ -13,28 +12,16 @@ const MapView = dynamic(() => import('./MapView'), {
         <p className="mt-4 text-gray-600 dark:text-gray-400">Loading map...</p>
       </div>
     </div>
-  )
-})
+  ),
+});
 
 interface MapClientWrapperProps {
-  junctions: Junction[]
-  junctionStatuses: JunctionStatus[]
-  predictions: Prediction[]
-  events: MapEvent[]
+  junctions: Junction[];
+  junctionStatuses: JunctionStatus[];
+  predictions: Prediction[];
+  events: MapEvent[];
 }
 
-export default function MapClientWrapper({
-  junctions,
-  junctionStatuses,
-  predictions,
-  events
-}: MapClientWrapperProps) {
-  return (
-    <MapView
-      junctions={junctions}
-      junctionStatuses={junctionStatuses}
-      predictions={predictions}
-      events={events}
-    />
-  )
+export default function MapClientWrapper(props: MapClientWrapperProps) {
+  return <MapView {...props} />;
 }

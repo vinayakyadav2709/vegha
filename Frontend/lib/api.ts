@@ -1,4 +1,16 @@
-import type { EventsResponse,MapEventsResponse } from '@/app/types/events'
+import type { EventsResponse, MapEventsResponse } from '@/app/types/events'
+
+// Import JSON files directly
+import dashboardData from '@/public/data/dashboard.json'
+import junctionsData from '@/public/data/junctions.json'
+import junctionStatusData from '@/public/data/junctionStatus.json'
+import routesData from '@/public/data/routes.json'
+import vehiclesData from '@/public/data/vehicles.json'
+import emergencyData from '@/public/data/emergency.json'
+import predictionsData from '@/public/data/predictions.json'
+import eventsData from '@/public/data/events.json'
+import mapEventsData from '@/public/data/mapevents.json'
+
 // Types for the dashboard data
 export interface DashboardData {
   system_status: 'operational' | 'warning' | 'critical'
@@ -59,47 +71,24 @@ export interface PredictionsData {
   }>
 }
 
-// Generic fetch function for JSON files in public/data/
-export async function fetchData(file: string) {
-  // For server-side requests, use absolute URL
-  const baseURL = process.env.NODE_ENV === 'production' 
-    ? 'https://vegha.vercel.app' // Replace with your actual domain
-    : 'http://localhost:3000';
-    
-  const res = await fetch(`${baseURL}/data/${file}`, {
-    headers: { "Cache-Control": "no-cache" }
-  });
-  
-  if (!res.ok) throw new Error(`Failed to fetch ${file}`);
-  return res.json();
-}
+// Direct data access functions (no fetch)
+export const getDashboard = (): Promise<DashboardData> => Promise.resolve(dashboardData as DashboardData);
 
-// Dashboard
-export const getDashboard = (): Promise<DashboardData> => fetchData("dashboard.json");
+export const getJunctions = () => Promise.resolve(junctionsData);
 
-// Junctions
-export const getJunctions = () => fetchData("junctions.json");
+export const getJunctionStatus = () => Promise.resolve(junctionStatusData);
 
-// Junction live status (signals, timings)
-export const getJunctionStatus = () => fetchData("junctionStatus.json");
+export const getRoutes = () => Promise.resolve(routesData);
 
-// Routes
-export const getRoutes = () => fetchData("routes.json");
+export const getVehicles = () => Promise.resolve(vehiclesData);
 
-// Vehicle counts
-export const getVehicles = () => fetchData("vehicles.json");
+export const getEmergencyVehicles = (): Promise<EmergencyData> => Promise.resolve(emergencyData as EmergencyData);
 
-// Emergency vehicles
-export const getEmergencyVehicles = (): Promise<EmergencyData> => fetchData("emergency.json");
+export const getPredictions = (): Promise<PredictionsData> => Promise.resolve(predictionsData as PredictionsData);
 
+export const getEvents = (): Promise<EventsResponse> => Promise.resolve(eventsData as EventsResponse);
 
-// Predictions
-export const getPredictions = (): Promise<PredictionsData> => fetchData("predictions.json");
-
-// Events
-// In your existing lib/api.ts, make sure getEvents returns the full response
-export const getEvents = (): Promise<EventsResponse> => fetchData("events.json");
-export const getMapEvents = (): Promise<MapEventsResponse> => fetchData("mapevents.json");
+export const getMapEvents = (): Promise<MapEventsResponse> => Promise.resolve(mapEventsData as unknown as MapEventsResponse);
 
 // Helper function to format wait time
 export function formatWaitTime(seconds: number): string {
@@ -127,7 +116,6 @@ export function getCongestionColor(level: string): string {
 }
 
 // Helper function to get alert color
-// lib/api.ts (replace old getAlertColor)
 export function getAlertColor(type: string) {
   switch (type) {
     case 'critical':
@@ -156,7 +144,6 @@ export function getAlertColor(type: string) {
       }
   }
 }
-
 
 // Helper function to get congestion level color for predictions
 export function getPredictionCongestionColor(level: string): string {
@@ -199,6 +186,7 @@ export function getEmergencyStatusBadge(status: string): string {
       return 'bg-gray-50 text-gray-800 dark:bg-gray-800 dark:text-gray-200'
   }
 }
+
 export const getStatusColor = (status: string) => {
   switch (status) {
     case 'operational': return 'green'

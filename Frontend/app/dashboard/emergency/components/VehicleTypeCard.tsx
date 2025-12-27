@@ -1,6 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
+import type { Variants } from 'framer-motion';
 import { Users, Clock, TrendingUp, TrendingDown } from 'lucide-react';
 import AnimatedProgressBar from './AnimatedProgressBar';
 import { TrafficVehicleData } from './types';
@@ -32,6 +33,17 @@ export default function VehicleTypeCard({ data, index }: { data: TrafficVehicleD
       linear-gradient(180deg, rgba(var(--color-primary-500-rgb),0.06), transparent 55%)
     `,
   };
+
+  const cardVariants: Variants = {
+    hidden: { opacity: 0, y: 18, filter: 'blur(6px)' as any },
+    visible: {
+      opacity: 1,
+      y: 0,
+      filter: 'blur(0px)' as any,
+      transition: { type: 'spring' as const, stiffness: 160, damping: 18 },
+    },
+  };
+
 
   return (
     <motion.div

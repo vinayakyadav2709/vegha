@@ -1,6 +1,7 @@
 'use client';
 
-import { motion, useReducedMotion } from 'framer-motion';
+import { motion , useReducedMotion } from 'framer-motion';
+import type { Variants, Transition  } from 'framer-motion';
 import { Activity, Clock, Ambulance, BarChart3, TrendingUp, TrendingDown } from 'lucide-react';
 import { TrafficData } from './types';
 
@@ -9,13 +10,15 @@ const containerVariants = {
   visible: { opacity: 1, transition: { staggerChildren: 0.08, delayChildren: 0.06 } },
 };
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 12 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { type: 'spring', stiffness: 160, damping: 18 },
-  },
+const itemTransition: Transition = {
+  type: 'spring',
+  stiffness: 500,
+  damping: 35,
+};
+
+const itemVariants: Variants = {
+  hidden: { opacity: 0, y: 8 },
+  visible: { opacity: 1, y: 0, transition: itemTransition },
 };
 
 function StatCard({

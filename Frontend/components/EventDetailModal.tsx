@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useEffect, useMemo } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, Variants } from 'framer-motion';
 import type { Event } from '@/app/types/events';
 
 interface EventDetailModalProps {
@@ -53,15 +53,19 @@ function getSeverityConfig(severity: string): { colorVar: string; icon: string; 
 // ========================================
 // ANIMATION VARIANTS
 // ========================================
-const modalVariants = {
-  hidden: { opacity: 0, scale: 0.98, y: 16 },
+const modalVariants: Variants = {
+  hidden: { opacity: 0, scale: 0.95, y: 10 },
   visible: {
     opacity: 1,
     scale: 1,
     y: 0,
-    transition: { type: 'spring', stiffness: 320, damping: 26 },
+    transition: {
+      type: 'spring',
+      stiffness: 300,
+      damping: 30,
+    },
   },
-  exit: { opacity: 0, scale: 0.98, y: 16 },
+  exit: { opacity: 0, scale: 0.95, y: 10 },
 };
 
 const backdropVariants = {

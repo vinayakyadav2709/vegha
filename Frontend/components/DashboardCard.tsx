@@ -332,7 +332,7 @@ function DashboardContent() {
         </p>
       </div>
     ) : (
-      data.alerts.map((alert, index) => {
+      data.alerts.map((alert: Alert, index: number) => {
         // token-driven appearance (no Tailwind hardcoded colors)
         const typeMeta =
           alert.type === 'critical'
@@ -441,3 +441,13 @@ export default function Dashboard() {
     </div>
   )
 }
+
+type Alert = {
+  id: string;
+  type: 'critical' | 'high' | 'medium' | 'low' | 'warning';
+  message: string;
+  title?: string;
+  timestamp?: string;
+  severity?: 'critical' | 'high' | 'medium' | 'low';
+  resolved?: boolean;
+};

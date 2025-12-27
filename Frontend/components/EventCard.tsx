@@ -126,12 +126,18 @@ function getStatusRingStyle(status: string): React.CSSProperties {
 // =====================
 // MOTION
 // =====================
-const cardVariants = {
-  hidden: { opacity: 0, y: 8 },
+import { Variants } from 'framer-motion';
+
+const cardVariants: Variants = {
+  hidden: { opacity: 0, y: 10 },
   visible: (i: number) => ({
     opacity: 1,
     y: 0,
-    transition: { delay: (i || 0) * 0.05, duration: 0.35, ease: 'easeOut' },
+    transition: {
+      delay: i * 0.1,
+      duration: 0.4,
+      easing: 'easeOut',
+    },
   }),
 };
 

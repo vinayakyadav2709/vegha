@@ -10,25 +10,19 @@
         "junction_id": "J001",
         "description": "MG Road between Trinity Circle and Cubbon Park"
       },
-      "start_time": "2025-09-17T06:00:00+05:30",
-      "end_time": "2025-09-17T22:00:00+05:30",
+      "start_time": "2025-12-27T06:00:00+05:30",
+      "end_time": "2025-12-27T22:00:00+05:30",
       "status": "active",
       "impact": {
-        "affected_routes": [
-          "R001",
-          "R004"
-        ],
+        "affected_routes": ["R001", "R004"],
         "estimated_delay_min": 25,
         "lanes_blocked": 2,
         "diverted_traffic": true
       },
-      "authorities": [
-        "BMRCL",
-        "Bangalore Traffic Police"
-      ],
+      "authorities": ["BMRCL", "Bangalore Traffic Police"],
       "created_by": "traffic_control_bangalore",
-      "created_at": "2025-09-15T14:30:00+05:30",
-      "last_modified": "2025-09-17T15:45:00+05:30"
+      "created_at": "2025-12-25T14:30:00+05:30",
+      "last_modified": "2025-12-27T15:45:00+05:30"
     },
     {
       "id": "E002",
@@ -40,30 +34,20 @@
         "route_id": "R003",
         "description": "South Bangalore procession route"
       },
-      "start_time": "2025-09-17T18:00:00+05:30",
-      "end_time": "2025-09-17T23:00:00+05:30",
+      "start_time": "2025-12-27T18:00:00+05:30",
+      "end_time": "2025-12-27T23:00:00+05:30",
       "status": "scheduled",
       "impact": {
-        "affected_routes": [
-          "R003",
-          "R005",
-          "R007"
-        ],
+        "affected_routes": ["R003", "R005", "R007"],
         "estimated_delay_min": 90,
         "complete_closure": true,
-        "alternate_routes_suggested": [
-          "R008",
-          "R009"
-        ]
+        "alternate_routes_suggested": ["R008", "R009"]
       },
-      "authorities": [
-        "Karnataka Police",
-        "BBMP"
-      ],
+      "authorities": ["Karnataka Police", "BBMP"],
       "crowd_estimate": 50000,
       "created_by": "event_coordinator_blr",
-      "created_at": "2025-09-10T11:00:00+05:30",
-      "last_modified": "2025-09-16T16:20:00+05:30"
+      "created_at": "2025-12-20T11:00:00+05:30",
+      "last_modified": "2025-12-26T16:20:00+05:30"
     },
     {
       "id": "E003",
@@ -75,28 +59,21 @@
         "junction_id": "J005",
         "description": "Silk Board Junction main flyover"
       },
-      "start_time": "2025-09-17T16:00:00+05:30",
-      "end_time": "2025-09-17T18:00:00+05:30",
+      "start_time": "2025-12-27T16:00:00+05:30",
+      "end_time": "2025-12-27T18:00:00+05:30",
       "estimated_duration_min": 120,
       "status": "active",
       "impact": {
-        "affected_routes": [
-          "R001",
-          "R006"
-        ],
+        "affected_routes": ["R001", "R006"],
         "estimated_delay_min": 45,
         "lanes_blocked": 3,
         "emergency_services_required": true
       },
-      "authorities_notified": [
-        "Bangalore Traffic Police",
-        "BMTC",
-        "108 Ambulance"
-      ],
+      "authorities_notified": ["Bangalore Traffic Police", "BMTC", "108 Ambulance"],
       "incident_number": "BTP/2025/ACC/0001234",
       "created_by": "system",
-      "created_at": "2025-09-17T16:00:18+05:30",
-      "last_modified": "2025-09-17T16:00:18+05:30"
+      "created_at": "2025-12-27T16:00:18+05:30",
+      "last_modified": "2025-12-27T16:00:18+05:30"
     },
     {
       "id": "E004",
@@ -108,25 +85,19 @@
         "junction_id": "J008",
         "description": "Outer Ring Road between Marathahalli and Whitefield"
       },
-      "start_time": "2025-09-18T10:00:00+05:30",
-      "end_time": "2025-09-18T16:00:00+05:30",
+      "start_time": "2025-12-28T10:00:00+05:30",
+      "end_time": "2025-12-28T16:00:00+05:30",
       "status": "scheduled",
       "impact": {
-        "affected_routes": [
-          "R010",
-          "R011"
-        ],
+        "affected_routes": ["R010", "R011"],
         "estimated_delay_min": 15,
         "lanes_blocked": 1,
         "diverted_traffic": true
       },
-      "authorities": [
-        "BBMP",
-        "Bangalore Traffic Police"
-      ],
+      "authorities": ["BBMP", "Bangalore Traffic Police"],
       "created_by": "maintenance_coordinator",
-      "created_at": "2025-09-16T09:15:00+05:30",
-      "last_modified": "2025-09-16T09:15:00+05:30"
+      "created_at": "2025-12-26T09:15:00+05:30",
+      "last_modified": "2025-12-26T09:15:00+05:30"
     },
     {
       "id": "E006",
@@ -138,32 +109,23 @@
         "junction_id": "J003",
         "description": "Vidhana Soudha area and surrounding roads"
       },
-      "start_time": "2025-09-17T11:00:00+05:30",
-      "end_time": "2025-09-17T15:00:00+05:30",
+      "start_time": "2025-12-27T11:00:00+05:30",
+      "end_time": "2025-12-27T15:00:00+05:30",
       "status": "completed",
       "impact": {
-        "affected_routes": [
-          "R002",
-          "R006"
-        ],
+        "affected_routes": ["R002", "R006"],
         "estimated_delay_min": 30,
         "complete_closure": true,
-        "alternate_routes_suggested": [
-          "R007",
-          "R008"
-        ]
+        "alternate_routes_suggested": ["R007", "R008"]
       },
-      "authorities": [
-        "Karnataka Police",
-        "Bangalore Traffic Police"
-      ],
+      "authorities": ["Karnataka Police", "Bangalore Traffic Police"],
       "crowd_estimate": 2000,
       "created_by": "police_control_room",
-      "created_at": "2025-09-17T10:30:00+05:30",
-      "last_modified": "2025-09-17T15:30:00+05:30"
+      "created_at": "2025-12-27T10:30:00+05:30",
+      "last_modified": "2025-12-27T15:30:00+05:30"
     }
   ],
-  "total_count": 6,
-  "active_count": 3,
-  "timestamp": "2025-09-17T16:00:15+05:30"
+  "total_count": 5,
+  "active_count": 2,
+  "timestamp": "2025-12-27T15:50:00+05:30"
 }

@@ -126,13 +126,13 @@ export default function MiniStreetPicker({
 
           const poly = L.polyline(s.coordinates, styles.normal).addTo(mapRef.current!);
 
-          poly.on('mouseover', function () {
-            if (!selectedSet.has(id)) this.setStyle(styles.hover);
+          poly.on('mouseover', () => {
+            if (!selectedSet.has(id)) poly.setStyle(styles.hover);
           });
 
-          poly.on('mouseout', function () {
+          poly.on('mouseout', () => {
             const isSel = selectedSet.has(id);
-            this.setStyle(isSel ? styles.selected : styles.normal);
+            poly.setStyle(isSel ? styles.selected : styles.normal);
           });
 
           poly.on('click', (e) => {

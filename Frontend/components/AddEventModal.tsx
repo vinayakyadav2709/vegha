@@ -1,48 +1,7 @@
 'use client';
 
 import React from 'react';
-
-type LocationMode = 'junction' | 'route';
-type AuthoritiesMode = 'authorities' | 'authorities_notified';
-
-export type NewEventState = {
-  id: string;
-  title: string;
-  description: string;
-
-  type:
-    | 'construction'
-    | 'religious_event'
-    | 'accident'
-    | 'maintenance'
-    | 'protest'
-    | 'weather'
-    | string;
-
-  severity: 'critical' | 'high' | 'medium' | 'low' | string;
-  status: 'active' | 'scheduled' | 'completed' | 'cancelled' | 'inactive' | string;
-
-  // location
-  locationMode: LocationMode;
-  junction_id: string;
-  route_id: string;
-  location_description: string;
-
-  // times for datetime-local: YYYY-MM-DDTHH:mm (no timezone) [web:1122]
-  start_time: string;
-  end_time: string;
-
-  // impact (basic)
-  affected_routes: string[]; // from comma-separated input
-  estimated_delay_min: number | ''; // allow empty string for input
-
-  // authorities
-  authoritiesMode: AuthoritiesMode;
-  authorities: string[]; // from comma-separated input
-
-  // optional
-  created_by?: string;
-};
+import type { NewEventState, LocationMode, AuthoritiesMode } from '@/app/types/events';
 
 type AddEventModalProps = {
   isOpen: boolean;
@@ -82,12 +41,17 @@ export default function AddEventModal({
     !!newEvent.title.trim() &&
     !!newEvent.description.trim() &&
     !!newEvent.type.trim() &&
-    !!newEvent.severity.trim() &&
+    !!String(newEvent.severity).trim() &&
     !!newEvent.status.trim() &&
     !!newEvent.start_time &&
     !!newEvent.end_time &&
     !!newEvent.location_description.trim() &&
-    (newEvent.locationMode === 'junction' ? !!newEvent.junction_id.trim() : !!newEvent.route_id.trim()) &&
+    (newEvent.locationMode === 'junction'
+      ? !!newEvent.junction_id.trim()
+      : newEvent.locationMode === 'route'
+        ? !!newEvent.route_id.trim()
+        : true) &&
+    // estimated_delay_min is a string in shared NewEventState; empty allowed
     (newEvent.estimated_delay_min !== '' ? Number(newEvent.estimated_delay_min) >= 0 : true) &&
     (newEvent.affected_routes?.length ?? 0) > 0 &&
     (newEvent.authorities?.length ?? 0) > 0;
@@ -128,7 +92,7 @@ export default function AddEventModal({
               <label className="block text-sm font-medium text-theme-text mb-2">Status *</label>
               <select
                 value={newEvent.status}
-                onChange={(e) => setNewEvent((p) => ({ ...p, status: e.target.value }))}
+                onChange={(e) => setNewEvent((p) => ({ ...p, status: e.target.value as NewEventState['status'] }))}
                 className="w-full rounded-xl border border-[var(--color-border)] bg-theme-surface px-4 py-2 text-theme-text
                            focus:outline-none focus:ring-2 focus:ring-[rgba(var(--color-primary-500-rgb),0.30)]"
               >
@@ -187,7 +151,9 @@ export default function AddEventModal({
               <label className="block text-sm font-medium text-theme-text mb-2">Severity *</label>
               <select
                 value={newEvent.severity}
-                onChange={(e) => setNewEvent((p) => ({ ...p, severity: e.target.value }))}
+                onChange={(e) =>
+                  setNewEvent((p) => ({ ...p, severity: e.target.value as NewEventState['severity'] }))
+                }
                 className="w-full rounded-xl border border-[var(--color-border)] bg-theme-surface px-4 py-2 text-theme-text
                            focus:outline-none focus:ring-2 focus:ring-[rgba(var(--color-primary-500-rgb),0.30)]"
               >
@@ -208,7 +174,7 @@ export default function AddEventModal({
                 onChange={(e) =>
                   setNewEvent((p) => ({
                     ...p,
-                    estimated_delay_min: e.target.value === '' ? '' : Number(e.target.value),
+                    estimated_delay_min: e.target.value, // keep as string (shared state)
                   }))
                 }
                 className="w-full rounded-xl border border-[var(--color-border)] bg-theme-surface px-4 py-2 text-theme-text
@@ -267,6 +233,9 @@ export default function AddEventModal({
               >
                 <option value="junction">Junction</option>
                 <option value="route">Route</option>
+                {/* If you actually want custom, also add:
+                    <option value="custom">Custom</option>
+                 */}
               </select>
             </div>
 
@@ -282,7 +251,7 @@ export default function AddEventModal({
                     placeholder="e.g. J001"
                   />
                 </div>
-              ) : (
+              ) : newEvent.locationMode === 'route' ? (
                 <div>
                   <label className="block text-sm font-medium text-theme-text mb-2">Route ID *</label>
                   <input
@@ -293,6 +262,8 @@ export default function AddEventModal({
                     placeholder="e.g. R003"
                   />
                 </div>
+              ) : (
+                <div />
               )}
 
               <div>
@@ -310,7 +281,9 @@ export default function AddEventModal({
 
           {/* Impact */}
           <div>
-            <label className="block text-sm font-medium text-theme-text mb-2">Affected routes (comma-separated) *</label>
+            <label className="block text-sm font-medium text-theme-text mb-2">
+              Affected routes (comma-separated) *
+            </label>
             <input
               value={affectedRoutesText}
               onChange={(e) => setNewEvent((p) => ({ ...p, affected_routes: parseCsv(e.target.value) }))}
@@ -326,17 +299,25 @@ export default function AddEventModal({
               <label className="block text-sm font-medium text-theme-text mb-2">Authorities field *</label>
               <select
                 value={newEvent.authoritiesMode}
-                onChange={(e) => setNewEvent((p) => ({ ...p, authoritiesMode: e.target.value as AuthoritiesMode }))}
+                onChange={(e) =>
+                  setNewEvent((p) => ({
+                    ...p,
+                    authoritiesMode: e.target.value as AuthoritiesMode,
+                  }))
+                }
                 className="w-full rounded-xl border border-[var(--color-border)] bg-theme-surface px-4 py-2 text-theme-text
                            focus:outline-none focus:ring-2 focus:ring-[rgba(var(--color-primary-500-rgb),0.30)]"
               >
+                {/* Matches the shared AuthoritiesMode from app/types/events.ts */}
                 <option value="authorities">authorities</option>
-                <option value="authorities_notified">authorities_notified</option>
+                <option value="custom">custom</option>
               </select>
             </div>
 
             <div className="sm:col-span-2">
-              <label className="block text-sm font-medium text-theme-text mb-2">Authorities (comma-separated) *</label>
+              <label className="block text-sm font-medium text-theme-text mb-2">
+                Authorities (comma-separated) *
+              </label>
               <input
                 value={authoritiesText}
                 onChange={(e) => setNewEvent((p) => ({ ...p, authorities: parseCsv(e.target.value) }))}
@@ -358,7 +339,9 @@ export default function AddEventModal({
             >
               <span>Go to Simulation to Block Streets</span>
             </button>
-            <p className="mt-2 text-sm text-theme-muted">Click streets on the simulation map to block them for this event</p>
+            <p className="mt-2 text-sm text-theme-muted">
+              Click streets on the simulation map to block them for this event
+            </p>
           </div>
         </div>
 
@@ -387,21 +370,22 @@ export default function AddEventModal({
 }
 
 /**
- * OPTIONAL (if you want):
+ * OPTIONAL:
  * Helper to convert NewEventState -> your JSON event shape.
- * If you want this used, say and I'll update EventsPage handleSubmitEvent to use it.
  */
 export function toEventPayload(form: NewEventState) {
   const location =
     form.locationMode === 'junction'
       ? { junction_id: form.junction_id.trim(), description: form.location_description.trim() }
-      : { route_id: form.route_id.trim(), description: form.location_description.trim() };
+      : form.locationMode === 'route'
+        ? { route_id: form.route_id.trim(), description: form.location_description.trim() }
+        : { description: form.location_description.trim() };
 
   const impact: any = {
     affected_routes: form.affected_routes,
+    // If your API requires a number always, enforce it here instead of allowing ''.
+    estimated_delay_min: form.estimated_delay_min === '' ? 0 : Number(form.estimated_delay_min),
   };
-
-  if (form.estimated_delay_min !== '') impact.estimated_delay_min = Number(form.estimated_delay_min);
 
   const base: any = {
     id: form.id.trim(),
@@ -411,12 +395,18 @@ export function toEventPayload(form: NewEventState) {
     severity: form.severity,
     location,
     start_time: form.start_time,
-    end_time: form.end_time,
+    end_time: form.end_time || undefined,
     status: form.status,
     impact,
   };
 
-  base[form.authoritiesMode] = form.authorities;
+  if (form.authoritiesMode === 'authorities') {
+    base.authorities = form.authorities;
+  } else {
+    // If you truly support "custom", your backend must know which field to map it to.
+    // Otherwise remove 'custom' from AuthoritiesMode in app/types/events.ts.
+    base.authorities = form.authorities;
+  }
 
   return base;
 }

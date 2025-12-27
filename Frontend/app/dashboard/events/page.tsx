@@ -2,7 +2,14 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import { getEvents } from '@/lib/api';
-import type { Event, EventsResponse, EventSeverity, EventStatus } from '@/app/types/events';
+import type {
+  Event,
+  EventsResponse,
+  EventSeverity,
+  EventStatus,
+  NewEventState,
+} from '@/app/types/events';
+import { initialNewEventState } from '@/app/types/events';
 import EventCard from '@/components/EventCard';
 import AddEventModal from '@/components/AddEventModal';
 import { Plus, Search } from 'lucide-react';
@@ -26,37 +33,44 @@ function formatDateTime(dateString: string): string {
 
 type SortKey = 'latest' | 'soonest' | 'severity' | 'title';
 
-const severityRank: Record<string, number> = {
+const severityRank: Record<EventSeverity, number> = {
   critical: 4,
   high: 3,
   medium: 2,
   low: 1,
 };
 
-const initialNewEventState: NewEventState = {
-  id: '',
-  title: '',
-  description: '',
-  type: '',
-  severity: '',
-  status: 'scheduled',
+// If you already have this elsewhere, keep using that one and delete this.
+// This is just here so this file is self-contained & type-safe.
+function toEventPayload(state: NewEventState) {
+  const estimatedDelay =
+    state.estimated_delay_min.trim() === '' ? null : Number(state.estimated_delay_min);
 
-  locationMode: 'junction',
-  junction_id: '',
-  route_id: '',
-  location_description: '',
+  return {
+    id: state.id || undefined,
+    title: state.title,
+    description: state.description,
+    type: state.type || undefined,
+    severity: state.severity || undefined,
+    status: state.status,
 
-  start_time: '',
-  end_time: '',
+    location: {
+      mode: state.locationMode,
+      junction_id: state.junction_id || undefined,
+      route_id: state.route_id || undefined,
+      description: state.location_description || undefined,
+    },
 
-  affected_routes: [],
-  estimated_delay_min: '',
+    start_time: state.start_time || undefined,
+    end_time: state.end_time || undefined,
 
-  authoritiesMode: 'authorities',
-  authorities: [],
+    affected_routes: state.affected_routes,
+    estimated_delay_min: Number.isFinite(estimatedDelay as number) ? estimatedDelay : null,
 
-  created_by: 'system',
-};
+    authorities: state.authoritiesMode === 'authorities' ? state.authorities : [],
+    created_by: state.created_by,
+  };
+}
 
 export default function EventsPage() {
   const [events, setEvents] = useState<Event[]>([]);
@@ -83,7 +97,7 @@ export default function EventsPage() {
     setSortBy('latest');
   }
 
-  // UPDATED: matches expanded schema
+  // Form state (single shared type from @/app/types/events)
   const [newEvent, setNewEvent] = useState<NewEventState>(initialNewEventState);
 
   useEffect(() => {
@@ -229,12 +243,10 @@ export default function EventsPage() {
           bg-[var(--color-bg)]/72 backdrop-blur-xl
         "
         style={{
-          // subtle inner bottom divider + a soft glow line
           boxShadow:
             'inset 0 -1px 0 rgba(0,0,0,0.08), inset 0 -4px 0 rgba(var(--color-primary-500-rgb),0.08)',
         }}
       >
-        {/* thin accent hairline */}
         <div
           className="pointer-events-none absolute inset-x-0 bottom-0 h-px"
           style={{
@@ -243,10 +255,8 @@ export default function EventsPage() {
           }}
         />
 
-        {/* tighter padding + no extra vertical whitespace */}
         <div className="mx-auto w-full max-w-screen  py-3">
           <div className="flex items-center justify-between gap-3">
-            {/* Left: title/subtitle compact */}
             <div className="min-w-0">
               <h1 className="text-lg sm:text-xl font-semibold text-[var(--color-text)] tracking-tight leading-tight">
                 Traffic Events
@@ -256,7 +266,6 @@ export default function EventsPage() {
               </p>
             </div>
 
-            {/* Right: stats + button; keep single-line */}
             <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
               <div className="hidden sm:flex items-center gap-2">
                 <div className="inline-flex items-center gap-2 rounded-full border border-[var(--color-border)] bg-theme-surface px-3 py-1.5">
@@ -294,7 +303,6 @@ export default function EventsPage() {
         </div>
       </div>
 
-
       {/* Content */}
       <div className="mx-auto w-full max-w-screen py-6 p ">
         {events.length === 0 ? (
@@ -306,125 +314,123 @@ export default function EventsPage() {
         ) : (
           <>
             <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-  <p className="text-sm text-theme-muted">Last updated: {formatDateTime(timestamp)}</p>
+              <p className="text-sm text-theme-muted">Last updated: {formatDateTime(timestamp)}</p>
 
-  {/* Modern toolbar */}
-        <div className="rounded-2xl border border-[var(--color-border)] bg-theme-surface shadow-sm">
-          <div className="flex flex-wrap items-center gap-2 p-2">
-            {/* Search */}
-            <div className="relative flex-1 min-w-[220px]">
-              <Search className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-theme-muted" />
-              <input
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
-                placeholder="Search events"
-                className="w-full rounded-xl border border-[var(--color-border)] bg-theme-surface pl-9 pr-3 py-2 text-sm text-theme-text
+              <div className="rounded-2xl border border-[var(--color-border)] bg-theme-surface shadow-sm">
+                <div className="flex flex-wrap items-center gap-2 p-2">
+                  {/* Search */}
+                  <div className="relative flex-1 min-w-[220px]">
+                    <Search className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-theme-muted" />
+                    <input
+                      value={query}
+                      onChange={(e) => setQuery(e.target.value)}
+                      placeholder="Search events"
+                      className="w-full rounded-xl border border-[var(--color-border)] bg-theme-surface pl-9 pr-3 py-2 text-sm text-theme-text
                           placeholder:text-theme-muted focus:outline-none focus:ring-2 focus:ring-[rgba(var(--color-primary-500-rgb),0.25)]"
-              />
-            </div>
+                    />
+                  </div>
 
-            {/* Severity */}
-            <div className="relative">
-              <select
-                value={severityFilter}
-                onChange={(e) => setSeverityFilter(e.target.value as any)}
-                className="appearance-none rounded-xl border border-[var(--color-border)] bg-theme-surface
+                  {/* Severity */}
+                  <div className="relative">
+                    <select
+                      value={severityFilter}
+                      onChange={(e) => setSeverityFilter(e.target.value as any)}
+                      className="appearance-none rounded-xl border border-[var(--color-border)] bg-theme-surface
                           pl-3 pr-10 py-2 text-sm text-theme-text
                           focus:outline-none focus:ring-2 focus:ring-[rgba(var(--color-primary-500-rgb),0.25)]"
-              >
-                <option value="all">Severity: All</option>
-                <option value="critical">Severity: Critical</option>
-                <option value="high">Severity: High</option>
-                <option value="medium">Severity: Medium</option>
-                <option value="low">Severity: Low</option>
-              </select>
-              <svg
-                aria-hidden="true"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-                className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-theme-muted"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 10.94l3.71-3.71a.75.75 0 1 1 1.06 1.06l-4.24 4.24a.75.75 0 0 1-1.06 0L5.21 8.29a.75.75 0 0 1 .02-1.08z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </div>
+                    >
+                      <option value="all">Severity: All</option>
+                      <option value="critical">Severity: Critical</option>
+                      <option value="high">Severity: High</option>
+                      <option value="medium">Severity: Medium</option>
+                      <option value="low">Severity: Low</option>
+                    </select>
+                    <svg
+                      aria-hidden="true"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-theme-muted"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 10.94l3.71-3.71a.75.75 0 1 1 1.06 1.06l-4.24 4.24a.75.75 0 0 1-1.06 0L5.21 8.29a.75.75 0 0 1 .02-1.08z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </div>
 
-            {/* Status */}
-            <div className="relative">
-              <select
-                value={statusFilter}
-                onChange={(e) => setStatusFilter(e.target.value as any)}
-                className="appearance-none rounded-xl border border-[var(--color-border)] bg-theme-surface
+                  {/* Status */}
+                  <div className="relative">
+                    <select
+                      value={statusFilter}
+                      onChange={(e) => setStatusFilter(e.target.value as any)}
+                      className="appearance-none rounded-xl border border-[var(--color-border)] bg-theme-surface
                           pl-3 pr-10 py-2 text-sm text-theme-text
                           focus:outline-none focus:ring-2 focus:ring-[rgba(var(--color-primary-500-rgb),0.25)]"
-              >
-                <option value="all">Status: All</option>
-                <option value="active">Status: Active</option>
-                <option value="scheduled">Status: Scheduled</option>
-                <option value="completed">Status: Completed</option>
-                <option value="cancelled">Status: Cancelled</option>
-                <option value="inactive">Status: Inactive</option>
-              </select>
-              <svg
-                aria-hidden="true"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-                className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-theme-muted"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 10.94l3.71-3.71a.75.75 0 1 1 1.06 1.06l-4.24 4.24a.75.75 0 0 1-1.06 0L5.21 8.29a.75.75 0 0 1 .02-1.08z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </div>
+                    >
+                      <option value="all">Status: All</option>
+                      <option value="active">Status: Active</option>
+                      <option value="scheduled">Status: Scheduled</option>
+                      <option value="completed">Status: Completed</option>
+                      <option value="cancelled">Status: Cancelled</option>
+                      <option value="inactive">Status: Inactive</option>
+                    </select>
+                    <svg
+                      aria-hidden="true"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-theme-muted"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 10.94l3.71-3.71a.75.75 0 1 1 1.06 1.06l-4.24 4.24a.75.75 0 0 1-1.06 0L5.21 8.29a.75.75 0 0 1 .02-1.08z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </div>
 
-            {/* Sort */}
-            <div className="relative">
-              <select
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value as SortKey)}
-                className="appearance-none rounded-xl border border-[var(--color-border)] bg-theme-surface
+                  {/* Sort */}
+                  <div className="relative">
+                    <select
+                      value={sortBy}
+                      onChange={(e) => setSortBy(e.target.value as SortKey)}
+                      className="appearance-none rounded-xl border border-[var(--color-border)] bg-theme-surface
                           pl-3 pr-10 py-2 text-sm text-theme-text
                           focus:outline-none focus:ring-2 focus:ring-[rgba(var(--color-primary-500-rgb),0.25)]"
-              >
-                <option value="latest">Sort: Latest</option>
-                <option value="soonest">Sort: Soonest</option>
-                <option value="severity">Sort: Severity</option>
-                <option value="title">Sort: Title</option>
-              </select>
-              <svg
-                aria-hidden="true"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-                className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-theme-muted"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 10.94l3.71-3.71a.75.75 0 1 1 1.06 1.06l-4.24 4.24a.75.75 0 0 1-1.06 0L5.21 8.29a.75.75 0 0 1 .02-1.08z"
-                  clipRule="evenodd"
-                />
-              </svg>
-            </div>
+                    >
+                      <option value="latest">Sort: Latest</option>
+                      <option value="soonest">Sort: Soonest</option>
+                      <option value="severity">Sort: Severity</option>
+                      <option value="title">Sort: Title</option>
+                    </select>
+                    <svg
+                      aria-hidden="true"
+                      viewBox="0 0 20 20"
+                      fill="currentColor"
+                      className="pointer-events-none absolute right-3 top-1/2 h-4 w-4 -translate-y-1/2 text-theme-muted"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        d="M5.23 7.21a.75.75 0 0 1 1.06.02L10 10.94l3.71-3.71a.75.75 0 1 1 1.06 1.06l-4.24 4.24a.75.75 0 0 1-1.06 0L5.21 8.29a.75.75 0 0 1 .02-1.08z"
+                        clipRule="evenodd"
+                      />
+                    </svg>
+                  </div>
 
-            {/* Clear */}
-            <button
-              type="button"
-              onClick={clearAll}
-              disabled={!isFiltered}
-              className="rounded-xl border border-[var(--color-border)] bg-theme-surface px-4 py-2 text-sm font-semibold text-theme-text
+                  {/* Clear */}
+                  <button
+                    type="button"
+                    onClick={clearAll}
+                    disabled={!isFiltered}
+                    className="rounded-xl border border-[var(--color-border)] bg-theme-surface px-4 py-2 text-sm font-semibold text-theme-text
                         hover:bg-[rgba(var(--color-primary-500-rgb),0.06)] transition-colors
                         disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              Clear
-            </button>
-          </div>
-        </div>
-</div>
-
+                  >
+                    Clear
+                  </button>
+                </div>
+              </div>
+            </div>
 
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
               {visibleEvents.map((event) => (

@@ -10,6 +10,7 @@ class SUMOManager:
         self.simulation_paused = False
         self.closed_streets = set()
         self.available_streets = []
+        self.street_names = {}  # Cache for street names {id: name}
         self.bounds = config.get("bounds")
         self.step = 0
         self.mode = "vegha"
@@ -21,8 +22,15 @@ class SUMOManager:
         print("🚀 Initializing SUMO...")
         traci.start(self.sumo_cmd)
 
-        # 3. Run Detection ONCE at startup
-        self.active_tls = self._detect_active_tls()
+        # 3. Detect or Load Active TLS
+        controlled_junctions = self.config.get("system", {}).get("controlled_junctions", [])
+        if controlled_junctions:
+            print(f"📋 Using {len(controlled_junctions)} controlled junctions from config.")
+            # Verify they exist in simulation to avoid errors
+            existing_tls = set(traci.trafficlight.getIDList())
+            self.active_tls = set([j for j in controlled_junctions if j in existing_tls])
+        else:
+             self.active_tls = self._detect_active_tls()
 
         # 4. Reset to Time 0 and load streets
         self._reset_internal()
@@ -138,12 +146,21 @@ class SUMOManager:
                             self.bounds["min_lat"] <= lat <= self.bounds["max_lat"]
                             and self.bounds["min_lon"] <= lon <= self.bounds["max_lon"]
                         ):
+                            
+                            # Get Human Readable Name (if available)
+                            try:
+                                name = traci.edge.getStreetName(edge_id)
+                                if name and name.strip():  # Check if not empty
+                                    self.street_names[edge_id] = name
+                            except:
+                                pass
+                                
                             self.available_streets.append(edge_id)
                             break
                 except:
                     self.available_streets.append(edge_id)
 
-            print(f"✅ Loaded {len(self.available_streets)} streets")
+            print(f"✅ Loaded {len(self.available_streets)} streets ({len(self.street_names)} with names)")
 
         except Exception as e:
             print(f"⚠️ Error loading streets: {e}")

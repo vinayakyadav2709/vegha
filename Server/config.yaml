@@ -1,4 +1,4 @@
-mode: "sumo_rl_events"
+mode: "sumo_events"
 
 simulation:
   sumo_config: "coldplay/osm.sumocfg"

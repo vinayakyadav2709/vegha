@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- generated on 2025-12-29T02:44:16.436876+05:30 by Eclipse SUMO sumo 1.25.0
+<sumoConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
+
+    <input>
+        <net-file value="/mnt/Windows-SSD/Users/yvavi/yeet/coding/projects/delhi/Code-Slayer-FDRL-Traffic/vegha/Server/coldplay2/osm2.net.xml.gz"/>
+        <route-files value="/mnt/Windows-SSD/Users/yvavi/yeet/coding/projects/delhi/Code-Slayer-FDRL-Traffic/vegha/Server/coldplay2/   osm.passenger.trips_scaled.xml,/mnt/Windows-SSD/Users/yvavi/yeet/coding/projects/delhi/Code-Slayer-FDRL-Traffic/vegha/Server/coldplay2/   osm.motorcycle.trips_scaled.xml,/mnt/Windows-SSD/Users/yvavi/yeet/coding/projects/delhi/Code-Slayer-FDRL-Traffic/vegha/Server/coldplay2/   osm.bus.trips_scaled.xml,/mnt/Windows-SSD/Users/yvavi/yeet/coding/projects/delhi/Code-Slayer-FDRL-Traffic/vegha/Server/coldplay2/   osm.truck.trips_scaled.xml"/>
+        <additional-files value="/mnt/Windows-SSD/Users/yvavi/yeet/coding/projects/delhi/Code-Slayer-FDRL-Traffic/vegha/Server/coldplay2/osm.poly.xml.gz,/mnt/Windows-SSD/Users/yvavi/yeet/coding/projects/delhi/Code-Slayer-FDRL-Traffic/vegha/Server/coldplay2/output.add.xml,/mnt/Windows-SSD/Users/yvavi/yeet/coding/projects/delhi/Code-Slayer-FDRL-Traffic/vegha/Server/coldplay2/rl_traffic_lights.add.xml"/>
+    </input>
+
+    <output>
+        <tripinfo-output value="/mnt/Windows-SSD/Users/yvavi/yeet/coding/projects/delhi/Code-Slayer-FDRL-Traffic/vegha/Server/coldplay2/tripinfos.xml"/>
+        <statistic-output value="/mnt/Windows-SSD/Users/yvavi/yeet/coding/projects/delhi/Code-Slayer-FDRL-Traffic/vegha/Server/coldplay2/stats.xml"/>
+    </output>
+
+    <time>
+        <step-length value="1"/>
+    </time>
+
+    <processing>
+        <ignore-route-errors value="true"/>
+        <tls.actuated.jam-threshold value="30"/>
+    </processing>
+
+    <routing>
+        <device.rerouting.adaptation-steps value="18"/>
+        <device.rerouting.adaptation-interval value="10"/>
+    </routing>
+
+    <report>
+        <verbose value="true"/>
+        <no-warnings value="true"/>
+        <duration-log.statistics value="true"/>
+        <no-step-log value="true"/>
+    </report>
+
+    <gui_only>
+        <gui-settings-file value="/mnt/Windows-SSD/Users/yvavi/yeet/coding/projects/delhi/Code-Slayer-FDRL-Traffic/vegha/Server/coldplay2/osm.view.xml"/>
+    </gui_only>
+
+</sumoConfiguration>
+-->
+
+<meandata xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/meandata_file.xsd">
+</meandata>

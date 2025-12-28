@@ -30,6 +30,7 @@ socketio = SocketIO(app, cors_allowed_origins="*", async_mode="eventlet")
 @app.route("/api/mode", methods=["POST"])
 def set_mode():
     global SUMO_MODE
+    print("current_mode:", SUMO_MODE)
     data = request.get_json()
     mode = data.get("mode")
 
@@ -38,9 +39,9 @@ def set_mode():
 
     SUMO_MODE = mode
     sumo_manager.mode = mode
-    sumo_manager.close_simulation()
+    sumo_manager.reset_simulation()
     sumo_manager.start_simulation()
-
+    print(f"🔄 Simulation mode changed to {mode}")
     return {"message": f"Mode set to {mode}"}, 200
 
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 2025-12-29T00:51:16.011797+05:30 by Eclipse SUMO sumo 1.25.0
+<!-- generated on 2025-12-29T02:31:18.328820+05:30 by Eclipse SUMO sumo 1.25.0
 <sumoConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
 
     <input>
@@ -34,6 +34,10 @@
         <duration-log.statistics value="true"/>
         <no-step-log value="true"/>
     </report>
+
+    <traci_server>
+        <remote-port value="32979"/>
+    </traci_server>
 
     <gui_only>
         <gui-settings-file value="/mnt/Windows-SSD/Users/yvavi/yeet/coding/projects/delhi/Code-Slayer-FDRL-Traffic/vegha/Server/coldplay/osm.view.xml"/>

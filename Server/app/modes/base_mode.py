@@ -20,7 +20,15 @@ class BaseMode:
 
             while self.step < max_steps and self.sumo.simulation_running:
                 if not self.sumo.simulation_paused:
-                    traci.simulationStep()
+                    # Check if connection is still alive (safety)
+                    try:
+                        traci.simulationStep()
+                        # Sync step with actual SUMO time (handles resets)
+                        current_time = traci.simulation.getTime()
+                        self.step = int(current_time)
+                    except traci.FatalTraCIError:
+                        print("⚠️ TraCI connection lost. Stopping loop.")
+                        break
 
                     self.events.update_event_statuses(self.step)
                     self.apply_traffic_light_control()
@@ -32,8 +40,10 @@ class BaseMode:
 
                 eventlet.sleep(self.sumo.config.get("simulation_speed", 0.1))
 
-            traci.close()
-            self.sumo.simulation_running = False
+            # Only close if explicit shutdown requested, NOT during mode switch/reset
+            # if self.sumo.simulation_running is False, it might be a reset.
+            # We let sumo_manager handle full shutdown.
+            print("🛑 Simulation loop ended.")
 
         except Exception as e:
             print(f"❌ Simulation error: {e}")
@@ -133,18 +143,19 @@ class BaseMode:
                     # ✅ Fix: Skip single-phase (static) traffic lights
                     # These create clutter and cause RL errors if we try to switch them
                     try:
-                        # getCompleteRedYellowGreenDefinition returns a list of logics. 
+                        # getCompleteRedYellowGreenDefinition returns a list of logics.
                         # We need the currently active one (usually index 0 or matches programID)
                         # For simple filtering, checking the first one is usually sufficient as they share structure
-                        logics = traci.trafficlight.getCompleteRedYellowGreenDefinition(tl_id)
+                        logics = traci.trafficlight.getCompleteRedYellowGreenDefinition(
+                            tl_id
+                        )
                         if logics and len(logics) > 0:
                             current_logic = logics[0]
                             # If only 1 phase, it's static (always green/red/yellow)
                             if len(current_logic.phases) <= 1:
                                 continue
                     except:
-                         pass # Fallback if API fails, though unlikely
-
+                        pass  # Fallback if API fails, though unlikely
 
                     # Rendering Logic: Draw one bar per incoming road
                     processed_roads = set()
@@ -156,7 +167,6 @@ class BaseMode:
                             continue
                         if road_id.startswith(":"):
                             continue
-
 
                         processed_roads.add(road_id)
 
@@ -172,7 +182,7 @@ class BaseMode:
                             "moped",
                             "taxi",
                         }
-                        
+
                         # If list is empty, it allows all (keep it).
                         # If list is not empty, check if it intersects with relevant classes.
                         if allowed_classes:
@@ -190,13 +200,13 @@ class BaseMode:
                                 for p in current_logic.phases:
                                     if i < len(p.state):
                                         char = p.state[i].lower()
-                                        if 'r' in char:
+                                        if "r" in char:
                                             can_be_red = True
                                             break
                                 if not can_be_red:
                                     # LOGGING (Temporary for Debugging)
                                     # print(f"Skipping ALWAYS-GREEN lane {lane_id} at {tl_id}")
-                                    continue # Skip this lane, it's always green/yellow
+                                    continue  # Skip this lane, it's always green/yellow
                         except:
                             pass
 
@@ -211,11 +221,11 @@ class BaseMode:
                                 for p in current_logic.phases:
                                     if i < len(p.state):
                                         char = p.state[i].lower()
-                                        if 'r' in char:
+                                        if "r" in char:
                                             can_be_red = True
                                             break
                                 if not can_be_red:
-                                    continue # Skip this lane, it's always green/yellow
+                                    continue  # Skip this lane, it's always green/yellow
                         except:
                             pass
 

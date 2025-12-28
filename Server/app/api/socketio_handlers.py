@@ -56,22 +56,25 @@ def register_socketio_handlers(socketio, sumo_mgr, event_mgr, mode):
 
     @socketio.on("start")
     def handle_start():
-        if not sumo_mgr.simulation_running:
-            sumo_mgr.start_simulation()
-            sumo_mgr.simulation_running = True
-
-            event_mgr.events.clear()
-            event_mgr.event_id_counter = 1
-
+        # Start background loop ONCE
+        if not getattr(sumo_mgr, "loop_started", False):
+            sumo_mgr.loop_started = True
             socketio.start_background_task(target=mode.run)
-            print("▶️ Simulation started")
+
+        # Resume simulation
+        sumo_mgr.start_simulation()
+
+        # Reset events ONLY when starting fresh
+        event_mgr.events.clear()
+        event_mgr.event_id_counter = 1
+
+        print("▶️ Simulation started")
 
     @socketio.on("pause")
     def handle_pause():
         sumo_mgr.simulation_paused = not sumo_mgr.simulation_paused
         print(f"⏸️  Simulation {'paused' if sumo_mgr.simulation_paused else 'resumed'}")
 
-    @socketio.on("reset")
     @socketio.on("reset")
     def handle_reset():
         sumo_mgr.simulation_running = False

@@ -1,10 +1,12 @@
+from statistics import mode
 import traci
 import os
 import sys
+import eventlet
 
 
 class SUMOManager:
-    def __init__(self, config):
+    def __init__(self, config, mode="vegha"):
         self.config = config
         self.simulation_running = False
         self.simulation_paused = False
@@ -13,7 +15,8 @@ class SUMOManager:
         self.street_names = {}  # Cache for street names {id: name}
         self.bounds = config.get("bounds")
         self.step = 0
-        self.mode = "vegha"
+        self.mode = mode  # "vegha" or "fixed"
+        self.loop_started = False
 
         # 1. Prepare the SUMO Command (Path logic moved here)
         self.sumo_cmd = self._get_sumo_cmd()
@@ -23,14 +26,20 @@ class SUMOManager:
         traci.start(self.sumo_cmd)
 
         # 3. Detect or Load Active TLS
-        controlled_junctions = self.config.get("system", {}).get("controlled_junctions", [])
+        controlled_junctions = self.config.get("system", {}).get(
+            "controlled_junctions", []
+        )
         if controlled_junctions:
-            print(f"📋 Using {len(controlled_junctions)} controlled junctions from config.")
+            print(
+                f"📋 Using {len(controlled_junctions)} controlled junctions from config."
+            )
             # Verify they exist in simulation to avoid errors
             existing_tls = set(traci.trafficlight.getIDList())
-            self.active_tls = set([j for j in controlled_junctions if j in existing_tls])
+            self.active_tls = set(
+                [j for j in controlled_junctions if j in existing_tls]
+            )
         else:
-             self.active_tls = self._detect_active_tls()
+            self.active_tls = self._detect_active_tls()
 
         # 4. Reset to Time 0 and load streets
         self._reset_internal()
@@ -110,12 +119,26 @@ class SUMOManager:
         print("▶️ Simulation marked as running")
 
     def reset_simulation(self):
-        """Called when user clicks Reset."""
-        self.simulation_running = False
-        self.simulation_paused = False
+        # Don't set simulation_running = False, as that kills the BaseMode loop
+        self.simulation_paused = True
+        
+        eventlet.sleep(0.1)  # yield to let loop pause
+
         self.closed_streets.clear()
-        self._reset_internal()
-        print("🔄 Simulation reset to Time 0")
+        
+        try:
+            self._reset_internal()
+        except Exception as e:
+            print(f"⚠️ Error during reset: {e}")
+
+        # If mode changed, we might need to rely on the new mode instance picking up?
+        # Actually, in main.py, a NEW mode instance is created on startup.
+        # But for 'set_mode' endpoint, we seem to be re-using the manager but maybe creating new mode handling?
+        # Wait, main.py: set_mode -> sumo_manager.reset_simulation() -> sumo_manager.start_simulation()
+        # It DOES NOT recreate the `BaseMode` instance or thread.
+        # So we MUST keep the loop running.
+
+        self.simulation_paused = False
 
     def load_available_streets(self):
         self.available_streets = []
@@ -123,12 +146,23 @@ class SUMOManager:
         # Optional: Set programs if needed
         all_junctions = traci.trafficlight.getIDList()
         for jid in all_junctions:
-            try:
-                programs = traci.trafficlight.getAllProgramLogics(jid)
-                if programs:
-                    traci.trafficlight.setProgram(jid, programs[0].programID)
-            except:
-                pass
+            all_junctions = traci.trafficlight.getIDList()
+
+            if self.mode == "default" or self.mode == "vegha":
+                
+                for jid in all_junctions:
+                    try:
+                        traci.trafficlight.setProgram(jid, "0")
+
+                    except:
+                        pass
+
+            elif self.mode == "fixed":
+                for jid in all_junctions:
+                    try:
+                        traci.trafficlight.setProgram(jid, "fixed_60")
+                    except:
+                        pass
 
         try:
             for edge_id in traci.edge.getIDList():
@@ -146,7 +180,6 @@ class SUMOManager:
                             self.bounds["min_lat"] <= lat <= self.bounds["max_lat"]
                             and self.bounds["min_lon"] <= lon <= self.bounds["max_lon"]
                         ):
-                            
                             # Get Human Readable Name (if available)
                             try:
                                 name = traci.edge.getStreetName(edge_id)
@@ -154,13 +187,15 @@ class SUMOManager:
                                     self.street_names[edge_id] = name
                             except:
                                 pass
-                                
+
                             self.available_streets.append(edge_id)
                             break
                 except:
                     self.available_streets.append(edge_id)
 
-            print(f"✅ Loaded {len(self.available_streets)} streets ({len(self.street_names)} with names)")
+            print(
+                f"✅ Loaded {len(self.available_streets)} streets ({len(self.street_names)} with names)"
+            )
 
         except Exception as e:
             print(f"⚠️ Error loading streets: {e}")
@@ -177,8 +212,7 @@ class SUMOManager:
             return []
 
     def close_simulation(self):
-        try:
+        # ONLY for final shutdown, NEVER during runtime
+        if traci.isConnected():
             traci.close()
-            self.simulation_running = False
-        except:
-            pass
+        self.simulation_running = False

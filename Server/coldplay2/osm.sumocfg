@@ -13,7 +13,7 @@
   osm.bus.trips_scaled.xml,
   osm.truck.trips_scaled.xml"/>
 
-        <additional-files value="osm.poly.xml.gz,output.add.xml"/>
+        <additional-files value="osm.poly.xml.gz,output.add.xml,rl_traffic_lights.add.xml"/>
         <!-- rl_traffic_lights.add.xml -->
         
     </input>

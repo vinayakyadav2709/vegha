@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 2025-12-29T00:51:15.895670+05:30 by Eclipse SUMO sumo 1.25.0
+<!-- generated on 2025-12-29T02:31:18.214060+05:30 by Eclipse SUMO sumo 1.25.0
 <sumoConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
 
     <input>
@@ -35,6 +35,10 @@
         <no-step-log value="true"/>
     </report>
 
+    <traci_server>
+        <remote-port value="32979"/>
+    </traci_server>
+
     <gui_only>
         <gui-settings-file value="/mnt/Windows-SSD/Users/yvavi/yeet/coding/projects/delhi/Code-Slayer-FDRL-Traffic/vegha/Server/coldplay/osm.view.xml"/>
     </gui_only>
@@ -43,11 +47,4 @@
 -->
 
 <tripinfos xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/tripinfo_file.xsd">
-    <tripinfo id="motorcycle26" depart="28.00" departLane="423840850#0_0" departPos="2.30" departSpeed="0.00" departDelay="0.81" arrival="43.00" arrivalLane="787858368#1_0" arrivalPos="51.34" arrivalSpeed="10.22" duration="15.00" routeLength="127.74" waitingTime="0.00" waitingCount="0" stopTime="0.00" timeLoss="3.92" rerouteNo="1" devices="tripinfo_motorcycle26 routing_motorcycle26" vType="motorcycle_motorcycle" speedFactor="0.91" vaporized=""/>
-    <tripinfo id="veh17" depart="9.00" departLane="1195576992#11_0" departPos="5.10" departSpeed="0.00" departDelay="0.11" arrival="83.00" arrivalLane="-1195576992#4_0" arrivalPos="0.13" arrivalSpeed="10.18" duration="74.00" routeLength="606.19" waitingTime="20.00" waitingCount="2" stopTime="0.00" timeLoss="39.80" rerouteNo="1" devices="tripinfo_veh17 routing_veh17" vType="veh_passenger" speedFactor="0.83" vaporized=""/>
-    <tripinfo id="motorcycle24" depart="26.00" departLane="787945997_0" departPos="2.30" departSpeed="0.00" departDelay="0.90" arrival="84.00" arrivalLane="215089904#1_0" arrivalPos="29.87" arrivalSpeed="11.20" duration="58.00" routeLength="540.71" waitingTime="6.00" waitingCount="1" stopTime="0.00" timeLoss="18.50" rerouteNo="1" devices="tripinfo_motorcycle24 routing_motorcycle24" vType="motorcycle_motorcycle" speedFactor="0.91" vaporized=""/>
-    <tripinfo id="motorcycle38" depart="40.00" departLane="1192595036#0_0" departPos="2.30" departSpeed="14.21" departDelay="0.27" arrival="91.00" arrivalLane="749128442#2_0" arrivalPos="16.69" arrivalSpeed="20.55" duration="51.00" routeLength="302.58" waitingTime="14.00" waitingCount="4" stopTime="0.00" timeLoss="31.60" rerouteNo="1" devices="tripinfo_motorcycle38 routing_motorcycle38" vType="motorcycle_motorcycle" speedFactor="1.02" vaporized=""/>
-    <tripinfo id="veh13" depart="7.00" departLane="1431978404#0_0" departPos="5.10" departSpeed="0.00" departDelay="0.20" arrival="98.00" arrivalLane="708292171_0" arrivalPos="75.43" arrivalSpeed="20.95" duration="91.00" routeLength="556.65" waitingTime="22.00" waitingCount="3" stopTime="0.00" timeLoss="53.34" rerouteNo="1" devices="tripinfo_veh13 routing_veh13" vType="veh_passenger" speedFactor="1.03" vaporized=""/>
-    <tripinfo id="veh45" depart="24.00" departLane="566962241_0" departPos="5.10" departSpeed="23.80" departDelay="0.47" arrival="99.00" arrivalLane="-646210541#3_0" arrivalPos="182.51" arrivalSpeed="11.36" duration="75.00" routeLength="1036.30" waitingTime="2.00" waitingCount="1" stopTime="0.00" timeLoss="18.53" rerouteNo="1" devices="tripinfo_veh45 routing_veh45" vType="veh_passenger" speedFactor="0.86" vaporized=""/>
-    <tripinfo id="veh115" depart="61.00" departLane="215089917#0_0" departPos="5.10" departSpeed="0.00" departDelay="0.87" arrival="103.00" arrivalLane="215090078#1_0" arrivalPos="41.51" arrivalSpeed="13.59" duration="42.00" routeLength="432.22" waitingTime="0.00" waitingCount="0" stopTime="0.00" timeLoss="10.94" rerouteNo="1" devices="tripinfo_veh115 routing_veh115" vType="veh_passenger" speedFactor="1.02" vaporized=""/>
 </tripinfos>

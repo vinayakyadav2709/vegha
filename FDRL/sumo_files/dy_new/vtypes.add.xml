@@ -1,0 +1,6 @@
+<additional>
+    <vType id="passenger_type" vClass="passenger" guiShape="passenger" length="5.0" width="1.8" maxSpeed="30.0"/>
+    <vType id="truck_type" vClass="truck" guiShape="truck" length="12.0" width="2.5" maxSpeed="30.0"/>
+    <vType id="bus_type" vClass="bus" guiShape="bus" length="12.0" width="2.5" maxSpeed="30.0"/>
+    <vType id="motorcycle_type" vClass="motorcycle" guiShape="motorcycle" length="2.5" width="1.0" maxSpeed="30.0"/>
+</additional>

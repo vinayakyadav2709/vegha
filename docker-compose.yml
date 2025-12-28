@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  vegha-backend:
+    build:
+      context: ./Server
+      dockerfile: Dockerfile
+    container_name: vegha-backend
+    ports:
+      - "5000:5000"
+    environment:
+      - FLASK_ENV=production
+      - MODE=sumo_events
+      - PYTHONUNBUFFERED=1
+    restart: unless-stopped
+    security_opt:
+      - label=disable
+
+  vegha-frontend:
+    build:
+      context: ./Frontend
+      dockerfile: Dockerfile
+    container_name: vegha-frontend
+    ports:
+      - "3100:3100"
+    environment:
+      - NEXT_PUBLIC_API_URL=https://vegha.vikasrajyadav.com
+    restart: unless-stopped
+    depends_on:
+      - vegha-backend

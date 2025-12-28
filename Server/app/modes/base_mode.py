@@ -345,15 +345,7 @@ class BaseMode:
         # ✅ Safe calculation using count
         avg_speed = int(total_speed / count) if count > 0 else 0
         amb_avg_speed = int(amb_total_speed / amb_count) if amb_count > 0 else 0
-        for vid, vdata in vehicles.items():
-            if vdata["type"] == "truck":
-                # Get the raw ID from SUMO to see why it failed your check
-                raw_type = traci.vehicle.getTypeID(vid)
-                print(f"🚨 LEAK DETECTED! Vehicle '{vid}' is being sent as 'truck'.")
-                print(f"   -> Raw SUMO Type: '{raw_type}'")
-                print(
-                    f"   -> Your check 'truck' in '{raw_type.lower()}'? {('truck' in raw_type.lower())}"
-                )
+
         return vehicles, {
             "traffic_lights": traffic_lights,
             "avg_speed": avg_speed,

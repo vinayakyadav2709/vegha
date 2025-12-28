@@ -12,7 +12,8 @@ const nextConfig: NextConfig = {
       'leaflet': require.resolve('leaflet'),
     }
     return config
-  }
+  },
+  output: "standalone",
 };
 
 export default nextConfig;

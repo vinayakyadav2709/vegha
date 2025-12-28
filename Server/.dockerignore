@@ -9,6 +9,4 @@ __pycache__
 .vscode
 *.md
 .DS_Store
-models/saved_models/*
-Berlin/*.xml
-Berlin/*.net.xml
+venv

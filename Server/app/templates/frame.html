@@ -72,6 +72,20 @@
             <div class="metric-label">Waiting</div>
             <div class="metric-value" id="waiting" style="color:#f5576c;">0</div>
         </div>
+
+        <!-- ✅ NEW: Ambulance Metric -->
+        <div class="metric">
+            <div class="metric-label">Amb. Wait</div>
+            <div class="metric-value" id="amb-waiting" style="color:#ff4444; text-shadow: 0 0 5px red;">0</div>
+        </div>
+        <div class="metric">
+            <div class="metric-label">Amb. Total</div>
+            <div class="metric-value" id="amb-count" style="color:#FFA500;">0</div>
+        </div>
+        <div class="metric">
+            <div class="metric-label">Amb. Speed</div>
+            <div class="metric-value" id="amb-speed" style="color:#00FFFF;">0</div>
+        </div>
         <div class="metric">
             <div class="metric-label">Time</div>
             <div class="metric-value" id="sim-time" style="color:#38ef7d;">0s</div>
@@ -271,14 +285,20 @@
                 }
             })
             .catch(err => console.error('Failed to fetch mode:', err));
-
         socket.on('update', function (data) {
+            // --- 1. Update Statistics ---
             document.getElementById('vehicle-count').textContent = Object.keys(data.vehicles || {}).length;
             document.getElementById('avg-speed').textContent = data.avg_speed + ' km/h';
             document.getElementById('waiting').textContent = data.waiting;
+
+            // ✅ NEW: Update Ambulance Waiting Stat here
+            // (Make sure you added the <div id="amb-waiting"> in the HTML as shown before)
+            document.getElementById('amb-waiting').textContent = data.amb_waiting || 0;
+            document.getElementById('amb-count').textContent = data.amb_count || 0;
             document.getElementById('sim-time').textContent = data.time + 's';
             document.getElementById('signals').textContent = Object.keys(data.traffic_lights || {}).length;
-
+            document.getElementById('amb-speed').textContent = (data.amb_avg_speed || 0) + ' km/h';
+            // --- 2. Update Vehicles ---
             for (var id in data.vehicles) {
                 var veh = data.vehicles[id];
                 var lon = veh.pos[0];
@@ -302,6 +322,7 @@
                 }
             }
 
+            // --- 3. Remove Missing Vehicles ---
             for (var id in vehicles) {
                 if (!data.vehicles[id]) {
                     map.removeLayer(vehicles[id]);
@@ -309,6 +330,7 @@
                 }
             }
 
+            // --- 4. Update Traffic Lights ---
             for (var tlId in data.traffic_lights) {
                 var tl = data.traffic_lights[tlId];
                 if (!tl.pos || tl.pos.length !== 2) return;

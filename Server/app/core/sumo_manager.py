@@ -121,11 +121,11 @@ class SUMOManager:
     def reset_simulation(self):
         # Don't set simulation_running = False, as that kills the BaseMode loop
         self.simulation_paused = True
-        
+
         eventlet.sleep(0.1)  # yield to let loop pause
 
         self.closed_streets.clear()
-        
+
         try:
             self._reset_internal()
         except Exception as e:
@@ -148,8 +148,7 @@ class SUMOManager:
         for jid in all_junctions:
             all_junctions = traci.trafficlight.getIDList()
 
-            if self.mode == "default" or self.mode == "vegha":
-                
+            if self.mode == "vegha":
                 for jid in all_junctions:
                     try:
                         traci.trafficlight.setProgram(jid, "0")

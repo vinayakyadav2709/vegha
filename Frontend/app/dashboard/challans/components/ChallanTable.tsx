@@ -1,7 +1,7 @@
 /**
  * ChallanTable.tsx
  * 
- * Updated: Using generateChallanPDF from pdfGenerator (same as ChallanDetailModal)
+ * Updated: Accept onExportFiltered prop for filtered data export
  */
 
 'use client';
@@ -14,6 +14,7 @@ import { generateChallanPDF } from '@/app/lib/pdfGenerator';
 interface ChallanTableProps {
   challans: Challan[];
   onViewDetails: (challanId: string) => void;
+  onExportFiltered?: (filteredData: Challan[]) => void; // ✅ NEW PROP
 }
 
 // Status badge styling
@@ -23,7 +24,7 @@ const statusStyles: Record<string, string> = {
   REFUTED: 'bg-red-100 text-red-700 border-red-200',
 };
 
-export default function ChallanTable({ challans = [], onViewDetails }: ChallanTableProps) {
+export default function ChallanTable({ challans = [], onViewDetails, onExportFiltered }: ChallanTableProps) {
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('ALL');
   const [currentPage, setCurrentPage] = useState(1);
@@ -105,9 +106,12 @@ export default function ChallanTable({ challans = [], onViewDetails }: ChallanTa
     return pages;
   };
 
-  const formatDate = (dateString: string) => {
+  const formatDate = (dateString?: string | null) => {
+    if (!dateString) return 'N/A';
     try {
-      return new Date(dateString).toLocaleDateString('en-IN', {
+      const d = new Date(dateString);
+      if (Number.isNaN(d.getTime())) return 'N/A';
+      return d.toLocaleString('en-IN', {
         day: '2-digit',
         month: 'short',
         year: 'numeric',
@@ -115,7 +119,7 @@ export default function ChallanTable({ challans = [], onViewDetails }: ChallanTa
         minute: '2-digit',
       });
     } catch {
-      return dateString || 'N/A';
+      return 'N/A';
     }
   };
 
@@ -134,18 +138,68 @@ export default function ChallanTable({ challans = [], onViewDetails }: ChallanTa
     }
   };
 
+  // ✅ Handle Export All (filtered data)
+  const handleExportAll = () => {
+    try {
+      // Create CSV headers
+      const headers = [
+        'Challan ID',
+        'Vehicle Number',
+        'Violation Type',
+        'Location',
+        'Status',
+        'Fine Amount',
+        'Issued At',
+        'Verified At',
+        'Verified By'
+      ];
+
+      // Create CSV rows from FILTERED data
+      const rows = filteredData.map(challan => [
+        challan.challanId,
+        getVehicleNumber(challan.vehicle),
+        getViolationType(challan.violation),
+        getLocationString(challan.location),
+        challan.status,
+        `${challan.fine.currency} ${challan.fine.totalAmount}`,
+        formatDate(challan.issuedAt),
+        formatDate(challan.audit.verifiedAt),
+        challan.audit.verifiedBy || 'N/A'
+      ]);
+
+      // Combine headers and rows
+      const csvContent = [
+        headers.join(','),
+        ...rows.map(row => row.map(cell => `"${cell}"`).join(','))
+      ].join('\n');
+
+      // Create blob and download
+      const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+      const link = document.createElement('a');
+      const url = URL.createObjectURL(blob);
+      
+      const filterSuffix = statusFilter !== 'ALL' ? `_${statusFilter}` : '';
+      const searchSuffix = searchTerm ? `_filtered` : '';
+      
+      link.setAttribute('href', url);
+      link.setAttribute('download', `challans_export${filterSuffix}${searchSuffix}_${new Date().toISOString().split('T')[0]}.csv`);
+      link.style.visibility = 'hidden';
+      
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      console.log(`✅ Exported ${filteredData.length} challans successfully`);
+    } catch (error) {
+      console.error('❌ Export failed:', error);
+      alert('Failed to export data. Please try again.');
+    }
+  };
+
   return (
     <div className="rounded-xl border-2 border-[var(--color-border)] bg-theme-surface overflow-hidden shadow-lg">
       {/* Header with filters */}
       <div className="p-6 border-b-2 border-[var(--color-border)] space-y-4">
-        <div className="flex items-center justify-between flex-wrap gap-4">
-          <h3 className="text-lg font-bold text-theme-text">Challan Records</h3>
-          <button className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[var(--color-primary)] text-white font-semibold hover:opacity-90 transition-opacity">
-            <Download className="h-4 w-4" />
-            Export All
-          </button>
-        </div>
-
         {/* Search and Filter */}
         <div className="flex flex-col sm:flex-row gap-4">
           <div className="flex-1 relative">
@@ -172,6 +226,14 @@ export default function ChallanTable({ challans = [], onViewDetails }: ChallanTa
               <option value="REFUTED">Refuted</option>
             </select>
           </div>
+
+          <button 
+            onClick={handleExportAll}
+            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-[var(--color-primary)] text-white font-semibold hover:opacity-90 transition-opacity whitespace-nowrap"
+          >
+            <Download className="h-4 w-4" />
+            Export {searchTerm || statusFilter !== 'ALL' ? 'Filtered' : 'All'} ({filteredData.length})
+          </button>
         </div>
       </div>
 

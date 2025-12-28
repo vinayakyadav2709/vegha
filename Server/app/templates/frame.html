@@ -311,8 +311,11 @@
 
             for (var tlId in data.traffic_lights) {
                 var tl = data.traffic_lights[tlId];
+                if (!tl.pos || tl.pos.length !== 2) return;
+
                 var lon = tl.pos[0];
                 var lat = tl.pos[1];
+
                 var state = tl.state;
                 var angle = tl.angle || 0;
 
@@ -338,20 +341,35 @@
             }
         });
 
+
         socket.on('streets_loaded', function (data) {
             console.log('Streets loaded:', data.total);
 
+            var allCoords = []; // Store all points to find the center
+
             // Check if data includes coordinates
             if (data.streets_with_coords && data.streets_with_coords.length > 0) {
-                // New format with coordinates
                 allStreets = data.streets_with_coords.map(function (s) { return s.name; });
                 drawClickableStreets(data.streets_with_coords);
+
+                // Collect all coordinates
+                data.streets_with_coords.forEach(function (street) {
+                    street.coordinates.forEach(function (coord) {
+                        allCoords.push(coord);
+                    });
+                });
             } else {
-                // Old format without coordinates
                 allStreets = data.streets || [];
             }
 
             populateStreetSelect();
+
+            // ✅ AUTO-CENTER LOGIC
+            if (allCoords.length > 0) {
+                var bounds = L.latLngBounds(allCoords);
+                map.fitBounds(bounds); // Zooms and pans to fit the Berlin map
+                console.log("🌍 Map auto-centered to simulation bounds");
+            }
         });
 
         socket.on('street_status', function (data) {

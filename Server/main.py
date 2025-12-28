@@ -95,7 +95,7 @@ else:
     raise ValueError(f"❌ Unknown mode: {MODE}")
 
 # Initialize managers
-sumo_manager = SUMOManager(CONFIG.get("simulation", {}))
+sumo_manager = SUMOManager(CONFIG)
 event_manager = EventManager(CONFIG)
 current_mode = mode_class(sumo_manager, event_manager, socketio, CONFIG)
 
@@ -112,7 +112,7 @@ if __name__ == "__main__":
     print("=" * 60)
 
     # Start simulation in background
-    socketio.start_background_task(target=current_mode.run)
+    # Start SUMO once, but NOT the loop
 
     # Run server
     socketio.run(

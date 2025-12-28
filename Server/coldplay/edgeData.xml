@@ -1,22 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 2025-12-28T12:02:53.991673+05:30 by Eclipse SUMO sumo 1.25.0
+<!-- generated on 2025-12-29T00:15:53.157789+05:30 by Eclipse SUMO sumo 1.25.0
 <sumoConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
 
     <input>
-        <net-file value="/mnt/Windows-SSD/Users/yvavi/yeet/coding/projects/delhi/Code-Slayer-FDRL-Traffic/vegha/Server/coldplay/osm_tls.net.xml.gz"/>
-        <route-files value="/mnt/Windows-SSD/Users/yvavi/yeet/coding/projects/delhi/Code-Slayer-FDRL-Traffic/vegha/Server/coldplay/   osm.passenger.trips_scaled.xml,/mnt/Windows-SSD/Users/yvavi/yeet/coding/projects/delhi/Code-Slayer-FDRL-Traffic/vegha/Server/coldplay/   osm.motorcycle.trips_scaled.xml,/mnt/Windows-SSD/Users/yvavi/yeet/coding/projects/delhi/Code-Slayer-FDRL-Traffic/vegha/Server/coldplay/   osm.bus.trips_scaled.xml,/mnt/Windows-SSD/Users/yvavi/yeet/coding/projects/delhi/Code-Slayer-FDRL-Traffic/vegha/Server/coldplay/   osm.truck.trips_scaled.xml"/>
-        <additional-files value="/mnt/Windows-SSD/Users/yvavi/yeet/coding/projects/delhi/Code-Slayer-FDRL-Traffic/vegha/Server/coldplay/osm.poly.xml.gz,/mnt/Windows-SSD/Users/yvavi/yeet/coding/projects/delhi/Code-Slayer-FDRL-Traffic/vegha/Server/coldplay/output.add.xml,/mnt/Windows-SSD/Users/yvavi/yeet/coding/projects/delhi/Code-Slayer-FDRL-Traffic/vegha/Server/coldplay/rl_traffic_lights.add.xml"/>
+        <net-file value="coldplay/osm_tls.net.xml.gz"/>
+        <route-files value="coldplay/   osm.passenger.trips_scaled.xml,coldplay/   osm.motorcycle.trips_scaled.xml,coldplay/   osm.bus.trips_scaled.xml,coldplay/   osm.truck.trips_scaled.xml"/>
+        <additional-files value="coldplay/osm.poly.xml.gz,coldplay/output.add.xml,coldplay/rl_traffic_lights.add.xml"/>
     </input>
 
     <output>
-        <tripinfo-output value="/mnt/Windows-SSD/Users/yvavi/yeet/coding/projects/delhi/Code-Slayer-FDRL-Traffic/vegha/Server/coldplay/tripinfos.xml"/>
-        <statistic-output value="/mnt/Windows-SSD/Users/yvavi/yeet/coding/projects/delhi/Code-Slayer-FDRL-Traffic/vegha/Server/coldplay/stats.xml"/>
+        <tripinfo-output value="coldplay/tripinfos.xml"/>
+        <statistic-output value="coldplay/stats.xml"/>
     </output>
-
-    <time>
-        <step-length value="1"/>
-    </time>
 
     <processing>
         <ignore-route-errors value="true"/>
@@ -36,11 +32,15 @@
     </report>
 
     <traci_server>
-        <remote-port value="36475"/>
+        <remote-port value="45255"/>
     </traci_server>
 
     <gui_only>
-        <gui-settings-file value="/mnt/Windows-SSD/Users/yvavi/yeet/coding/projects/delhi/Code-Slayer-FDRL-Traffic/vegha/Server/coldplay/osm.view.xml"/>
+        <gui-settings-file value="coldplay/osm.view.xml"/>
     </gui_only>
 
 </sumoConfiguration>
+-->
+
+<meandata xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/meandata_file.xsd">
+</meandata>

@@ -1,25 +1,21 @@
-sumo:
-  config_file: sumo_files/coldplay/osm.sumocfg
-  step_length: 1.0
-  gui: false
-  gridlock_detection_time: 300.0
-priority_weights:
-  DEFAULT_VEHTYPE: 1.0
-fdrl:
-  epochs: 50
-  K: 500
-  alpha: 0.05
-  gamma: 0.99
-  actor_lr: 0.0001
-  critic_lr: 0.0005
-  clip_epsilon: 0.2
-  yellow_time: 3
-  green_time: 10
+mode: "sumo_rl_events"
+
+simulation:
+  sumo_config: "coldplay/osm.sumocfg"
+  simulation_speed: 0.1
+  bounds:
+    min_lat: 52.520
+    max_lat: 52.531
+    min_lon: 13.385
+    max_lon: 13.405
+  max_steps: 7200
+
 model:
-  hidden_layers:
-    - 128
-    - 64
-  activation: relu
+  hidden_layers: [64, 16]
+
+fdrl:
+  yellow_time: 3
+  green_time: 30
 system:
   server_host: localhost
   server_port: 12345

@@ -145,74 +145,7 @@ export default function ChallanDetailModal({
         <div className="p-6 space-y-6">
           
           {/* ========== EVIDENCE SECTION (TOP PRIORITY) ========== */}
-          {detail.evidence.images.length > 0 && (
-            <div className="rounded-xl border-2 border-[var(--color-primary)] bg-theme-surface p-6 shadow-lg">
-              <div className="flex items-center gap-3 mb-5">
-                <div className="p-3 rounded-lg bg-[var(--color-primary)] shadow-sm">
-                  <Camera className="h-6 w-6 text-white" />
-                </div>
-                <div>
-                  <h3 className="text-lg font-bold text-theme-text">Violation Evidence</h3>
-                  <p className="text-sm text-theme-muted">Captured at the time of violation</p>
-                </div>
-              </div>
-              
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                {detail.evidence.images.map((item, idx) => (
-                  <a
-                    key={idx}
-                    href={item.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group relative rounded-xl overflow-hidden border-2 border-[var(--color-border)] 
-                               hover:border-[var(--color-primary)] hover:shadow-xl transition-all duration-300"
-                  >
-                    <div className="aspect-square relative overflow-hidden bg-gray-200">
-                      <img
-                        src={item.thumbnail}
-                        alt={`Evidence ${idx + 1}`}
-                        className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
-                        <div className="absolute bottom-2 left-2 right-2">
-                          <p className="text-white text-xs font-semibold">View Full Size</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="p-2 bg-theme-background">
-                      <p className="text-xs text-theme-text text-center font-medium">
-                        📅 {format(new Date(item.capturedAt), 'dd MMM, HH:mm')}
-                      </p>
-                    </div>
-                  </a>
-                ))}
-              </div>
-              
-              {/* {detail.evidence.video && (
-                <div className="mt-4 p-4 rounded-xl bg-blue-600 border-2 border-blue-700 shadow-md">
-                  <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-lg bg-white/20">
-                      <svg className="h-5 w-5 text-white" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z" />
-                      </svg>
-                    </div>
-                    <div className="flex-1">
-                      <p className="text-sm font-semibold text-white">Video Evidence Available</p>
-                      <p className="text-xs text-blue-100">Duration: {detail.evidence.video.durationSeconds}s</p>
-                    </div>
-                    <a
-                      href={detail.evidence.video.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="px-4 py-2 rounded-lg bg-white text-blue-600 text-sm font-semibold hover:bg-blue-50 transition-colors"
-                    >
-                      Watch Video
-                    </a>
-                  </div>
-                </div>
-              )} */}
-            </div>
-          )}
+          
 
           {/* ========== VIOLATION & FINE SUMMARY (PROMINENT) ========== */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">

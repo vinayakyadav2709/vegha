@@ -130,6 +130,22 @@ class BaseMode:
                     controlled_lanes = traci.trafficlight.getControlledLanes(tl_id)
                     state = traci.trafficlight.getRedYellowGreenState(tl_id)
 
+                    # ✅ Fix: Skip single-phase (static) traffic lights
+                    # These create clutter and cause RL errors if we try to switch them
+                    try:
+                        # getCompleteRedYellowGreenDefinition returns a list of logics. 
+                        # We need the currently active one (usually index 0 or matches programID)
+                        # For simple filtering, checking the first one is usually sufficient as they share structure
+                        logics = traci.trafficlight.getCompleteRedYellowGreenDefinition(tl_id)
+                        if logics and len(logics) > 0:
+                            current_logic = logics[0]
+                            # If only 1 phase, it's static (always green/red/yellow)
+                            if len(current_logic.phases) <= 1:
+                                continue
+                    except:
+                         pass # Fallback if API fails, though unlikely
+
+
                     # Rendering Logic: Draw one bar per incoming road
                     processed_roads = set()
 
@@ -162,6 +178,46 @@ class BaseMode:
                         if allowed_classes:
                             if not any(c in allowed_classes for c in relevant_classes):
                                 continue  # Skip this lane (pedestrian/bike only)
+
+                        # ✅ Fix: Skip lanes that NEVER turn Red (Always Green/Yellow)
+                        # Used to hide continuous flow lanes
+                        try:
+                            # Use logics fetched above or fetch again safely
+                            # 'logics' variable from line 139 is available in this scope
+                            if logics and len(logics) > 0:
+                                current_logic = logics[0]
+                                can_be_red = False
+                                for p in current_logic.phases:
+                                    if i < len(p.state):
+                                        char = p.state[i].lower()
+                                        if 'r' in char:
+                                            can_be_red = True
+                                            break
+                                if not can_be_red:
+                                    # LOGGING (Temporary for Debugging)
+                                    # print(f"Skipping ALWAYS-GREEN lane {lane_id} at {tl_id}")
+                                    continue # Skip this lane, it's always green/yellow
+                        except:
+                            pass
+
+                        # ✅ Fix: Skip lanes that NEVER turn Red (Always Green/Yellow)
+                        # Used to hide continuous flow lanes
+                        try:
+                            # Use logics fetched above or fetch again safely
+                            # 'logics' variable from line 139 is available in this scope
+                            if logics and len(logics) > 0:
+                                current_logic = logics[0]
+                                can_be_red = False
+                                for p in current_logic.phases:
+                                    if i < len(p.state):
+                                        char = p.state[i].lower()
+                                        if 'r' in char:
+                                            can_be_red = True
+                                            break
+                                if not can_be_red:
+                                    continue # Skip this lane, it's always green/yellow
+                        except:
+                            pass
 
                         # Get coords
                         shape = traci.lane.getShape(lane_id)

@@ -329,6 +329,7 @@
                         iconAnchor: [15, 2]
                     });
                     trafficLights[tlId] = L.marker([lat, lon], { icon: icon, zIndexOffset: 1000 }).addTo(map);
+                    trafficLights[tlId].bindPopup(`🚦 Signal ID: <b>${tlId}</b>`);
                 } else {
                     var icon = L.divIcon({
                         html: `<div class="traffic-light-line" style="background: ${color}; color: ${color}; transform: rotate(${angle}deg);"></div>`,

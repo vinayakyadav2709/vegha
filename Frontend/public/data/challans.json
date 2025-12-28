@@ -1,0 +1,1897 @@
+{
+  "kpis": [
+    {
+      "id": "total_challans",
+      "label": "Total Challans",
+      "value": 30,
+      "icon": "receipt",
+      "format": "number",
+      "trend": {
+        "direction": "up",
+        "percentage": 12
+      }
+    },
+    {
+      "id": "verified_challans",
+      "label": "Verified Challans",
+      "value": 18,
+      "icon": "check-circle",
+      "format": "number",
+      "trend": {
+        "direction": "up",
+        "percentage": 15
+      }
+    },
+    {
+      "id": "pending_verification",
+      "label": "Pending Verification",
+      "value": 9,
+      "icon": "clock",
+      "format": "number",
+      "trend": {
+        "direction": "down",
+        "percentage": 5
+      }
+    },
+    {
+      "id": "refuted_challans",
+      "label": "Refuted Challans",
+      "value": 3,
+      "icon": "x-circle",
+      "format": "number",
+      "trend": {
+        "direction": "down",
+        "percentage": 3
+      }
+    }
+  ],
+  "challans": [
+    {
+      "challanId": "CHLN-2025-000872",
+      "status": "PENDING",
+      "issuedAt": "2025-12-25T10:42:18+05:30",
+      "vehicle": {
+        "vehicleNumber": "MH12AB1234",
+        "vehicleType": "CAR",
+        "owner": {
+          "name": "Rajesh Kumar",
+          "licenseNumber": "DL-1420110012345",
+          "contact": "+91-9876543210",
+          "masked": false
+        }
+      },
+      "violation": {
+        "type": "SIGNAL_JUMP",
+        "description": "Vehicle crossed the stop line during red signal",
+        "ruleCode": "MV-119",
+        "detectedBy": "CAMERA"
+      },
+      "location": {
+        "junctionId": "JN-045",
+        "junctionName": "MG Road Junction",
+        "zone": "Central Zone",
+        "coordinates": {
+          "latitude": 18.52043,
+          "longitude": 73.85674
+        }
+      },
+      "fine": {
+        "baseAmount": 1000,
+        "penalty": 0,
+        "totalAmount": 1000,
+        "currency": "INR"
+      },
+      "evidence": {
+        "images": [
+          {
+            "url": "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=400",
+            "thumbnail": "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=200",
+            "capturedAt": "2025-12-25T10:42:15+05:30"
+          },
+          {
+            "url": "https://images.unsplash.com/photo-1486299267070-83823f5448dd?w=400",
+            "thumbnail": "https://images.unsplash.com/photo-1486299267070-83823f5448dd?w=200",
+            "capturedAt": "2025-12-25T10:42:16+05:30"
+          }
+        ],
+        "video": {
+          "url": "https://example.com/evidence/CHLN-2025-000872/video.mp4",
+          "durationSeconds": 12
+        }
+      },
+      "audit": {
+        "issuedBy": {
+          "type": "SYSTEM",
+          "id": "CAM-009"
+        },
+        "verifiedBy": null,
+        "verifiedAt": null,
+        "lastUpdatedAt": "2025-12-25T10:42:18+05:30"
+      },
+      "dueDate": "2026-01-24T23:59:59+05:30"
+    },
+    {
+      "challanId": "CHLN-2025-000873",
+      "status": "VERIFIED",
+      "issuedAt": "2025-12-24T14:22:30+05:30",
+      "vehicle": {
+        "vehicleNumber": "KA01MN5678",
+        "vehicleType": "BIKE",
+        "owner": {
+          "name": "Priya Sharma",
+          "licenseNumber": "DL-0720200034567",
+          "contact": "+91-9123456789",
+          "masked": false
+        }
+      },
+      "violation": {
+        "type": "SPEEDING",
+        "description": "Vehicle exceeded speed limit of 60 km/h (detected: 82 km/h)",
+        "ruleCode": "MV-183",
+        "detectedBy": "SPEED_CAMERA"
+      },
+      "location": {
+        "junctionId": "JN-012",
+        "junctionName": "Silk Board Junction",
+        "zone": "South Zone",
+        "coordinates": {
+          "latitude": 12.9165,
+          "longitude": 77.6225
+        }
+      },
+      "fine": {
+        "baseAmount": 2000,
+        "penalty": 0,
+        "totalAmount": 2000,
+        "currency": "INR"
+      },
+      "evidence": {
+        "images": [
+          {
+            "url": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400",
+            "thumbnail": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200",
+            "capturedAt": "2025-12-24T14:22:28+05:30"
+          },
+          {
+            "url": "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=400",
+            "thumbnail": "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=200",
+            "capturedAt": "2025-12-24T14:22:29+05:30"
+          }
+        ],
+        "video": null
+      },
+      "audit": {
+        "issuedBy": {
+          "type": "SYSTEM",
+          "id": "SPEED-CAM-003"
+        },
+        "verifiedBy": "Officer Sarah Wilson",
+        "verifiedAt": "2025-12-24T18:30:00+05:30",
+        "lastUpdatedAt": "2025-12-25T09:15:00+05:30"
+      },
+      "dueDate": "2026-01-23T23:59:59+05:30"
+    },
+    {
+      "challanId": "CHLN-2025-000874",
+      "status": "REFUTED",
+      "issuedAt": "2025-11-15T08:10:45+05:30",
+      "vehicle": {
+        "vehicleNumber": "DL3CAR9012",
+        "vehicleType": "CAR",
+        "owner": {
+          "name": "Amit Patel",
+          "licenseNumber": "DL-0120150045678",
+          "contact": "+91-9988776655",
+          "masked": false
+        }
+      },
+      "violation": {
+        "type": "NO_HELMET",
+        "description": "Rider without helmet",
+        "ruleCode": "MV-129",
+        "detectedBy": "MANUAL"
+      },
+      "location": {
+        "junctionId": "JN-078",
+        "junctionName": "Koramangala Junction",
+        "zone": "East Zone",
+        "coordinates": {
+          "latitude": 12.9352,
+          "longitude": 77.6245
+        }
+      },
+      "fine": {
+        "baseAmount": 1000,
+        "penalty": 0,
+        "totalAmount": 1000,
+        "currency": "INR"
+      },
+      "evidence": {
+        "images": [
+          {
+            "url": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400",
+            "thumbnail": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=200",
+            "capturedAt": "2025-11-15T08:10:40+05:30"
+          }
+        ],
+        "video": null
+      },
+      "audit": {
+        "issuedBy": {
+          "type": "OFFICER",
+          "id": "OFF-234"
+        },
+        "verifiedBy": "Officer Ravi Kumar",
+        "verifiedAt": "2025-11-16T10:00:00+05:30",
+        "lastUpdatedAt": "2025-11-16T10:00:00+05:30"
+      },
+      "dueDate": "2025-12-15T23:59:59+05:30"
+    },
+    {
+      "challanId": "CHLN-2025-000875",
+      "status": "VERIFIED",
+      "issuedAt": "2025-12-23T09:15:22+05:30",
+      "vehicle": {
+        "vehicleNumber": "TN09BC3456",
+        "vehicleType": "AUTO",
+        "owner": {
+          "name": "Suresh Reddy",
+          "licenseNumber": "DL-3320180067890",
+          "contact": "+91-8765432109",
+          "masked": false
+        }
+      },
+      "violation": {
+        "type": "WRONG_SIDE_DRIVING",
+        "description": "Vehicle driving on wrong side of the road",
+        "ruleCode": "MV-177",
+        "detectedBy": "CAMERA"
+      },
+      "location": {
+        "junctionId": "JN-023",
+        "junctionName": "Anna Nagar Junction",
+        "zone": "North Zone",
+        "coordinates": {
+          "latitude": 13.0853,
+          "longitude": 80.2091
+        }
+      },
+      "fine": {
+        "baseAmount": 5000,
+        "penalty": 500,
+        "totalAmount": 5500,
+        "currency": "INR"
+      },
+      "evidence": {
+        "images": [
+          {
+            "url": "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=400",
+            "thumbnail": "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=200",
+            "capturedAt": "2025-12-23T09:15:20+05:30"
+          },
+          {
+            "url": "https://images.unsplash.com/photo-1502877338535-766e1452684a?w=400",
+            "thumbnail": "https://images.unsplash.com/photo-1502877338535-766e1452684a?w=200",
+            "capturedAt": "2025-12-23T09:15:21+05:30"
+          },
+          {
+            "url": "https://images.unsplash.com/photo-1485463611174-f302f6a5c1c9?w=400",
+            "thumbnail": "https://images.unsplash.com/photo-1485463611174-f302f6a5c1c9?w=200",
+            "capturedAt": "2025-12-23T09:15:22+05:30"
+          }
+        ],
+        "video": {
+          "url": "https://example.com/evidence/CHLN-2025-000875/video.mp4",
+          "durationSeconds": 18
+        }
+      },
+      "audit": {
+        "issuedBy": {
+          "type": "SYSTEM",
+          "id": "CAM-015"
+        },
+        "verifiedBy": "Officer Meera Singh",
+        "verifiedAt": "2025-12-23T16:45:00+05:30",
+        "lastUpdatedAt": "2025-12-23T16:45:00+05:30"
+      },
+      "dueDate": "2026-01-22T23:59:59+05:30"
+    },
+    {
+      "challanId": "CHLN-2025-000876",
+      "status": "PENDING",
+      "issuedAt": "2025-12-22T11:30:45+05:30",
+      "vehicle": {
+        "vehicleNumber": "GJ05XY7890",
+        "vehicleType": "TRUCK",
+        "owner": {
+          "name": "Vikram Desai",
+          "licenseNumber": "DL-2420190078901",
+          "contact": "+91-9012345678",
+          "masked": false
+        }
+      },
+      "violation": {
+        "type": "OVERLOADING",
+        "description": "Vehicle exceeds permitted weight limit",
+        "ruleCode": "MV-194",
+        "detectedBy": "WEIGHBRIDGE"
+      },
+      "location": {
+        "junctionId": "JN-056",
+        "junctionName": "SG Highway Toll Plaza",
+        "zone": "West Zone",
+        "coordinates": {
+          "latitude": 23.0225,
+          "longitude": 72.5714
+        }
+      },
+      "fine": {
+        "baseAmount": 20000,
+        "penalty": 2000,
+        "totalAmount": 22000,
+        "currency": "INR"
+      },
+      "evidence": {
+        "images": [
+          {
+            "url": "https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=400",
+            "thumbnail": "https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=200",
+            "capturedAt": "2025-12-22T11:30:40+05:30"
+          }
+        ],
+        "video": null
+      },
+      "audit": {
+        "issuedBy": {
+          "type": "OFFICER",
+          "id": "OFF-567"
+        },
+        "verifiedBy": null,
+        "verifiedAt": null,
+        "lastUpdatedAt": "2025-12-22T11:30:45+05:30"
+      },
+      "dueDate": "2026-01-21T23:59:59+05:30"
+    },
+    {
+      "challanId": "CHLN-2025-000877",
+      "status": "VERIFIED",
+      "issuedAt": "2025-12-21T16:45:12+05:30",
+      "vehicle": {
+        "vehicleNumber": "RJ14PQ2345",
+        "vehicleType": "BIKE",
+        "owner": {
+          "name": "Ananya Verma",
+          "licenseNumber": "DL-0820210089012",
+          "contact": "+91-8901234567",
+          "masked": false
+        }
+      },
+      "violation": {
+        "type": "TRIPLE_RIDING",
+        "description": "More than two persons riding on two-wheeler",
+        "ruleCode": "MV-128",
+        "detectedBy": "MANUAL"
+      },
+      "location": {
+        "junctionId": "JN-089",
+        "junctionName": "MI Road Junction",
+        "zone": "Central Zone",
+        "coordinates": {
+          "latitude": 26.9124,
+          "longitude": 75.7873
+        }
+      },
+      "fine": {
+        "baseAmount": 1000,
+        "penalty": 0,
+        "totalAmount": 1000,
+        "currency": "INR"
+      },
+      "evidence": {
+        "images": [
+          {
+            "url": "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=400",
+            "thumbnail": "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=200",
+            "capturedAt": "2025-12-21T16:45:10+05:30"
+          },
+          {
+            "url": "https://images.unsplash.com/photo-1471479917193-f00955256257?w=400",
+            "thumbnail": "https://images.unsplash.com/photo-1471479917193-f00955256257?w=200",
+            "capturedAt": "2025-12-21T16:45:11+05:30"
+          }
+        ],
+        "video": null
+      },
+      "audit": {
+        "issuedBy": {
+          "type": "OFFICER",
+          "id": "OFF-123"
+        },
+        "verifiedBy": "Officer Arjun Kapoor",
+        "verifiedAt": "2025-12-21T20:00:00+05:30",
+        "lastUpdatedAt": "2025-12-21T20:00:00+05:30"
+      },
+      "dueDate": "2026-01-20T23:59:59+05:30"
+    },
+    {
+      "challanId": "CHLN-2025-000878",
+      "status": "PENDING",
+      "issuedAt": "2025-12-20T13:20:55+05:30",
+      "vehicle": {
+        "vehicleNumber": "UP32RS6789",
+        "vehicleType": "CAR",
+        "owner": {
+          "name": "Neha Gupta",
+          "licenseNumber": "DL-0920220090123",
+          "contact": "+91-7890123456",
+          "masked": false
+        }
+      },
+      "violation": {
+        "type": "MOBILE_USE",
+        "description": "Using mobile phone while driving",
+        "ruleCode": "MV-184",
+        "detectedBy": "CAMERA"
+      },
+      "location": {
+        "junctionId": "JN-034",
+        "junctionName": "Gomti Nagar Junction",
+        "zone": "East Zone",
+        "coordinates": {
+          "latitude": 26.8467,
+          "longitude": 80.9462
+        }
+      },
+      "fine": {
+        "baseAmount": 1000,
+        "penalty": 0,
+        "totalAmount": 1000,
+        "currency": "INR"
+      },
+      "evidence": {
+        "images": [
+          {
+            "url": "https://images.unsplash.com/photo-1485965120184-e220f721d03e?w=400",
+            "thumbnail": "https://images.unsplash.com/photo-1485965120184-e220f721d03e?w=200",
+            "capturedAt": "2025-12-20T13:20:52+05:30"
+          },
+          {
+            "url": "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=400",
+            "thumbnail": "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=200",
+            "capturedAt": "2025-12-20T13:20:54+05:30"
+          }
+        ],
+        "video": {
+          "url": "https://example.com/evidence/CHLN-2025-000878/video.mp4",
+          "durationSeconds": 8
+        }
+      },
+      "audit": {
+        "issuedBy": {
+          "type": "SYSTEM",
+          "id": "CAM-021"
+        },
+        "verifiedBy": null,
+        "verifiedAt": null,
+        "lastUpdatedAt": "2025-12-20T13:20:55+05:30"
+      },
+      "dueDate": "2026-01-19T23:59:59+05:30"
+    },
+    {
+      "challanId": "CHLN-2025-000879",
+      "status": "VERIFIED",
+      "issuedAt": "2025-12-19T08:50:30+05:30",
+      "vehicle": {
+        "vehicleNumber": "WB22CD4567",
+        "vehicleType": "BUS",
+        "owner": {
+          "name": "Calcutta Transport Corp",
+          "licenseNumber": "DL-1920170001234",
+          "contact": "+91-3312345678",
+          "masked": false
+        }
+      },
+      "violation": {
+        "type": "NO_ENTRY",
+        "description": "Vehicle entered restricted area during prohibited hours",
+        "ruleCode": "MV-115",
+        "detectedBy": "CAMERA"
+      },
+      "location": {
+        "junctionId": "JN-067",
+        "junctionName": "Park Street Junction",
+        "zone": "Central Zone",
+        "coordinates": {
+          "latitude": 22.5726,
+          "longitude": 88.3639
+        }
+      },
+      "fine": {
+        "baseAmount": 3000,
+        "penalty": 0,
+        "totalAmount": 3000,
+        "currency": "INR"
+      },
+      "evidence": {
+        "images": [
+          {
+            "url": "https://images.unsplash.com/photo-1570125909232-eb263c188f7e?w=400",
+            "thumbnail": "https://images.unsplash.com/photo-1570125909232-eb263c188f7e?w=200",
+            "capturedAt": "2025-12-19T08:50:28+05:30"
+          }
+        ],
+        "video": null
+      },
+      "audit": {
+        "issuedBy": {
+          "type": "SYSTEM",
+          "id": "CAM-033"
+        },
+        "verifiedBy": "Officer Debashish Roy",
+        "verifiedAt": "2025-12-19T14:30:00+05:30",
+        "lastUpdatedAt": "2025-12-19T14:30:00+05:30"
+      },
+      "dueDate": "2026-01-18T23:59:59+05:30"
+    },
+    {
+      "challanId": "CHLN-2025-000880",
+      "status": "PENDING",
+      "issuedAt": "2025-12-18T15:35:42+05:30",
+      "vehicle": {
+        "vehicleNumber": "HR26TU8901",
+        "vehicleType": "CAR",
+        "owner": {
+          "name": "Rohit Malik",
+          "licenseNumber": "DL-0620190012345",
+          "contact": "+91-9876543201",
+          "masked": false
+        }
+      },
+      "violation": {
+        "type": "SEATBELT_VIOLATION",
+        "description": "Driver not wearing seatbelt",
+        "ruleCode": "MV-138",
+        "detectedBy": "CAMERA"
+      },
+      "location": {
+        "junctionId": "JN-091",
+        "junctionName": "Golf Course Road Junction",
+        "zone": "South Zone",
+        "coordinates": {
+          "latitude": 28.4595,
+          "longitude": 77.0266
+        }
+      },
+      "fine": {
+        "baseAmount": 1000,
+        "penalty": 0,
+        "totalAmount": 1000,
+        "currency": "INR"
+      },
+      "evidence": {
+        "images": [
+          {
+            "url": "https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=400",
+            "thumbnail": "https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=200",
+            "capturedAt": "2025-12-18T15:35:40+05:30"
+          },
+          {
+            "url": "https://images.unsplash.com/photo-1502877338535-766e1452684a?w=400",
+            "thumbnail": "https://images.unsplash.com/photo-1502877338535-766e1452684a?w=200",
+            "capturedAt": "2025-12-18T15:35:41+05:30"
+          }
+        ],
+        "video": null
+      },
+      "audit": {
+        "issuedBy": {
+          "type": "SYSTEM",
+          "id": "CAM-045"
+        },
+        "verifiedBy": null,
+        "verifiedAt": null,
+        "lastUpdatedAt": "2025-12-18T15:35:42+05:30"
+      },
+      "dueDate": "2026-01-17T23:59:59+05:30"
+    },
+    {
+      "challanId": "CHLN-2025-000881",
+      "status": "REFUTED",
+      "issuedAt": "2025-12-17T10:12:18+05:30",
+      "vehicle": {
+        "vehicleNumber": "MP09VW1234",
+        "vehicleType": "BIKE",
+        "owner": {
+          "name": "Kavita Jain",
+          "licenseNumber": "DL-2320180023456",
+          "contact": "+91-8765432108",
+          "masked": false
+        }
+      },
+      "violation": {
+        "type": "PARKING_VIOLATION",
+        "description": "Vehicle parked in no-parking zone",
+        "ruleCode": "MV-122",
+        "detectedBy": "MANUAL"
+      },
+      "location": {
+        "junctionId": "JN-103",
+        "junctionName": "New Market Junction",
+        "zone": "Central Zone",
+        "coordinates": {
+          "latitude": 23.2599,
+          "longitude": 77.4126
+        }
+      },
+      "fine": {
+        "baseAmount": 500,
+        "penalty": 0,
+        "totalAmount": 500,
+        "currency": "INR"
+      },
+      "evidence": {
+        "images": [
+          {
+            "url": "https://images.unsplash.com/photo-1506521781263-d8422e82f27a?w=400",
+            "thumbnail": "https://images.unsplash.com/photo-1506521781263-d8422e82f27a?w=200",
+            "capturedAt": "2025-12-17T10:12:15+05:30"
+          }
+        ],
+        "video": null
+      },
+      "audit": {
+        "issuedBy": {
+          "type": "OFFICER",
+          "id": "OFF-789"
+        },
+        "verifiedBy": "Officer Sunita Yadav",
+        "verifiedAt": "2025-12-17T18:00:00+05:30",
+        "lastUpdatedAt": "2025-12-17T18:00:00+05:30"
+      },
+      "dueDate": "2026-01-16T23:59:59+05:30"
+    },
+    {
+      "challanId": "CHLN-2025-000882",
+      "status": "VERIFIED",
+      "issuedAt": "2025-12-16T12:25:50+05:30",
+      "vehicle": {
+        "vehicleNumber": "PB03XY5678",
+        "vehicleType": "CAR",
+        "owner": {
+          "name": "Harpreet Singh",
+          "licenseNumber": "DL-0320200034567",
+          "contact": "+91-9012345679",
+          "masked": false
+        }
+      },
+      "violation": {
+        "type": "DRUNK_DRIVING",
+        "description": "Driving under influence of alcohol (BAC: 0.12%)",
+        "ruleCode": "MV-185",
+        "detectedBy": "BREATHALYZER"
+      },
+      "location": {
+        "junctionId": "JN-112",
+        "junctionName": "Lawrence Road Junction",
+        "zone": "North Zone",
+        "coordinates": {
+          "latitude": 30.7046,
+          "longitude": 76.7179
+        }
+      },
+      "fine": {
+        "baseAmount": 10000,
+        "penalty": 0,
+        "totalAmount": 10000,
+        "currency": "INR"
+      },
+      "evidence": {
+        "images": [
+          {
+            "url": "https://images.unsplash.com/photo-1551522435-a13afa10f103?w=400",
+            "thumbnail": "https://images.unsplash.com/photo-1551522435-a13afa10f103?w=200",
+            "capturedAt": "2025-12-16T12:25:48+05:30"
+          },
+          {
+            "url": "https://images.unsplash.com/photo-1464219789935-c2d9d9aba644?w=400",
+            "thumbnail": "https://images.unsplash.com/photo-1464219789935-c2d9d9aba644?w=200",
+            "capturedAt": "2025-12-16T12:25:49+05:30"
+          }
+        ],
+        "video": null
+      },
+      "audit": {
+        "issuedBy": {
+          "type": "OFFICER",
+          "id": "OFF-456"
+        },
+        "verifiedBy": "Officer Manpreet Kaur",
+        "verifiedAt": "2025-12-16T13:00:00+05:30",
+        "lastUpdatedAt": "2025-12-16T13:00:00+05:30"
+      },
+      "dueDate": "2026-01-15T23:59:59+05:30"
+    },
+    {
+      "challanId": "CHLN-2025-000883",
+      "status": "PENDING",
+      "issuedAt": "2025-12-15T09:40:33+05:30",
+      "vehicle": {
+        "vehicleNumber": "AP16ZA9012",
+        "vehicleType": "AUTO",
+        "owner": {
+          "name": "Ramesh Naidu",
+          "licenseNumber": "DL-3720190045678",
+          "contact": "+91-7890123457",
+          "masked": false
+        }
+      },
+      "violation": {
+        "type": "NO_PERMIT",
+        "description": "Operating without valid commercial permit",
+        "ruleCode": "MV-192",
+        "detectedBy": "MANUAL"
+      },
+      "location": {
+        "junctionId": "JN-125",
+        "junctionName": "Ameerpet Junction",
+        "zone": "West Zone",
+        "coordinates": {
+          "latitude": 17.4326,
+          "longitude": 78.4482
+        }
+      },
+      "fine": {
+        "baseAmount": 5000,
+        "penalty": 0,
+        "totalAmount": 5000,
+        "currency": "INR"
+      },
+      "evidence": {
+        "images": [
+          {
+            "url": "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=400",
+            "thumbnail": "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?w=200",
+            "capturedAt": "2025-12-15T09:40:30+05:30"
+          }
+        ],
+        "video": null
+      },
+      "audit": {
+        "issuedBy": {
+          "type": "OFFICER",
+          "id": "OFF-234"
+        },
+        "verifiedBy": null,
+        "verifiedAt": null,
+        "lastUpdatedAt": "2025-12-15T09:40:33+05:30"
+      },
+      "dueDate": "2026-01-14T23:59:59+05:30"
+    },
+    {
+      "challanId": "CHLN-2025-000884",
+      "status": "VERIFIED",
+      "issuedAt": "2025-12-14T17:55:20+05:30",
+      "vehicle": {
+        "vehicleNumber": "OD07AB3456",
+        "vehicleType": "BIKE",
+        "owner": {
+          "name": "Prakash Mohanty",
+          "licenseNumber": "DL-2120210056789",
+          "contact": "+91-9876543202",
+          "masked": false
+        }
+      },
+      "violation": {
+        "type": "MODIFIED_EXHAUST",
+        "description": "Vehicle has illegally modified exhaust system",
+        "ruleCode": "MV-190",
+        "detectedBy": "MANUAL"
+      },
+      "location": {
+        "junctionId": "JN-138",
+        "junctionName": "Bhubaneswar Railway Station",
+        "zone": "Central Zone",
+        "coordinates": {
+          "latitude": 20.2961,
+          "longitude": 85.8245
+        }
+      },
+      "fine": {
+        "baseAmount": 3000,
+        "penalty": 0,
+        "totalAmount": 3000,
+        "currency": "INR"
+      },
+      "evidence": {
+        "images": [
+          {
+            "url": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400",
+            "thumbnail": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=200",
+            "capturedAt": "2025-12-14T17:55:18+05:30"
+          },
+          {
+            "url": "https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?w=400",
+            "thumbnail": "https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?w=200",
+            "capturedAt": "2025-12-14T17:55:19+05:30"
+          }
+        ],
+        "video": null
+      },
+      "audit": {
+        "issuedBy": {
+          "type": "OFFICER",
+          "id": "OFF-678"
+        },
+        "verifiedBy": "Officer Sarita Panda",
+        "verifiedAt": "2025-12-14T19:30:00+05:30",
+        "lastUpdatedAt": "2025-12-14T19:30:00+05:30"
+      },
+      "dueDate": "2026-01-13T23:59:59+05:30"
+    },
+    {
+      "challanId": "CHLN-2025-000885",
+      "status": "PENDING",
+      "issuedAt": "2025-12-13T11:08:45+05:30",
+      "vehicle": {
+        "vehicleNumber": "CG04BC7890",
+        "vehicleType": "CAR",
+        "owner": {
+          "name": "Deepak Agrawal",
+          "licenseNumber": "DL-2220220067890",
+          "contact": "+91-8765432109",
+          "masked": false
+        }
+      },
+      "violation": {
+        "type": "TINTED_GLASS",
+        "description": "Vehicle has illegal tinted windows",
+        "ruleCode": "MV-100",
+        "detectedBy": "MANUAL"
+      },
+      "location": {
+        "junctionId": "JN-149",
+        "junctionName": "Telibandha Junction",
+        "zone": "East Zone",
+        "coordinates": {
+          "latitude": 21.2514,
+          "longitude": 81.6296
+        }
+      },
+      "fine": {
+        "baseAmount": 2000,
+        "penalty": 0,
+        "totalAmount": 2000,
+        "currency": "INR"
+      },
+      "evidence": {
+        "images": [
+          {
+            "url": "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=400",
+            "thumbnail": "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=200",
+            "capturedAt": "2025-12-13T11:08:43+05:30"
+          }
+        ],
+        "video": null
+      },
+      "audit": {
+        "issuedBy": {
+          "type": "OFFICER",
+          "id": "OFF-890"
+        },
+        "verifiedBy": null,
+        "verifiedAt": null,
+        "lastUpdatedAt": "2025-12-13T11:08:45+05:30"
+      },
+      "dueDate": "2026-01-12T23:59:59+05:30"
+    },
+    {
+      "challanId": "CHLN-2025-000886",
+      "status": "VERIFIED",
+      "issuedAt": "2025-12-12T14:22:12+05:30",
+      "vehicle": {
+        "vehicleNumber": "JH01CD2345",
+        "vehicleType": "TRUCK",
+        "owner": {
+          "name": "Logistics India Pvt Ltd",
+          "licenseNumber": "DL-2020170078901",
+          "contact": "+91-6512345678",
+          "masked": false
+        }
+      },
+      "violation": {
+        "type": "POLLUTION_VIOLATION",
+        "description": "Vehicle failed pollution check (exceeded emission limits)",
+        "ruleCode": "MV-190A",
+        "detectedBy": "POLLUTION_METER"
+      },
+      "location": {
+        "junctionId": "JN-156",
+        "junctionName": "Dhurwa Junction",
+        "zone": "South Zone",
+        "coordinates": {
+          "latitude": 23.3441,
+          "longitude": 85.3096
+        }
+      },
+      "fine": {
+        "baseAmount": 10000,
+        "penalty": 1000,
+        "totalAmount": 11000,
+        "currency": "INR"
+      },
+      "evidence": {
+        "images": [
+          {
+            "url": "https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=400",
+            "thumbnail": "https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?w=200",
+            "capturedAt": "2025-12-12T14:22:10+05:30"
+          },
+          {
+            "url": "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=400",
+            "thumbnail": "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=200",
+            "capturedAt": "2025-12-12T14:22:11+05:30"
+          }
+        ],
+        "video": null
+      },
+      "audit": {
+        "issuedBy": {
+          "type": "OFFICER",
+          "id": "OFF-901"
+        },
+        "verifiedBy": "Officer Anil Kumar",
+        "verifiedAt": "2025-12-12T16:00:00+05:30",
+        "lastUpdatedAt": "2025-12-12T16:00:00+05:30"
+      },
+      "dueDate": "2026-01-11T23:59:59+05:30"
+    },
+    {
+      "challanId": "CHLN-2025-000887",
+      "status": "PENDING",
+      "issuedAt": "2025-12-11T16:48:30+05:30",
+      "vehicle": {
+        "vehicleNumber": "AS01DE6789",
+        "vehicleType": "BIKE",
+        "owner": {
+          "name": "Raju Dutta",
+          "licenseNumber": "DL-1820190089012",
+          "contact": "+91-9012345680",
+          "masked": false
+        }
+      },
+      "violation": {
+        "type": "UNDERAGE_DRIVING",
+        "description": "Driver below legal age limit",
+        "ruleCode": "MV-181",
+        "detectedBy": "MANUAL"
+      },
+      "location": {
+        "junctionId": "JN-167",
+        "junctionName": "Fancy Bazaar Junction",
+        "zone": "Central Zone",
+        "coordinates": {
+          "latitude": 26.1833,
+          "longitude": 91.7514
+        }
+      },
+      "fine": {
+        "baseAmount": 5000,
+        "penalty": 0,
+        "totalAmount": 5000,
+        "currency": "INR"
+      },
+      "evidence": {
+        "images": [
+          {
+            "url": "https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=400",
+            "thumbnail": "https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=200",
+            "capturedAt": "2025-12-11T16:48:28+05:30"
+          }
+        ],
+        "video": null
+      },
+      "audit": {
+        "issuedBy": {
+          "type": "OFFICER",
+          "id": "OFF-012"
+        },
+        "verifiedBy": null,
+        "verifiedAt": null,
+        "lastUpdatedAt": "2025-12-11T16:48:30+05:30"
+      },
+      "dueDate": "2026-01-10T23:59:59+05:30"
+    },
+    {
+      "challanId": "CHLN-2025-000888",
+      "status": "VERIFIED",
+      "issuedAt": "2025-12-10T10:15:42+05:30",
+      "vehicle": {
+        "vehicleNumber": "BR02EF1234",
+        "vehicleType": "AUTO",
+        "owner": {
+          "name": "Manjula Kumari",
+          "licenseNumber": "DL-1020200090123",
+          "contact": "+91-7890123458",
+          "masked": false
+        }
+      },
+      "violation": {
+        "type": "OVERCHARGING",
+        "description": "Auto-rickshaw driver overcharging passengers",
+        "ruleCode": "MV-177B",
+        "detectedBy": "MANUAL"
+      },
+      "location": {
+        "junctionId": "JN-178",
+        "junctionName": "Patna Junction Railway Station",
+        "zone": "North Zone",
+        "coordinates": {
+          "latitude": 25.5941,
+          "longitude": 85.1376
+        }
+      },
+      "fine": {
+        "baseAmount": 1000,
+        "penalty": 0,
+        "totalAmount": 1000,
+        "currency": "INR"
+      },
+      "evidence": {
+        "images": [
+          {
+            "url": "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=400",
+            "thumbnail": "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=200",
+            "capturedAt": "2025-12-10T10:15:40+05:30"
+          }
+        ],
+        "video": null
+      },
+      "audit": {
+        "issuedBy": {
+          "type": "OFFICER",
+          "id": "OFF-345"
+        },
+        "verifiedBy": "Officer Rakesh Singh",
+        "verifiedAt": "2025-12-10T12:30:00+05:30",
+        "lastUpdatedAt": "2025-12-10T12:30:00+05:30"
+      },
+      "dueDate": "2026-01-09T23:59:59+05:30"
+    },
+    {
+      "challanId": "CHLN-2025-000889",
+      "status": "REFUTED",
+      "issuedAt": "2025-12-09T13:33:55+05:30",
+      "vehicle": {
+        "vehicleNumber": "UK05FG5678",
+        "vehicleType": "CAR",
+        "owner": {
+          "name": "Pooja Rawat",
+          "licenseNumber": "DL-0520210001234",
+          "contact": "+91-9876543203",
+          "masked": false
+        }
+      },
+      "violation": {
+        "type": "NO_DOCUMENTS",
+        "description": "Driving without valid registration and insurance documents",
+        "ruleCode": "MV-139",
+        "detectedBy": "MANUAL"
+      },
+      "location": {
+        "junctionId": "JN-189",
+        "junctionName": "Clock Tower Junction",
+        "zone": "Central Zone",
+        "coordinates": {
+          "latitude": 30.3165,
+          "longitude": 78.0322
+        }
+      },
+      "fine": {
+        "baseAmount": 5000,
+        "penalty": 0,
+        "totalAmount": 5000,
+        "currency": "INR"
+      },
+      "evidence": {
+        "images": [
+          {
+            "url": "https://images.unsplash.com/photo-1494905998402-395d579af36f?w=400",
+            "thumbnail": "https://images.unsplash.com/photo-1494905998402-395d579af36f?w=200",
+            "capturedAt": "2025-12-09T13:33:52+05:30"
+          }
+        ],
+        "video": null
+      },
+      "audit": {
+        "issuedBy": {
+          "type": "OFFICER",
+          "id": "OFF-567"
+        },
+        "verifiedBy": "Officer Deepa Negi",
+        "verifiedAt": "2025-12-09T17:00:00+05:30",
+        "lastUpdatedAt": "2025-12-09T17:00:00+05:30"
+      },
+      "dueDate": "2026-01-08T23:59:59+05:30"
+    },
+    {
+      "challanId": "CHLN-2025-000890",
+      "status": "PENDING",
+      "issuedAt": "2025-12-08T08:20:10+05:30",
+      "vehicle": {
+        "vehicleNumber": "HP39GH9012",
+        "vehicleType": "BIKE",
+        "owner": {
+          "name": "Karan Thakur",
+          "licenseNumber": "DL-0220220012345",
+          "contact": "+91-8765432110",
+          "masked": false
+        }
+      },
+      "violation": {
+        "type": "DANGEROUS_DRIVING",
+        "description": "Rash and dangerous driving endangering public safety",
+        "ruleCode": "MV-184",
+        "detectedBy": "CAMERA"
+      },
+      "location": {
+        "junctionId": "JN-198",
+        "junctionName": "Mall Road Junction",
+        "zone": "East Zone",
+        "coordinates": {
+          "latitude": 32.2190,
+          "longitude": 76.3234
+        }
+      },
+      "fine": {
+        "baseAmount": 5000,
+        "penalty": 500,
+        "totalAmount": 5500,
+        "currency": "INR"
+      },
+      "evidence": {
+        "images": [
+          {
+            "url": "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=400",
+            "thumbnail": "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=200",
+            "capturedAt": "2025-12-08T08:20:08+05:30"
+          },
+          {
+            "url": "https://images.unsplash.com/photo-1471479917193-f00955256257?w=400",
+            "thumbnail": "https://images.unsplash.com/photo-1471479917193-f00955256257?w=200",
+            "capturedAt": "2025-12-08T08:20:09+05:30"
+          }
+        ],
+        "video": {
+          "url": "https://example.com/evidence/CHLN-2025-000890/video.mp4",
+          "durationSeconds": 15
+        }
+      },
+      "audit": {
+        "issuedBy": {
+          "type": "SYSTEM",
+          "id": "CAM-078"
+        },
+        "verifiedBy": null,
+        "verifiedAt": null,
+        "lastUpdatedAt": "2025-12-08T08:20:10+05:30"
+      },
+      "dueDate": "2026-01-07T23:59:59+05:30"
+    },
+    {
+      "challanId": "CHLN-2025-000891",
+      "status": "VERIFIED",
+      "issuedAt": "2025-12-07T15:42:28+05:30",
+      "vehicle": {
+        "vehicleNumber": "JK02HI3456",
+        "vehicleType": "CAR",
+        "owner": {
+          "name": "Farooq Ahmad",
+          "licenseNumber": "DL-0120190023456",
+          "contact": "+91-9012345681",
+          "masked": false
+        }
+      },
+      "violation": {
+        "type": "NO_PARKING",
+        "description": "Vehicle parked in no-parking zone blocking traffic",
+        "ruleCode": "MV-122",
+        "detectedBy": "CAMERA"
+      },
+      "location": {
+        "junctionId": "JN-205",
+        "junctionName": "Lal Chowk Junction",
+        "zone": "Central Zone",
+        "coordinates": {
+          "latitude": 34.0837,
+          "longitude": 74.7973
+        }
+      },
+      "fine": {
+        "baseAmount": 500,
+        "penalty": 0,
+        "totalAmount": 500,
+        "currency": "INR"
+      },
+      "evidence": {
+        "images": [
+          {
+            "url": "https://images.unsplash.com/photo-1506521781263-d8422e82f27a?w=400",
+            "thumbnail": "https://images.unsplash.com/photo-1506521781263-d8422e82f27a?w=200",
+            "capturedAt": "2025-12-07T15:42:26+05:30"
+          },
+          {
+            "url": "https://images.unsplash.com/photo-1464219789935-c2d9d9aba644?w=400",
+            "thumbnail": "https://images.unsplash.com/photo-1464219789935-c2d9d9aba644?w=200",
+            "capturedAt": "2025-12-07T15:42:27+05:30"
+          }
+        ],
+        "video": null
+      },
+      "audit": {
+        "issuedBy": {
+          "type": "SYSTEM",
+          "id": "CAM-090"
+        },
+        "verifiedBy": "Officer Shabir Hussain",
+        "verifiedAt": "2025-12-07T18:00:00+05:30",
+        "lastUpdatedAt": "2025-12-07T18:00:00+05:30"
+      },
+      "dueDate": "2026-01-06T23:59:59+05:30"
+    },
+    {
+      "challanId": "CHLN-2025-000892",
+      "status": "PENDING",
+      "issuedAt": "2025-12-06T11:55:15+05:30",
+      "vehicle": {
+        "vehicleNumber": "GA08IJ7890",
+        "vehicleType": "BIKE",
+        "owner": {
+          "name": "Maria Fernandes",
+          "licenseNumber": "DL-3020210034567",
+          "contact": "+91-8320123456",
+          "masked": false
+        }
+      },
+      "violation": {
+        "type": "FANCY_NUMBER_PLATE",
+        "description": "Vehicle using non-standard fancy number plate",
+        "ruleCode": "MV-177A",
+        "detectedBy": "MANUAL"
+      },
+      "location": {
+        "junctionId": "JN-216",
+        "junctionName": "Panaji Market Junction",
+        "zone": "West Zone",
+        "coordinates": {
+          "latitude": 15.4909,
+          "longitude": 73.8278
+        }
+      },
+      "fine": {
+        "baseAmount": 1000,
+        "penalty": 0,
+        "totalAmount": 1000,
+        "currency": "INR"
+      },
+      "evidence": {
+        "images": [
+          {
+            "url": "https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?w=400",
+            "thumbnail": "https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?w=200",
+            "capturedAt": "2025-12-06T11:55:12+05:30"
+          }
+        ],
+        "video": null
+      },
+      "audit": {
+        "issuedBy": {
+          "type": "OFFICER",
+          "id": "OFF-678"
+        },
+        "verifiedBy": null,
+        "verifiedAt": null,
+        "lastUpdatedAt": "2025-12-06T11:55:15+05:30"
+      },
+      "dueDate": "2026-01-05T23:59:59+05:30"
+    },
+    {
+      "challanId": "CHLN-2025-000893",
+      "status": "VERIFIED",
+      "issuedAt": "2025-12-05T14:10:40+05:30",
+      "vehicle": {
+        "vehicleNumber": "MN01JK2345",
+        "vehicleType": "CAR",
+        "owner": {
+          "name": "Laishram Tomba",
+          "licenseNumber": "DL-1420200045678",
+          "contact": "+91-7890123459",
+          "masked": false
+        }
+      },
+      "violation": {
+        "type": "LANE_VIOLATION",
+        "description": "Vehicle changing lanes without indicator",
+        "ruleCode": "MV-146",
+        "detectedBy": "CAMERA"
+      },
+      "location": {
+        "junctionId": "JN-227",
+        "junctionName": "Imphal East Junction",
+        "zone": "East Zone",
+        "coordinates": {
+          "latitude": 24.8170,
+          "longitude": 93.9368
+        }
+      },
+      "fine": {
+        "baseAmount": 1000,
+        "penalty": 0,
+        "totalAmount": 1000,
+        "currency": "INR"
+      },
+      "evidence": {
+        "images": [
+          {
+            "url": "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=400",
+            "thumbnail": "https://images.unsplash.com/photo-1503376780353-7e6692767b70?w=200",
+            "capturedAt": "2025-12-05T14:10:38+05:30"
+          },
+          {
+            "url": "https://images.unsplash.com/photo-1485463611174-f302f6a5c1c9?w=400",
+            "thumbnail": "https://images.unsplash.com/photo-1485463611174-f302f6a5c1c9?w=200",
+            "capturedAt": "2025-12-05T14:10:39+05:30"
+          }
+        ],
+        "video": {
+          "url": "https://example.com/evidence/CHLN-2025-000893/video.mp4",
+          "durationSeconds": 10
+        }
+      },
+      "audit": {
+        "issuedBy": {
+          "type": "SYSTEM",
+          "id": "CAM-102"
+        },
+        "verifiedBy": "Officer Khangembam Singh",
+        "verifiedAt": "2025-12-05T17:30:00+05:30",
+        "lastUpdatedAt": "2025-12-05T17:30:00+05:30"
+      },
+      "dueDate": "2026-01-04T23:59:59+05:30"
+    },
+    {
+      "challanId": "CHLN-2025-000894",
+      "status": "PENDING",
+      "issuedAt": "2025-12-04T09:28:52+05:30",
+      "vehicle": {
+        "vehicleNumber": "ML08KL6789",
+        "vehicleType": "BIKE",
+        "owner": {
+          "name": "Ricky Lyngdoh",
+          "licenseNumber": "DL-1720210056789",
+          "contact": "+91-9876543204",
+          "masked": false
+        }
+      },
+      "violation": {
+        "type": "NO_REFLECTOR",
+        "description": "Two-wheeler without rear reflector",
+        "ruleCode": "MV-134",
+        "detectedBy": "MANUAL"
+      },
+      "location": {
+        "junctionId": "JN-238",
+        "junctionName": "Police Bazaar Junction",
+        "zone": "Central Zone",
+        "coordinates": {
+          "latitude": 25.5788,
+          "longitude": 91.8933
+        }
+      },
+      "fine": {
+        "baseAmount": 500,
+        "penalty": 0,
+        "totalAmount": 500,
+        "currency": "INR"
+      },
+      "evidence": {
+        "images": [
+          {
+            "url": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=400",
+            "thumbnail": "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=200",
+            "capturedAt": "2025-12-04T09:28:50+05:30"
+          }
+        ],
+        "video": null
+      },
+      "audit": {
+        "issuedBy": {
+          "type": "OFFICER",
+          "id": "OFF-789"
+        },
+        "verifiedBy": null,
+        "verifiedAt": null,
+        "lastUpdatedAt": "2025-12-04T09:28:52+05:30"
+      },
+      "dueDate": "2026-01-03T23:59:59+05:30"
+    },
+    {
+      "challanId": "CHLN-2025-000895",
+      "status": "VERIFIED",
+      "issuedAt": "2025-12-03T16:45:33+05:30",
+      "vehicle": {
+        "vehicleNumber": "TR05LM1234",
+        "vehicleType": "AUTO",
+        "owner": {
+          "name": "Debbarma Bijoy",
+          "licenseNumber": "DL-1620190067890",
+          "contact": "+91-3812345678",
+          "masked": false
+        }
+      },
+      "violation": {
+        "type": "REFUSED_METER",
+        "description": "Auto driver refused to use meter",
+        "ruleCode": "MV-177C",
+        "detectedBy": "MANUAL"
+      },
+      "location": {
+        "junctionId": "JN-249",
+        "junctionName": "Agartala Railway Station",
+        "zone": "North Zone",
+        "coordinates": {
+          "latitude": 23.8315,
+          "longitude": 91.2868
+        }
+      },
+      "fine": {
+        "baseAmount": 1000,
+        "penalty": 0,
+        "totalAmount": 1000,
+        "currency": "INR"
+      },
+      "evidence": {
+        "images": [
+          {
+            "url": "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=400",
+            "thumbnail": "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=200",
+            "capturedAt": "2025-12-03T16:45:30+05:30"
+          }
+        ],
+        "video": null
+      },
+      "audit": {
+        "issuedBy": {
+          "type": "OFFICER",
+          "id": "OFF-901"
+        },
+        "verifiedBy": "Officer Joydeep Das",
+        "verifiedAt": "2025-12-03T19:00:00+05:30",
+        "lastUpdatedAt": "2025-12-03T19:00:00+05:30"
+      },
+      "dueDate": "2026-01-02T23:59:59+05:30"
+    },
+    {
+      "challanId": "CHLN-2025-000896",
+      "status": "PENDING",
+      "issuedAt": "2025-12-02T12:18:20+05:30",
+      "vehicle": {
+        "vehicleNumber": "AR03MN5678",
+        "vehicleType": "CAR",
+        "owner": {
+          "name": "Taba Tara",
+          "licenseNumber": "DL-1220200078901",
+          "contact": "+91-8765432111",
+          "masked": false
+        }
+      },
+      "violation": {
+        "type": "ZIGZAG_DRIVING",
+        "description": "Vehicle driving in zigzag manner endangering others",
+        "ruleCode": "MV-184A",
+        "detectedBy": "CAMERA"
+      },
+      "location": {
+        "junctionId": "JN-256",
+        "junctionName": "Itanagar Junction",
+        "zone": "Central Zone",
+        "coordinates": {
+          "latitude": 27.0844,
+          "longitude": 93.6053
+        }
+      },
+      "fine": {
+        "baseAmount": 3000,
+        "penalty": 0,
+        "totalAmount": 3000,
+        "currency": "INR"
+      },
+      "evidence": {
+        "images": [
+          {
+            "url": "https://images.unsplash.com/photo-1485965120184-e220f721d03e?w=400",
+            "thumbnail": "https://images.unsplash.com/photo-1485965120184-e220f721d03e?w=200",
+            "capturedAt": "2025-12-02T12:18:18+05:30"
+          },
+          {
+            "url": "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=400",
+            "thumbnail": "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=200",
+            "capturedAt": "2025-12-02T12:18:19+05:30"
+          }
+        ],
+        "video": {
+          "url": "https://example.com/evidence/CHLN-2025-000896/video.mp4",
+          "durationSeconds": 20
+        }
+      },
+      "audit": {
+        "issuedBy": {
+          "type": "SYSTEM",
+          "id": "CAM-115"
+        },
+        "verifiedBy": null,
+        "verifiedAt": null,
+        "lastUpdatedAt": "2025-12-02T12:18:20+05:30"
+      },
+      "dueDate": "2026-01-01T23:59:59+05:30"
+    },
+    {
+      "challanId": "CHLN-2025-000897",
+      "status": "VERIFIED",
+      "issuedAt": "2025-12-01T10:05:48+05:30",
+      "vehicle": {
+        "vehicleNumber": "NL01NO9012",
+        "vehicleType": "BIKE",
+        "owner": {
+          "name": "Kikon Temjen",
+          "licenseNumber": "DL-1320210089012",
+          "contact": "+91-9012345682",
+          "masked": false
+        }
+      },
+      "violation": {
+        "type": "HEADLIGHT_OFF",
+        "description": "Riding without headlight during night hours",
+        "ruleCode": "MV-131",
+        "detectedBy": "MANUAL"
+      },
+      "location": {
+        "junctionId": "JN-267",
+        "junctionName": "Kohima Main Junction",
+        "zone": "Central Zone",
+        "coordinates": {
+          "latitude": 25.6751,
+          "longitude": 94.1086
+        }
+      },
+      "fine": {
+        "baseAmount": 500,
+        "penalty": 0,
+        "totalAmount": 500,
+        "currency": "INR"
+      },
+      "evidence": {
+        "images": [
+          {
+            "url": "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=400",
+            "thumbnail": "https://images.unsplash.com/photo-1558981403-c5f9899a28bc?w=200",
+            "capturedAt": "2025-12-01T10:05:45+05:30"
+          }
+        ],
+        "video": null
+      },
+      "audit": {
+        "issuedBy": {
+          "type": "OFFICER",
+          "id": "OFF-012"
+        },
+        "verifiedBy": "Officer Neiphiu Rio",
+        "verifiedAt": "2025-12-01T13:00:00+05:30",
+        "lastUpdatedAt": "2025-12-01T13:00:00+05:30"
+      },
+      "dueDate": "2025-12-31T23:59:59+05:30"
+    },
+    {
+      "challanId": "CHLN-2025-000898",
+      "status": "VERIFIED",
+      "issuedAt": "2025-11-30T14:32:15+05:30",
+      "vehicle": {
+        "vehicleNumber": "MZ09OP3456",
+        "vehicleType": "CAR",
+        "owner": {
+          "name": "Lalthangliana Sailo",
+          "licenseNumber": "DL-1520200090123",
+          "contact": "+91-7890123460",
+          "masked": false
+        }
+      },
+      "violation": {
+        "type": "HORN_VIOLATION",
+        "description": "Using horn in silence zone",
+        "ruleCode": "MV-125",
+        "detectedBy": "MANUAL"
+      },
+      "location": {
+        "junctionId": "JN-278",
+        "junctionName": "Aizawl Hospital Junction",
+        "zone": "Central Zone",
+        "coordinates": {
+          "latitude": 23.7271,
+          "longitude": 92.7176
+        }
+      },
+      "fine": {
+        "baseAmount": 500,
+        "penalty": 0,
+        "totalAmount": 500,
+        "currency": "INR"
+      },
+      "evidence": {
+        "images": [
+          {
+            "url": "https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=400",
+            "thumbnail": "https://images.unsplash.com/photo-1519641471654-76ce0107ad1b?w=200",
+            "capturedAt": "2025-11-30T14:32:12+05:30"
+          }
+        ],
+        "video": null
+      },
+      "audit": {
+        "issuedBy": {
+          "type": "OFFICER",
+          "id": "OFF-234"
+        },
+        "verifiedBy": "Officer Lalchhanhima",
+        "verifiedAt": "2025-11-30T16:00:00+05:30",
+        "lastUpdatedAt": "2025-11-30T16:00:00+05:30"
+      },
+      "dueDate": "2025-12-30T23:59:59+05:30"
+    },
+    {
+      "challanId": "CHLN-2025-000899",
+      "status": "PENDING",
+      "issuedAt": "2025-11-29T11:48:30+05:30",
+      "vehicle": {
+        "vehicleNumber": "SK01PQ7890",
+        "vehicleType": "BIKE",
+        "owner": {
+          "name": "Pema Dorjee",
+          "licenseNumber": "DL-1120210001234",
+          "contact": "+91-9876543205",
+          "masked": false
+        }
+      },
+      "violation": {
+        "type": "RACING",
+        "description": "Participating in unauthorized street racing",
+        "ruleCode": "MV-189",
+        "detectedBy": "CAMERA"
+      },
+      "location": {
+        "junctionId": "JN-289",
+        "junctionName": "MG Marg Junction",
+        "zone": "Central Zone",
+        "coordinates": {
+          "latitude": 27.3314,
+          "longitude": 88.6138
+        }
+      },
+      "fine": {
+        "baseAmount": 5000,
+        "penalty": 0,
+        "totalAmount": 5000,
+        "currency": "INR"
+      },
+      "evidence": {
+        "images": [
+          {
+            "url": "https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=400",
+            "thumbnail": "https://images.unsplash.com/photo-1558981806-ec527fa84c39?w=200",
+            "capturedAt": "2025-11-29T11:48:28+05:30"
+          },
+          {
+            "url": "https://images.unsplash.com/photo-1471479917193-f00955256257?w=400",
+            "thumbnail": "https://images.unsplash.com/photo-1471479917193-f00955256257?w=200",
+            "capturedAt": "2025-11-29T11:48:29+05:30"
+          }
+        ],
+        "video": {
+          "url": "https://example.com/evidence/CHLN-2025-000899/video.mp4",
+          "durationSeconds": 25
+        }
+      },
+      "audit": {
+        "issuedBy": {
+          "type": "SYSTEM",
+          "id": "CAM-127"
+        },
+        "verifiedBy": null,
+        "verifiedAt": null,
+        "lastUpdatedAt": "2025-11-29T11:48:30+05:30"
+      },
+      "dueDate": "2025-12-29T23:59:59+05:30"
+    },
+    {
+      "challanId": "CHLN-2025-000900",
+      "status": "VERIFIED",
+      "issuedAt": "2025-11-28T15:22:45+05:30",
+      "vehicle": {
+        "vehicleNumber": "PY01QR2345",
+        "vehicleType": "CAR",
+        "owner": {
+          "name": "Venkatesh Rao",
+          "licenseNumber": "DL-3420190012345",
+          "contact": "+91-4132345678",
+          "masked": false
+        }
+      },
+      "violation": {
+        "type": "ACCIDENT_NO_STOP",
+        "description": "Leaving accident scene without stopping",
+        "ruleCode": "MV-187",
+        "detectedBy": "CAMERA"
+      },
+      "location": {
+        "junctionId": "JN-298",
+        "junctionName": "Beach Road Junction",
+        "zone": "East Zone",
+        "coordinates": {
+          "latitude": 11.9139,
+          "longitude": 79.8145
+        }
+      },
+      "fine": {
+        "baseAmount": 10000,
+        "penalty": 1000,
+        "totalAmount": 11000,
+        "currency": "INR"
+      },
+      "evidence": {
+        "images": [
+          {
+            "url": "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=400",
+            "thumbnail": "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=200",
+            "capturedAt": "2025-11-28T15:22:42+05:30"
+          },
+          {
+            "url": "https://images.unsplash.com/photo-1486299267070-83823f5448dd?w=400",
+            "thumbnail": "https://images.unsplash.com/photo-1486299267070-83823f5448dd?w=200",
+            "capturedAt": "2025-11-28T15:22:43+05:30"
+          },
+          {
+            "url": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400",
+            "thumbnail": "https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=200",
+            "capturedAt": "2025-11-28T15:22:44+05:30"
+          }
+        ],
+        "video": {
+          "url": "https://example.com/evidence/CHLN-2025-000900/video.mp4",
+          "durationSeconds": 30
+        }
+      },
+      "audit": {
+        "issuedBy": {
+          "type": "SYSTEM",
+          "id": "CAM-139"
+        },
+        "verifiedBy": "Officer Karthik Kumar",
+        "verifiedAt": "2025-11-28T18:00:00+05:30",
+        "lastUpdatedAt": "2025-11-28T18:00:00+05:30"
+      },
+      "dueDate": "2025-12-28T23:59:59+05:30"
+    },
+    {
+      "challanId": "CHLN-2025-000901",
+      "status": "PENDING",
+      "issuedAt": "2025-11-27T09:15:55+05:30",
+      "vehicle": {
+        "vehicleNumber": "AN11RS6789",
+        "vehicleType": "BIKE",
+        "owner": {
+          "name": "Ajay Kumar",
+          "licenseNumber": "DL-3520200023456",
+          "contact": "+91-3192345678",
+          "masked": false
+        }
+      },
+      "violation": {
+        "type": "EXPIRED_LICENSE",
+        "description": "Driving with expired driving license",
+        "ruleCode": "MV-181A",
+        "detectedBy": "MANUAL"
+      },
+      "location": {
+        "junctionId": "JN-305",
+        "junctionName": "Port Blair Central Junction",
+        "zone": "Central Zone",
+        "coordinates": {
+          "latitude": 11.6234,
+          "longitude": 92.7265
+        }
+      },
+      "fine": {
+        "baseAmount": 5000,
+        "penalty": 0,
+        "totalAmount": 5000,
+        "currency": "INR"
+      },
+      "evidence": {
+        "images": [
+          {
+            "url": "https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?w=400",
+            "thumbnail": "https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?w=200",
+            "capturedAt": "2025-11-27T09:15:52+05:30"
+          }
+        ],
+        "video": null
+      },
+      "audit": {
+        "issuedBy": {
+          "type": "OFFICER",
+          "id": "OFF-345"
+        },
+        "verifiedBy": null,
+        "verifiedAt": null,
+        "lastUpdatedAt": "2025-11-27T09:15:55+05:30"
+      },
+      "dueDate": "2025-12-27T23:59:59+05:30"
+    }
+  ],
+  "heatmapData": [
+    {
+      "lat": 18.52043,
+      "lng": 73.85674,
+      "count": 45,
+      "violationType": "SIGNAL_JUMP",
+      "locationName": "MG Road Junction"
+    },
+    {
+      "lat": 12.9165,
+      "lng": 77.6225,
+      "count": 32,
+      "violationType": "SPEEDING",
+      "locationName": "Silk Board Junction"
+    },
+    {
+      "lat": 13.0853,
+      "lng": 80.2091,
+      "count": 28,
+      "violationType": "WRONG_SIDE_DRIVING",
+      "locationName": "Anna Nagar Junction"
+    },
+    {
+      "lat": 23.0225,
+      "lng": 72.5714,
+      "count": 15,
+      "violationType": "OVERLOADING",
+      "locationName": "SG Highway Toll Plaza"
+    },
+    {
+      "lat": 26.9124,
+      "lng": 75.7873,
+      "count": 22,
+      "violationType": "TRIPLE_RIDING",
+      "locationName": "MI Road Junction"
+    },
+    {
+      "lat": 26.8467,
+      "lng": 80.9462,
+      "count": 18,
+      "violationType": "MOBILE_USE",
+      "locationName": "Gomti Nagar Junction"
+    },
+    {
+      "lat": 22.5726,
+      "lng": 88.3639,
+      "count": 25,
+      "violationType": "NO_ENTRY",
+      "locationName": "Park Street Junction"
+    },
+    {
+      "lat": 28.4595,
+      "lng": 77.0266,
+      "count": 30,
+      "violationType": "SEATBELT_VIOLATION",
+      "locationName": "Golf Course Road Junction"
+    }
+  ]
+}

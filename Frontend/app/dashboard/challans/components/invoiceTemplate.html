@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Invoice Template</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+        background-color: #f3f4f6;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+      
+      @page {
+        size: 105mm 148mm;
+        margin: 0;
+      }
+
+      @media print {
+        body {
+          background-color: white;
+          margin: 0;
+          padding: 0;
+        }
+        .no-print {
+          display: none !important;
+        }
+        .print-container {
+          box-shadow: none;
+          margin: 0;
+          padding: 0.5cm;
+          width: 105mm !important;
+          height: 148mm !important;
+          max-width: 105mm !important;
+          min-height: 148mm !important;
+          overflow: hidden;
+          page-break-after: always;
+        }
+      }
+    </style>
+</head>
+<body>
+    <div class="print-container bg-white w-[105mm] h-[148mm] mx-auto p-4 shadow-lg relative text-[9px] leading-tight text-gray-800 flex flex-col font-medium box-border">
+      
+      <!-- Header Section -->
+      <div class="mb-2 shrink-0">
+        <h1 class="text-sm font-bold uppercase tracking-wide border-b border-black pb-0.5 mb-1">
+          SQUARE ALUMINIUM
+        </h1>
+        <div class="text-center font-bold text-[10px] mb-2 text-gray-800">Estimate</div>
+
+        <div class="flex justify-between items-start gap-2">
+          <!-- Bill To -->
+          <div class="w-[55%]">
+            <h3 class="font-bold text-gray-700 underline mb-0.5 text-[9px]">Bill To</h3>
+            <div class="flex flex-col text-[9px]">
+              <div class="font-bold text-black truncate mb-0.5">
+                Rahul Sharma - <span class="text-gray-800 font-normal">Mumbai</span>
+              </div>
+              <div class="flex items-center gap-1 text-black leading-tight">
+                <svg xmlns="http://www.w3.org/2000/svg" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-gray-600"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                <span class="font-semibold">9876543210</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Invoice Details -->
+          <div class="w-[45%] text-right">
+            <h3 class="font-bold text-gray-700 underline mb-0.5 text-[9px]">Invoice Details</h3>
+            <div class="flex justify-end gap-1">
+              <span class="text-gray-600">Invoice No.:</span>
+              <span class="font-bold text-black">1</span>
+            </div>
+            <div class="flex justify-end gap-1">
+              <span class="text-gray-600">Date:</span>
+              <span class="font-bold text-black">25/12/2025</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Table Section -->
+      <div class="mb-2 overflow-visible">
+        <table class="w-full border-collapse table-fixed">
+          <colgroup>
+            <col class="w-[6%]" />
+            <col class="w-[44%]" />
+            <col class="w-[10%]" />
+            <col class="w-[10%]" />
+            <col class="w-[15%]" />
+            <col class="w-[15%]" />
+          </colgroup>
+          <thead>
+            <tr class="bg-[#938bc2] text-white text-[8px] uppercase tracking-tighter">
+              <th class="py-1 px-1 text-left font-semibold rounded-tl-sm">#</th>
+              <th class="py-1 px-1 text-left font-semibold">Item name</th>
+              <th class="py-1 px-1 text-right font-semibold">Quantity</th>
+              <th class="py-1 px-1 text-right font-semibold">Unit</th>
+              <th class="py-1 px-1 text-right font-semibold">Price/ unit</th>
+              <th class="py-1 px-1 text-right font-semibold rounded-tr-sm">Amount</th>
+            </tr>
+          </thead>
+          <tbody class="text-[8px] leading-3">
+            <!-- Glass Category -->
+            <tr class="bg-gray-100">
+               <td colspan="6" class="py-0.5 px-1 text-left font-bold text-gray-800 border-b border-gray-300">
+                 Glass
+               </td>
+            </tr>
+            
+            <!-- Product 1: 12mm Toughened Glass - Window -->
+            <tr class="border-b border-gray-200 bg-gray-50/50">
+              <td class="py-1 px-1 text-left text-black align-top font-medium">1</td>
+              <td class="py-1 px-1 text-left font-bold text-black align-top">
+                12mm Toughened Glass - Window
+              </td>
+              <td class="py-1 px-1 text-right text-black align-top font-semibold">75.75</td>
+              <td class="py-1 px-1 text-right text-black align-top font-semibold">sqft</td>
+              <td class="py-1 px-1 text-right text-black align-top font-semibold">₹ 120.00</td>
+              <td class="py-1 px-1 text-right text-black font-bold align-top">₹ 9090.00</td>
+            </tr>
+            
+            <!-- Size breakdown -->
+            <tr class="border-b border-gray-100">
+              <td class="py-0.5 px-1"></td>
+              <td class="py-0.5 px-1 text-left text-gray-700 align-top pl-4 text-[8.5px]">5.5' x 3.25'</td>
+              <td class="py-0.5 px-1 text-right text-gray-500 align-top">2</td>
+              <td class="py-0.5 px-1 text-right text-gray-500 align-top">pcs</td>
+              <td class="py-0.5 px-1 text-right text-gray-500 align-top"></td>
+              <td class="py-0.5 px-1 text-right text-gray-500 align-top"></td>
+            </tr>
+            <tr class="border-b border-gray-100">
+              <td class="py-0.5 px-1"></td>
+              <td class="py-0.5 px-1 text-left text-gray-700 align-top pl-4 text-[8.5px]">4.0' x 2.5'</td>
+              <td class="py-0.5 px-1 text-right text-gray-500 align-top">1</td>
+              <td class="py-0.5 px-1 text-right text-gray-500 align-top">pcs</td>
+              <td class="py-0.5 px-1 text-right text-gray-500 align-top"></td>
+              <td class="py-0.5 px-1 text-right text-gray-500 align-top"></td>
+            </tr>
+            <tr class="border-b border-gray-100">
+              <td class="py-0.5 px-1"></td>
+              <td class="py-0.5 px-1 text-left text-gray-700 align-top pl-4 text-[8.5px]">3.0' x 3.0'</td>
+              <td class="py-0.5 px-1 text-right text-gray-500 align-top">2</td>
+              <td class="py-0.5 px-1 text-right text-gray-500 align-top">pcs</td>
+              <td class="py-0.5 px-1 text-right text-gray-500 align-top"></td>
+              <td class="py-0.5 px-1 text-right text-gray-500 align-top"></td>
+            </tr>
+            <tr class="border-b border-gray-100">
+              <td class="py-0.5 px-1"></td>
+              <td class="py-0.5 px-1 text-left text-gray-700 align-top pl-4 text-[8.5px]">6.0' x 2.0'</td>
+              <td class="py-0.5 px-1 text-right text-gray-500 align-top">1</td>
+              <td class="py-0.5 px-1 text-right text-gray-500 align-top">pcs</td>
+              <td class="py-0.5 px-1 text-right text-gray-500 align-top"></td>
+              <td class="py-0.5 px-1 text-right text-gray-500 align-top"></td>
+            </tr>
+            
+            <!-- Total pieces row -->
+            <tr class="border-b border-gray-300">
+              <td class="py-0.5 px-1"></td>
+              <td class="py-0.5 px-1 text-right font-bold text-black align-top pr-2">Total</td>
+              <td class="py-0.5 px-1 text-right font-bold text-black align-top">6</td>
+              <td class="py-0.5 px-1 text-right font-bold text-black align-top">pcs</td>
+              <td class="py-0.5 px-1"></td>
+              <td class="py-0.5 px-1"></td>
+            </tr>
+
+            <!-- Product 2: 12mm Toughened Glass - Door -->
+            <tr class="border-b border-gray-200 bg-gray-50/50">
+              <td class="py-1 px-1 text-left text-black align-top font-medium">2</td>
+              <td class="py-1 px-1 text-left font-bold text-black align-top">
+                12mm Toughened Glass - Door
+              </td>
+              <td class="py-1 px-1 text-right text-black align-top font-semibold">40.5</td>
+              <td class="py-1 px-1 text-right text-black align-top font-semibold">sqft</td>
+              <td class="py-1 px-1 text-right text-black align-top font-semibold">₹ 120.00</td>
+              <td class="py-1 px-1 text-right text-black font-bold align-top">₹ 4860.00</td>
+            </tr>
+            
+            <!-- Size breakdown -->
+            <tr class="border-b border-gray-100">
+              <td class="py-0.5 px-1"></td>
+              <td class="py-0.5 px-1 text-left text-gray-700 align-top pl-4 text-[8.5px]">7.0' x 3.0'</td>
+              <td class="py-0.5 px-1 text-right text-gray-500 align-top">1</td>
+              <td class="py-0.5 px-1 text-right text-gray-500 align-top">pcs</td>
+              <td class="py-0.5 px-1 text-right text-gray-500 align-top"></td>
+              <td class="py-0.5 px-1 text-right text-gray-500 align-top"></td>
+            </tr>
+            <tr class="border-b border-gray-100">
+              <td class="py-0.5 px-1"></td>
+              <td class="py-0.5 px-1 text-left text-gray-700 align-top pl-4 text-[8.5px]">7.0' x 2.5'</td>
+              <td class="py-0.5 px-1 text-right text-gray-500 align-top">1</td>
+              <td class="py-0.5 px-1 text-right text-gray-500 align-top">pcs</td>
+              <td class="py-0.5 px-1 text-right text-gray-500 align-top"></td>
+              <td class="py-0.5 px-1 text-right text-gray-500 align-top"></td>
+            </tr>
+            <tr class="border-b border-gray-100">
+              <td class="py-0.5 px-1"></td>
+              <td class="py-0.5 px-1 text-left text-gray-700 align-top pl-4 text-[8.5px]">2.0' x 1.0'</td>
+              <td class="py-0.5 px-1 text-right text-gray-500 align-top">1</td>
+              <td class="py-0.5 px-1 text-right text-gray-500 align-top">pcs</td>
+              <td class="py-0.5 px-1 text-right text-gray-500 align-top"></td>
+              <td class="py-0.5 px-1 text-right text-gray-500 align-top"></td>
+            </tr>
+            
+            <!-- Total pieces row -->
+            <tr class="border-b border-gray-300">
+              <td class="py-0.5 px-1"></td>
+              <td class="py-0.5 px-1 text-right font-bold text-black align-top pr-2">Total</td>
+              <td class="py-0.5 px-1 text-right font-bold text-black align-top">3</td>
+              <td class="py-0.5 px-1 text-right font-bold text-black align-top">pcs</td>
+              <td class="py-0.5 px-1"></td>
+              <td class="py-0.5 px-1"></td>
+            </tr>
+
+            <!-- Glass Category Total -->
+            <tr class="border-t border-gray-300">
+              <td class="py-1 px-1"></td>
+              <td class="py-1 px-1 text-right font-bold text-black uppercase">TOTAL GLASS</td>
+              <td class="py-1 px-1 text-right font-bold text-black">9</td>
+              <td class="py-1 px-1 text-right font-bold text-black">pcs</td>
+              <td class="py-1 px-1"></td>
+              <td class="py-1 px-1 text-right font-bold text-black">₹ 13950.00</td>
+            </tr>
+
+            <!-- Aluminium Section Category -->
+            <tr class="bg-gray-100">
+               <td colspan="6" class="py-0.5 px-1 text-left font-bold text-gray-800 border-b border-gray-300">
+                 Aluminium Section
+               </td>
+            </tr>
+            
+            <!-- Product 3: Aluminium Section -->
+            <tr class="border-b border-gray-200">
+              <td class="py-1 px-1 text-left text-black align-top font-medium">3</td>
+              <td class="py-1 px-1 text-left font-bold text-black align-top leading-tight">
+                Aluminium Section - 8.0 ft
+              </td>
+              <td class="py-1 px-1 text-right text-black align-top">10</td>
+              <td class="py-1 px-1 text-right text-black align-top">ft</td>
+              <td class="py-1 px-1 text-right text-black align-top"></td>
+              <td class="py-1 px-1 text-right text-black font-medium align-top"></td>
+            </tr>
+
+            <!-- Product 4: Aluminium Handle -->
+            <tr class="border-b border-gray-200">
+              <td class="py-1 px-1 text-left text-black align-top font-medium">4</td>
+              <td class="py-1 px-1 text-left font-bold text-black align-top leading-tight">
+                Aluminium Handle
+              </td>
+              <td class="py-1 px-1 text-right text-black align-top">20</td>
+              <td class="py-1 px-1 text-right text-black align-top">pcs</td>
+              <td class="py-1 px-1 text-right text-black align-top"></td>
+              <td class="py-1 px-1 text-right text-black font-medium align-top"></td>
+            </tr>
+
+            <!-- Product 5: Rubber Gasket -->
+            <tr class="border-b border-gray-200">
+              <td class="py-1 px-1 text-left text-black align-top font-medium">5</td>
+              <td class="py-1 px-1 text-left font-bold text-black align-top leading-tight">
+                Rubber Gasket (Bundle)
+              </td>
+              <td class="py-1 px-1 text-right text-black align-top">5</td>
+              <td class="py-1 px-1 text-right text-black align-top">pcs</td>
+              <td class="py-1 px-1 text-right text-black align-top"></td>
+              <td class="py-1 px-1 text-right text-black font-medium align-top"></td>
+            </tr>
+
+            <!-- Aluminium Category Total -->
+            <tr class="border-t border-gray-300">
+              <td class="py-1 px-1"></td>
+              <td class="py-1 px-1 text-right font-bold text-black uppercase">TOTAL ALUMINIUM SECTION</td>
+              <td class="py-1 px-1 text-right font-bold text-black">35</td>
+              <td class="py-1 px-1 text-right font-bold text-black">pcs</td>
+              <td class="py-1 px-1"></td>
+              <td class="py-1 px-1 text-right font-bold text-black"></td>
+            </tr>
+
+            <!-- Aluminium Total Weight Row -->
+            <tr class="border-t border-gray-300">
+              <td class="py-1 px-1"></td>
+              <td class="py-1 px-1 text-right font-bold text-black uppercase">TOTAL WEIGHT</td>
+              <td class="py-1 px-1 text-right font-bold text-black">20.00</td>
+              <td class="py-1 px-1 text-right font-bold text-black">kg</td>
+              <td class="py-1 px-1 text-right font-bold text-black">₹ 280.00</td>
+              <td class="py-1 px-1 text-right font-bold text-black">₹ 5600.00</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Footer Section -->
+      <div class="shrink-0 flex items-start border-t border-black pt-2 gap-3 mt-1">
+        
+        <!-- Left Side: Words & Terms -->
+        <div class="w-[55%] flex flex-col gap-2">
+          <div>
+            <span class="font-bold text-black text-[9px]">Invoice Amount In Words:</span>
+            <p class="text-black text-[9px] leading-tight mt-0.5 italic">
+              Nineteen Thousand Five Hundred Fifty Rupees Only
+            </p>
+          </div>
+          <div>
+            <span class="font-bold text-black text-[9px]">Terms and conditions:</span>
+            <p class="text-black text-[9px] leading-tight mt-0.5 text-gray-700">
+              Thank you for doing business with us.
+            </p>
+          </div>
+        </div>
+
+        <!-- Right Side: Totals -->
+        <div class="w-[45%] flex flex-col text-[9px]">
+          
+          <div class="flex justify-between items-center py-0.5 border-b border-gray-200">
+            <span class="text-gray-600">Sub Total</span>
+            <span class="text-black">₹ 19550.00</span>
+          </div>
+
+          <div class="flex justify-between items-center py-0.5 border-b border-gray-200">
+            <span class="font-bold text-black">Total</span>
+            <span class="font-bold text-black">₹ 19550.00</span>
+          </div>
+
+          <div class="flex justify-between items-center py-0.5 border-b border-gray-200">
+            <span class="text-gray-600">Received</span>
+            <span class="text-black">₹ 0.00</span>
+          </div>
+
+          <div class="flex justify-between items-center py-0.5 border-b border-gray-400 mb-1">
+            <span class="text-black">Balance</span>
+            <span class="text-black">₹ 19550.00</span>
+          </div>
+
+          <div class="flex justify-between items-center py-0.5">
+            <span class="text-black">Previous Balance</span>
+            <span class="text-black">₹ 0.00</span>
+          </div>
+
+          <div class="flex justify-between items-center py-0.5">
+            <span class="text-black">Current Balance</span>
+            <span class="text-black">₹ 19550.00</span>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+</body>
+</html>
+

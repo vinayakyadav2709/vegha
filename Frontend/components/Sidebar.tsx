@@ -11,6 +11,8 @@ import {
   ChevronLeft,
   ChevronRight,
   Cpu,
+  Receipt
+
 } from 'lucide-react';
 import React, { useEffect, useState } from 'react';
 import { useTheme } from 'next-themes';
@@ -33,7 +35,16 @@ const navigation = [
   { name: 'Simulation', href: '/dashboard/simulation', icon: Cpu },
   { name: 'Events', href: '/dashboard/events', icon: Calendar },
   { name: 'Emergency Vehicles', href: '/dashboard/emergency', icon: Truck },
-  { name: 'Predictions', href: '/dashboard/predictions', icon: TrendingUp },
+  // { name: 'Predictions', href: '/dashboard/predictions', icon: TrendingUp },
+  {
+  id: 'challans',
+  name: 'Challans',
+  href: '/dashboard/challans',
+  icon: Receipt, // Import from lucide-react
+  badge: null, // Optional: show pending count
+  description: 'Manage traffic violation challans',
+}
+
 ];
 
 export default function Sidebar({

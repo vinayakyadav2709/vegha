@@ -60,3 +60,5 @@ def register_routes(app, sumo_mgr, event_mgr, socketio):
             "closed_streets": list(sumo_mgr.closed_streets)
         })
         return jsonify({"success": True})
+
+        

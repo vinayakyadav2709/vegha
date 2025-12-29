@@ -40,9 +40,6 @@ class BaseMode:
 
                 eventlet.sleep(self.sumo.config.get("simulation_speed", 0.1))
 
-            # Only close if explicit shutdown requested, NOT during mode switch/reset
-            # if self.sumo.simulation_running is False, it might be a reset.
-            # We let sumo_manager handle full shutdown.
             print("🛑 Simulation loop ended.")
 
         except Exception as e:
@@ -71,56 +68,31 @@ class BaseMode:
             processed_tls = set()
 
             for amb_id in ambulances:
-                # Get the next traffic light the ambulance is approaching
-                # returns list of (tlsID, tlsIndex, distance, state)
                 next_tls_list = traci.vehicle.getNextTLS(amb_id)
-
                 if not next_tls_list:
                     continue
 
-                # Get the immediate next traffic light
                 tls_id, tls_index, distance, state = next_tls_list[0]
 
-                # Only prioritize if within reasonable distance (e.g., 100m)
                 if distance > 100:
                     continue
 
                 if tls_id in processed_tls:
                     continue
 
-                # 2. Force Green Logic
-                # We need to know which link index corresponds to the ambulance's lane
-                # The 'tls_index' returned by getNextTLS tells us exactly which link index in the TLS controls this lane.
-
                 try:
-                    # Get current state of the traffic light (e.g., "GrGr")
                     current_state = list(
                         traci.trafficlight.getRedYellowGreenState(tls_id)
                     )
 
-                    # If the ambulance's light is already Green (G or g), do nothing
                     if current_state[tls_index].lower() == "g":
                         continue
 
-                    # 3. Override the Traffic Light
-                    # We set the ambulance's specific link to GREEN ('G')
-                    # We set conflicting links to RED (This is a simple brute-force priority)
-
-                    # Ideally, we should find a valid phase, but for "Emergency Priority",
-                    # forcing the state is the most effective way to demonstrate speed.
-
-                    # Set specific link to Green
                     current_state[tls_index] = "G"
-
-                    # Optional: If you want to be safer, you might want to turn others red,
-                    # but simply turning this one Green is usually enough for the demo.
-                    # To be safe, let's just apply this modified state.
-
                     new_state = "".join(current_state)
                     traci.trafficlight.setRedYellowGreenState(tls_id, new_state)
 
                     processed_tls.add(tls_id)
-                    # print(f"🚑 Priority granted to {amb_id} at {tls_id}")
 
                 except Exception as e:
                     print(f"Priority Error: {e}")
@@ -132,14 +104,16 @@ class BaseMode:
         """Extract vehicles + REAL traffic lights only"""
         vehicles = {}
         traffic_lights = {}
+        
+        # Global Stats
         total_speed = 0
         waiting = 0
-
-        # ✅ FIX: Initialize 'count' here, safely at the top
         count = 0
-        amb_waiting = 0
-        amb_count = 0
-        amb_total_speed = 0
+
+        # ✅ NEW: Dynamic Dictionary for Per-Type Stats
+        # Structure: { 'car': {'count': 0, 'speed_sum': 0, 'waiting': 0}, 'bus': ... }
+        type_stats = {}
+
         # ---------------- VEHICLES ----------------
         try:
             for v in traci.vehicle.getIDList():
@@ -149,9 +123,7 @@ class BaseMode:
                     # Remove vehicles that will cross closed streets
                     try:
                         route_edges = traci.vehicle.getRoute(v)
-                        if any(
-                            edge in self.sumo.closed_streets for edge in route_edges
-                        ):
+                        if any(edge in self.sumo.closed_streets for edge in route_edges):
                             traci.vehicle.remove(v)
                             continue
                     except:
@@ -174,29 +146,41 @@ class BaseMode:
                     if skip:
                         continue
 
+                    # Get Vehicle Data
                     x, y = traci.vehicle.getPosition(v)
                     lon, lat = traci.simulation.convertGeo(x, y, fromGeo=False)
                     angle = traci.vehicle.getAngle(v)
                     vtype = traci.vehicle.getTypeID(v)
                     speed = traci.vehicle.getSpeed(v)
+                    speed_kmh = speed * 3.6
+                    
+                    # Determine Type
+                    std_type = self._get_vehicle_type(vtype)
 
                     vehicles[v] = {
                         "pos": [lon, lat],
                         "angle": angle,
-                        "type": self._get_vehicle_type(vtype),
+                        "type": std_type,
                     }
-                    std_type = self._get_vehicle_type(vtype)
-                    total_speed += speed * 3.6
-                    speed_kmh = speed * 3.6
+                    
+                    # --- Global Stats ---
+                    total_speed += speed_kmh
                     if speed < 0.1:
                         waiting += 1
-                    if std_type == "ambulance":
-                        amb_count += 1
-                        amb_total_speed += speed_kmh
-                        if speed < 0.1:
-                            amb_waiting += 1
-
                     count += 1
+
+                    # --- ✅ NEW: Per-Type Stats Accumulation ---
+                    if std_type not in type_stats:
+                        type_stats[std_type] = {
+                            "count": 0,
+                            "speed_sum": 0,
+                            "waiting": 0
+                        }
+                    
+                    type_stats[std_type]["count"] += 1
+                    type_stats[std_type]["speed_sum"] += speed_kmh
+                    if speed < 0.1:
+                        type_stats[std_type]["waiting"] += 1
 
                 except:
                     pass
@@ -205,8 +189,6 @@ class BaseMode:
 
         # ---------------- TRAFFIC LIGHTS ----------------
         try:
-            # Use the active_tls set populated by sumo_manager
-            # Fallback to all IDs if the set is empty (safety)
             target_tls = (
                 self.sumo.active_tls
                 if hasattr(self.sumo, "active_tls") and self.sumo.active_tls
@@ -215,144 +197,90 @@ class BaseMode:
 
             for tl_id in target_tls:
                 try:
-                    # Skip internal junctions (just in case)
-                    if tl_id.startswith(":"):
-                        continue
+                    if tl_id.startswith(":"): continue
 
                     controlled_lanes = traci.trafficlight.getControlledLanes(tl_id)
                     state = traci.trafficlight.getRedYellowGreenState(tl_id)
 
-                    # ✅ Fix: Skip single-phase (static) traffic lights
-                    # These create clutter and cause RL errors if we try to switch them
                     try:
-                        # getCompleteRedYellowGreenDefinition returns a list of logics.
-                        # We need the currently active one (usually index 0 or matches programID)
-                        # For simple filtering, checking the first one is usually sufficient as they share structure
-                        logics = traci.trafficlight.getCompleteRedYellowGreenDefinition(
-                            tl_id
-                        )
+                        logics = traci.trafficlight.getCompleteRedYellowGreenDefinition(tl_id)
                         if logics and len(logics) > 0:
-                            current_logic = logics[0]
-                            # If only 1 phase, it's static (always green/red/yellow)
-                            if len(current_logic.phases) <= 1:
-                                continue
+                            if len(logics[0].phases) <= 1: continue
                     except:
-                        pass  # Fallback if API fails, though unlikely
+                        pass
 
-                    # Rendering Logic: Draw one bar per incoming road
                     processed_roads = set()
 
                     for i, lane_id in enumerate(controlled_lanes):
                         road_id = traci.lane.getEdgeID(lane_id)
-
-                        if road_id in processed_roads:
-                            continue
-                        if road_id.startswith(":"):
-                            continue
-
+                        if road_id in processed_roads or road_id.startswith(":"): continue
                         processed_roads.add(road_id)
 
-                        # ✅ Fix: Skip pedestrian traffic lights
-                        # Only show if lane allows vehicles
                         allowed_classes = traci.lane.getAllowed(lane_id)
-                        relevant_classes = {
-                            "passenger",
-                            "bus",
-                            "truck",
-                            "trailer",
-                            "motorcycle",
-                            "moped",
-                            "taxi",
-                        }
-
-                        # If list is empty, it allows all (keep it).
-                        # If list is not empty, check if it intersects with relevant classes.
+                        relevant_classes = {"passenger", "bus", "truck", "trailer", "motorcycle", "moped", "taxi"}
                         if allowed_classes:
-                            if not any(c in allowed_classes for c in relevant_classes):
-                                continue  # Skip this lane (pedestrian/bike only)
+                            if not any(c in allowed_classes for c in relevant_classes): continue
 
-                        # ✅ Fix: Skip lanes that NEVER turn Red (Always Green/Yellow)
-                        # Used to hide continuous flow lanes
                         try:
-                            # Use logics fetched above or fetch again safely
-                            # 'logics' variable from line 139 is available in this scope
                             if logics and len(logics) > 0:
                                 current_logic = logics[0]
                                 can_be_red = False
                                 for p in current_logic.phases:
-                                    if i < len(p.state):
-                                        char = p.state[i].lower()
-                                        if "r" in char:
-                                            can_be_red = True
-                                            break
-                                if not can_be_red:
-                                    # LOGGING (Temporary for Debugging)
-                                    # print(f"Skipping ALWAYS-GREEN lane {lane_id} at {tl_id}")
-                                    continue  # Skip this lane, it's always green/yellow
+                                    if i < len(p.state) and "r" in p.state[i].lower():
+                                        can_be_red = True
+                                        break
+                                if not can_be_red: continue
                         except:
                             pass
 
-                        # ✅ Fix: Skip lanes that NEVER turn Red (Always Green/Yellow)
-                        # Used to hide continuous flow lanes
-                        try:
-                            # Use logics fetched above or fetch again safely
-                            # 'logics' variable from line 139 is available in this scope
-                            if logics and len(logics) > 0:
-                                current_logic = logics[0]
-                                can_be_red = False
-                                for p in current_logic.phases:
-                                    if i < len(p.state):
-                                        char = p.state[i].lower()
-                                        if "r" in char:
-                                            can_be_red = True
-                                            break
-                                if not can_be_red:
-                                    continue  # Skip this lane, it's always green/yellow
-                        except:
-                            pass
-
-                        # Get coords
                         shape = traci.lane.getShape(lane_id)
-                        if not shape or len(shape) < 2:
-                            continue
+                        if not shape or len(shape) < 2: continue
 
                         x1, y1 = shape[-2]
                         x2, y2 = shape[-1]
                         lon, lat = traci.simulation.convertGeo(x2, y2, fromGeo=False)
                         angle = math.degrees(math.atan2(y2 - y1, x2 - x1))
 
-                        # Color logic
                         color = "green"
                         if i < len(state):
                             char = state[i].lower()
-                            if "r" in char:
-                                color = "red"
-                            elif "y" in char:
-                                color = "yellow"
+                            if "r" in char: color = "red"
+                            elif "y" in char: color = "yellow"
 
                         display_id = f"{tl_id}_{road_id}"
-
-                        traffic_lights[display_id] = {
-                            "pos": [lon, lat],
-                            "state": color,
-                            "angle": angle,
-                        }
+                        traffic_lights[display_id] = {"pos": [lon, lat], "state": color, "angle": angle}
                 except:
                     pass
         except:
             pass
 
-        # ✅ Safe calculation using count
+        # Calculate Global Averages
         avg_speed = int(total_speed / count) if count > 0 else 0
-        amb_avg_speed = int(amb_total_speed / amb_count) if amb_count > 0 else 0
+        
+        # ✅ NEW: Calculate Averages for Each Type
+        final_type_stats = {}
+        for t, data in type_stats.items():
+            c = data["count"]
+            avg_s = int(data["speed_sum"] / c) if c > 0 else 0
+            final_type_stats[t] = {
+                "count": c,
+                "avg_speed": avg_s,
+                "waiting": data["waiting"]
+            }
+
+        # Keep backward compatibility for Ambulance specific keys
+        amb_data = final_type_stats.get("ambulance", {"count": 0, "avg_speed": 0, "waiting": 0})
 
         return vehicles, {
             "traffic_lights": traffic_lights,
             "avg_speed": avg_speed,
             "waiting": waiting,
-            "amb_waiting": amb_waiting,
-            "amb_count": amb_count,
-            "amb_avg_speed": amb_avg_speed,
+            # Legacy keys (so your current frontend doesn't break)
+            "amb_waiting": amb_data["waiting"],
+            "amb_count": amb_data["count"],
+            "amb_avg_speed": amb_data["avg_speed"],
+            # ✅ NEW: Full breakdown
+            "vehicle_stats": final_type_stats 
         }
 
     def broadcast_state(self, vehicles, tl_data):
@@ -366,16 +294,20 @@ class BaseMode:
                 "avg_speed": tl_data["avg_speed"],
                 "waiting": tl_data["waiting"],
                 "events": [e.copy() for e in self.events.events],
+                
+                # Legacy Ambulance Stats
                 "amb_waiting": tl_data["amb_waiting"],
                 "amb_count": tl_data["amb_count"],
                 "amb_avg_speed": tl_data["amb_avg_speed"],
+                
+                # ✅ NEW: Send the full breakdown to frontend
+                "vehicle_stats": tl_data["vehicle_stats"]
             },
         )
 
     # motor,car,truck,bus
     def _get_vehicle_type(self, vtype):
         """Standardize vehicle type"""
-
         v = vtype.lower()
         if "bus" in v:
             return "bus"
@@ -383,8 +315,10 @@ class BaseMode:
             return "motorcycle"
         if "ambulance" in v or "emergency" in v:
             return "ambulance"
+        # Note: You are currently mapping trucks to ambulances. 
+        # If you want separate stats for trucks, change this return to "truck"
         if "truck" in v or "trailer" in v:
-            return "ambulance"
+            return "ambulance" 
         if "default_vehtype" in v:
             return "car"
         return "car"

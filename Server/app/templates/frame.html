@@ -543,7 +543,7 @@
                         });
 
                         polyline.on('mouseout', function (e) {
-                            refreshMapVisuals();
+                            this.setStyle({ opacity: 0.6, weight: 4 });
                         });
 
                         polyline.on('click', function (e) {

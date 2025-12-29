@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 2025-12-29T08:08:11.861238+05:30 by Eclipse SUMO sumo 1.25.0
+<!-- generated on 2025-12-29T08:13:43.351616+05:30 by Eclipse SUMO sumo 1.25.0
 <sumoConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
 
     <input>
@@ -43,4 +43,8 @@
 -->
 
 <tripinfos xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/tripinfo_file.xsd">
+    <tripinfo id="veh3" depart="2.00" departLane="-215089911#0_0" departPos="5.10" departSpeed="0.00" departDelay="0.43" arrival="8.00" arrivalLane="-215089911#0_0" arrivalPos="34.90" arrivalSpeed="9.82" duration="6.00" routeLength="29.80" waitingTime="0.00" waitingCount="0" stopTime="0.00" timeLoss="3.74" rerouteNo="1" devices="tripinfo_veh3 routing_veh3" vType="veh_passenger" speedFactor="1.06" vaporized="traci"/>
+    <tripinfo id="bus2" depart="4.00" departLane="-1177915924_0" departPos="12.10" departSpeed="2.78" departDelay="0.51" arrival="9.00" arrivalLane="-1177915924_0" arrivalPos="22.40" arrivalSpeed="2.62" duration="5.00" routeLength="10.30" waitingTime="0.00" waitingCount="0" stopTime="0.00" timeLoss="0.30" rerouteNo="1" devices="tripinfo_bus2 routing_bus2" vType="bus_bus" speedFactor="1.00" vaporized="traci"/>
+    <tripinfo id="motorcycle1" depart="2.00" departLane="-215089911#2_0" departPos="2.30" departSpeed="0.00" departDelay="0.95" arrival="9.00" arrivalLane="-215089911#1_0" arrivalPos="30.39" arrivalSpeed="20.21" duration="7.00" routeLength="74.68" waitingTime="0.00" waitingCount="0" stopTime="0.00" timeLoss="2.42" rerouteNo="1" devices="tripinfo_motorcycle1 routing_motorcycle1" vType="motorcycle_motorcycle" speedFactor="0.94" vaporized="traci"/>
+    <tripinfo id="motorcycle2" depart="3.00" departLane="215090046#1_0" departPos="2.30" departSpeed="0.00" departDelay="0.91" arrival="9.00" arrivalLane="-215090046#1_0" arrivalPos="0.24" arrivalSpeed="3.37" duration="6.00" routeLength="28.91" waitingTime="0.00" waitingCount="0" stopTime="0.00" timeLoss="2.44" rerouteNo="1" devices="tripinfo_motorcycle2 routing_motorcycle2" vType="motorcycle_motorcycle" speedFactor="1.08" vaporized="traci"/>
 </tripinfos>

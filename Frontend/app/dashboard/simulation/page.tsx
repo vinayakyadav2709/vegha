@@ -17,7 +17,7 @@ import {
 import { NextRequest, NextResponse } from 'next/server';
 
 // ✅ FIX: Use HTTPS for production (wss:// will be automatic)
-const sumoServerUrl = process.env.NEXT_PUBLIC_SUMO_SERVER_URL || "http://localhost:3200";
+const sumoServerUrl = process.env.NEXT_PUBLIC_SUMO_SERVER_URL || "https://api.vegha.vikasrajyadav.com";
 
 interface SimulationMetrics {
   vehicleCount: number;

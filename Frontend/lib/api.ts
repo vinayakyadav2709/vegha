@@ -1,4 +1,6 @@
-import type { EventsResponse, MapEventsResponse } from '@/app/types/events'
+import type { EventsResponse } from '@/app/types/events'
+// MapEventsResponse was removed/renamed in the shared types — keep a local alias so existing code keeps working.
+type MapEventsResponse = EventsResponse
 
 // Import JSON files directly
 import dashboardData from '@/public/data/dashboard.json'
@@ -86,7 +88,7 @@ export const getEmergencyVehicles = (): Promise<EmergencyData> => Promise.resolv
 
 export const getPredictions = (): Promise<PredictionsData> => Promise.resolve(predictionsData as PredictionsData);
 
-export const getEvents = (): Promise<EventsResponse> => Promise.resolve(eventsData as EventsResponse);
+export const getEvents = (): Promise<EventsResponse> => Promise.resolve(eventsData as unknown as EventsResponse);
 
 export const getMapEvents = (): Promise<MapEventsResponse> => Promise.resolve(mapEventsData as unknown as MapEventsResponse);
 

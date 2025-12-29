@@ -9,10 +9,10 @@ import type {
   EventStatus,
   NewEventState,
 } from '@/app/types/events';
-import { initialNewEventState } from '@/app/types/events';
 import EventCard from '@/components/EventCard';
-import AddEventModal from '@/components/AddEventModal';
+import AddEventModal, { toEventPayload } from '@/components/AddEventModal';
 import { Plus, Search } from 'lucide-react';
+import { initialNewEventState } from '@/app/types/events';
 
 // Helper function to format dates
 function formatDateTime(dateString: string): string {
@@ -40,38 +40,6 @@ const severityRank: Record<EventSeverity, number> = {
   low: 1,
 };
 
-// If you already have this elsewhere, keep using that one and delete this.
-// This is just here so this file is self-contained & type-safe.
-function toEventPayload(state: NewEventState) {
-  const estimatedDelay =
-    state.estimated_delay_min.trim() === '' ? null : Number(state.estimated_delay_min);
-
-  return {
-    id: state.id || undefined,
-    title: state.title,
-    description: state.description,
-    type: state.type || undefined,
-    severity: state.severity || undefined,
-    status: state.status,
-
-    location: {
-      mode: state.locationMode,
-      junction_id: state.junction_id || undefined,
-      route_id: state.route_id || undefined,
-      description: state.location_description || undefined,
-    },
-
-    start_time: state.start_time || undefined,
-    end_time: state.end_time || undefined,
-
-    affected_routes: state.affected_routes,
-    estimated_delay_min: Number.isFinite(estimatedDelay as number) ? estimatedDelay : null,
-
-    authorities: state.authoritiesMode === 'authorities' ? state.authorities : [],
-    created_by: state.created_by,
-  };
-}
-
 export default function EventsPage() {
   const [events, setEvents] = useState<Event[]>([]);
   const [totalCount, setTotalCount] = useState(0);
@@ -97,8 +65,8 @@ export default function EventsPage() {
     setSortBy('latest');
   }
 
-  // Form state (single shared type from @/app/types/events)
-  const [newEvent, setNewEvent] = useState<NewEventState>(initialNewEventState);
+  // ✅ UPDATED: Simplified form state matching Flask API requirements
+  const [newEvent, setNewEvent] = useState<NewEventState>(() => initialNewEventState);
 
   useEffect(() => {
     loadEvents();
@@ -121,25 +89,39 @@ export default function EventsPage() {
     }
   }
 
+  // ✅ UPDATED: New event submission handler for Flask backend
   async function handleSubmitEvent() {
     try {
       const payload = toEventPayload(newEvent);
+      
+      console.log('📤 Sending event payload:', payload);
 
-      const response = await fetch('/api/events', {
+      // ✅ Call Next.js API route (which proxies to Flask)
+      const response = await fetch('/api/events/create', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });
 
       if (response.ok) {
+        const data = await response.json();
+        console.log('✅ Event created successfully:', data);
+        
         setShowAddModal(false);
-        setNewEvent(initialNewEventState);
+        
+        // ✅ Reset form to initial state
+        setNewEvent(() => initialNewEventState);
+        
+        // Reload events list
         loadEvents();
       } else {
-        console.error('Add event failed:', await response.text());
+        const errorText = await response.text();
+        console.error('❌ Add event failed:', errorText);
+        alert(`Failed to create event: ${errorText}`);
       }
     } catch (err) {
-      console.error('Error adding event:', err);
+      console.error('❌ Error adding event:', err);
+      alert('Network error. Check console for details.');
     }
   }
 
@@ -161,20 +143,20 @@ export default function EventsPage() {
     });
 
     list = [...list].sort((a, b) => {
-      const aStart = new Date(a.start_time).getTime();
-      const bStart = new Date(b.start_time).getTime();
-
+      const aStart = a.start_time ? new Date(a.start_time).getTime() : 0;
+      const bStart = b.start_time ? new Date(b.start_time).getTime() : 0;
+  
       switch (sortBy) {
         case 'latest':
           return bStart - aStart;
         case 'soonest':
           return aStart - bStart;
         case 'severity': {
-          const ar = severityRank[a.severity] ?? 0;
-          const br = severityRank[b.severity] ?? 0;
-          if (br !== ar) return br - ar;
-          return bStart - aStart;
-        }
+          const ar = severityRank[(a.severity ?? 'low') as EventSeverity] ?? 0;
+          const br = severityRank[(b.severity ?? 'low') as EventSeverity] ?? 0;
+           if (br !== ar) return br - ar;
+           return bStart - aStart;
+         }
         case 'title':
           return a.title.localeCompare(b.title);
         default:
@@ -255,7 +237,7 @@ export default function EventsPage() {
           }}
         />
 
-        <div className="mx-auto w-full max-w-screen  py-3">
+        <div className="mx-auto w-full max-w-screen py-3">
           <div className="flex items-center justify-between gap-3">
             <div className="min-w-0">
               <h1 className="text-lg sm:text-xl font-semibold text-[var(--color-text)] tracking-tight leading-tight">
@@ -304,7 +286,7 @@ export default function EventsPage() {
       </div>
 
       {/* Content */}
-      <div className="mx-auto w-full max-w-screen py-6 p ">
+      <div className="mx-auto w-full max-w-screen py-6 p">
         {events.length === 0 ? (
           <div className="card text-center py-12">
             <div className="text-4xl mb-3">📅</div>
@@ -448,7 +430,7 @@ export default function EventsPage() {
         )}
       </div>
 
-      {/* Extracted modal */}
+      {/* ✅ UPDATED: Modal with simplified props */}
       <AddEventModal
         isOpen={showAddModal}
         onClose={() => setShowAddModal(false)}

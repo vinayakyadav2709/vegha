@@ -75,7 +75,7 @@ const backdropVariants = {
 };
 
 export default function EventDetailModal({ event, isOpen, onClose }: EventDetailModalProps) {
-  const severity = useMemo(() => getSeverityConfig(event.severity), [event.severity]);
+  const severity = useMemo(() => getSeverityConfig(event.severity ?? ''), [event.severity]);
 
   // ESC to close (basic accessibility)
   useEffect(() => {
@@ -90,25 +90,34 @@ export default function EventDetailModal({ event, isOpen, onClose }: EventDetail
   const severityColor = `var(${severity.colorVar})`;
   const severitySoft = `var(${severity.softBgVar})`;
 
+  const status = event.status ?? '';
   const statusStyles =
-    norm(event.status) === 'active'
+    norm(status) === 'active'
       ? 'bg-[var(--status-active-soft)] text-[var(--status-active)]'
-      : norm(event.status) === 'scheduled'
+      : norm(status) === 'scheduled'
         ? 'bg-[var(--status-scheduled-soft)] text-[var(--status-scheduled)]'
         : 'bg-[var(--status-resolved-soft)] text-[var(--status-resolved)]';
 
   const statusBorder =
-    norm(event.status) === 'active'
+    norm(status) === 'active'
       ? 'var(--status-active)'
-      : norm(event.status) === 'scheduled'
+      : norm(status) === 'scheduled'
         ? 'var(--status-scheduled)'
         : 'var(--status-resolved)';
 
-  const incidentType = event.type?.replaceAll('_', ' ').toUpperCase?.() ?? String(event.type || '').toUpperCase();
+  const incidentType = (event.type ?? '').replaceAll('_', ' ').toUpperCase();
 
-  const authorities = (event.authorities || event.authorities_notified || []) as string[];
+  const authorities = ((event as any).authorities || (event as any).authorities_notified || []) as string[];
 
-  return (
+  // local convenience for optional complex fields
+  const impact = (event as any).impact ?? null;
+  const estimatedDuration = (event as any).estimated_duration_min ?? null;
+  const crowdEstimate = (event as any).crowd_estimate ?? null;
+  const incidentNumber = (event as any).incident_number ?? null;
+  const lastModified = (event as any).last_modified ?? null;
+  const createdBy = (event as any).created_by ?? null;
+
+   return (
     <AnimatePresence>
       {isOpen && (
         <motion.div
@@ -165,7 +174,7 @@ export default function EventDetailModal({ event, isOpen, onClose }: EventDetail
                       className={`px-3 py-1.5 text-xs sm:text-sm font-semibold rounded-full ${statusStyles}`}
                       style={{ border: `1px solid ${statusBorder}` }}
                     >
-                      {event.status.charAt(0).toUpperCase() + event.status.slice(1)}
+                      {(event.status ?? '').charAt(0).toUpperCase() + (event.status ?? '').slice(1)}
                     </span>
 
                     <span
@@ -176,7 +185,7 @@ export default function EventDetailModal({ event, isOpen, onClose }: EventDetail
                         border: `1px solid ${severityColor}`,
                       }}
                     >
-                      {event.severity.charAt(0).toUpperCase() + event.severity.slice(1)} Severity
+                      {(event.severity ?? '').charAt(0).toUpperCase() + (event.severity ?? '').slice(1)} Severity
                     </span>
                   </div>
                 </div>
@@ -230,7 +239,7 @@ export default function EventDetailModal({ event, isOpen, onClose }: EventDetail
                     <div className="flex items-baseline justify-between gap-3">
                       <span className="text-xs text-theme-muted">Start</span>
                       <span className="text-sm font-semibold text-theme-text text-right">
-                        {formatDateTime(event.start_time)}
+                        {formatDateTime(event.start_time ?? '')}
                       </span>
                     </div>
 
@@ -238,25 +247,25 @@ export default function EventDetailModal({ event, isOpen, onClose }: EventDetail
                       <div className="flex items-baseline justify-between gap-3">
                         <span className="text-xs text-theme-muted">End</span>
                         <span className="text-sm font-semibold text-theme-text text-right">
-                          {formatDateTime(event.end_time)}
+                          {formatDateTime(event.end_time ?? '')}
                         </span>
                       </div>
                     )}
                   </div>
-
-                  {event.estimated_duration_min ? (
+  
+                  {estimatedDuration ? (
                     <div className="mt-4 rounded-xl border border-[var(--color-primary)] bg-[var(--color-primary-soft)] p-3">
                       <p className="text-xs font-semibold text-theme-primary uppercase tracking-wide">Estimated Duration</p>
                       <p className="mt-1 text-lg font-semibold text-theme-text">
-                        {formatDuration(event.estimated_duration_min)}
+                        {formatDuration(estimatedDuration)}
                       </p>
                     </div>
                   ) : null}
                 </div>
               </section>
-
+  
               {/* Traffic impact */}
-              {event.impact && (
+              {impact && (
                 <section
                   className="mt-5 rounded-2xl border p-4"
                   style={{
@@ -266,48 +275,48 @@ export default function EventDetailModal({ event, isOpen, onClose }: EventDetail
                 >
                   <div className="flex items-center justify-between gap-3">
                     <h3 className="text-xs font-semibold text-theme-muted uppercase tracking-wide">Traffic impact</h3>
-                    {event.impact.complete_closure && (
-                      <span
-                        className="px-2.5 py-1 text-xs font-semibold rounded-full"
-                        style={{
-                          backgroundColor: 'var(--severity-critical-soft)',
-                          color: 'var(--severity-critical)',
-                          border: '1px solid var(--severity-critical)',
-                        }}
-                      >
-                        Complete closure
-                      </span>
-                    )}
+                    {impact?.complete_closure && (
+                       <span
+                         className="px-2.5 py-1 text-xs font-semibold rounded-full"
+                         style={{
+                           backgroundColor: 'var(--severity-critical-soft)',
+                           color: 'var(--severity-critical)',
+                           border: '1px solid var(--severity-critical)',
+                         }}
+                       >
+                         Complete closure
+                       </span>
+                     )}
                   </div>
 
                   <div className="mt-4 grid grid-cols-1 sm:grid-cols-3 gap-3">
                     <div className="rounded-xl border border-[var(--color-border)] bg-theme-surface p-3">
                       <p className="text-xs text-theme-muted">Estimated delay</p>
                       <p className="mt-1 text-lg font-semibold text-theme-text">
-                        {formatDuration(event.impact.estimated_delay_min || 0)}
+                        {formatDuration(impact?.estimated_delay_min ?? 0)}
                       </p>
                     </div>
 
                     <div className="rounded-xl border border-[var(--color-border)] bg-theme-surface p-3">
                       <p className="text-xs text-theme-muted">Routes affected</p>
                       <p className="mt-1 text-lg font-semibold text-theme-text">
-                        {event.impact.affected_routes?.length || 0}
+                        {impact?.affected_routes?.length || 0}
                       </p>
                     </div>
 
                     <div className="rounded-xl border border-[var(--color-border)] bg-theme-surface p-3">
                       <p className="text-xs text-theme-muted">Lanes blocked</p>
                       <p className="mt-1 text-lg font-semibold text-theme-text">
-                        {event.impact.lanes_blocked || 0}
+                        {impact?.lanes_blocked || 0}
                       </p>
                     </div>
                   </div>
 
-                  {event.impact.affected_routes && event.impact.affected_routes.length > 0 && (
+                  {impact?.affected_routes && impact.affected_routes.length > 0 && (
                     <div className="mt-4">
                       <p className="text-xs font-semibold text-theme-muted">Affected routes</p>
                       <div className="mt-2 flex flex-wrap gap-2">
-                        {event.impact.affected_routes.map((route, i) => (
+                        {impact.affected_routes.map((route: string, i: number) => (
                           <span
                             key={i}
                             className="px-3 py-1.5 text-xs rounded-full border border-[var(--color-border)] bg-theme-surface text-theme-text"
@@ -340,7 +349,7 @@ export default function EventDetailModal({ event, isOpen, onClose }: EventDetail
               )}
 
               {/* Crowd estimate */}
-              {event.crowd_estimate && (
+              {crowdEstimate && (
                 <section
                   className="mt-5 rounded-2xl border p-4"
                   style={{ backgroundColor: 'var(--color-emergency-soft)', borderColor: 'var(--color-emergency)' }}
@@ -349,25 +358,25 @@ export default function EventDetailModal({ event, isOpen, onClose }: EventDetail
                     Crowd estimate
                   </p>
                   <p className="mt-2 text-3xl font-bold" style={{ color: 'var(--color-emergency)' }}>
-                    {event.crowd_estimate.toLocaleString()}
+                    {crowdEstimate.toLocaleString()}
                   </p>
                 </section>
               )}
-
+  
               {/* Incident number */}
-              {event.incident_number && (
+              {incidentNumber && (
                 <section className="mt-5 rounded-2xl border border-[var(--color-border)] bg-theme-bg p-4">
                   <p className="text-xs font-semibold text-theme-muted uppercase tracking-wide">Incident number</p>
-                  <p className="mt-2 text-lg font-mono font-semibold text-theme-text">{event.incident_number}</p>
+                  <p className="mt-2 text-lg font-mono font-semibold text-theme-text">{incidentNumber}</p>
                 </section>
               )}
-
+  
               {/* Footer meta */}
               <footer className="mt-6 pt-4 border-t border-[var(--color-border)] text-xs text-theme-muted">
                 <p>
-                  Created by: <span className="font-semibold text-theme-text">{event.created_by || '—'}</span>
+                  Created by: <span className="font-semibold text-theme-text">{createdBy || '—'}</span>
                 </p>
-                <p>Last modified: {event.last_modified ? formatDateTime(event.last_modified) : '—'}</p>
+                <p>Last modified: {lastModified ? formatDateTime(lastModified ?? '') : '—'}</p>
               </footer>
             </div>
 

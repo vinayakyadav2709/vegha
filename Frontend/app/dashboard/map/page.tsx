@@ -29,7 +29,47 @@ export default async function MapPage() {
   }))
 
   const predictions: Prediction[] = predictionsData.predictions || []
-  const events: MapEvent[] = mapEventsData.events || []
+
+  // Convert raw map events (which may have different location shapes) into MapEvent[]
+  // MapEvent requires location: {lat, lng} — events coming from mapEventsData may have
+  // either location.lat/lng or a junction_id. Resolve junction coords when possible and
+  // filter out entries without usable coordinates to satisfy the MapEvent type.
+  const junctionById = new Map<string, { id: any; location: { lat: number; lng: number } }>(
+    junctions.map((j) => [String(j.id), j])
+  )
+
+  const events: MapEvent[] = (mapEventsData.events || [])
+    .map((e: any) => {
+      // if event already has lat/lng, use it
+      if (e?.location && typeof e.location.lat === 'number' && typeof e.location.lng === 'number') {
+        return {
+          id: e.id,
+          location: { lat: e.location.lat, lng: e.location.lng },
+          title: e.title,
+          severity: (e.severity || 'low') as MapEvent['severity'],
+          type: e.type,
+          timestamp: e.start_time || e.timestamp,
+        } as MapEvent
+      }
+
+      // otherwise if it references a junction_id, try to resolve coordinates from junctions
+      const jid = e?.location?.junction_id
+      if (jid && junctionById.has(String(jid))) {
+        const j = junctionById.get(String(jid))!
+        return {
+          id: e.id,
+          location: { lat: j.location.lat, lng: j.location.lng },
+          title: e.title,
+          severity: (e.severity || 'low') as MapEvent['severity'],
+          type: e.type,
+          timestamp: e.start_time || e.timestamp,
+        } as MapEvent
+      }
+
+      // no usable location -> drop by returning null
+      return null
+    })
+    .filter(Boolean) as MapEvent[]
 
   return (
     <div className="h-screen w-full">

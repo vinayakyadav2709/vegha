@@ -147,25 +147,27 @@ const cardVariants: Variants = {
 export default function EventCard({ event, className = '', index = 0 }: EventCardProps) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const sev = getSeverityConfig(event.severity);
-  const statusBadge = getStatusBadge(event.status);
-
-  // const leftFadeStyle = getSeverityLeftFadeStyle(event.severity);
-  const ringStyle = getSeverityRingStyle(event.severity);
-
+  // Ensure a string is always passed to severity helpers and avoid calling string methods on undefined
+  const sev = getSeverityConfig(event.severity ?? '');
+  const statusBadge = getStatusBadge(event.status ?? '');
+  const severityLabel = (event.severity ?? '').charAt(0).toUpperCase() + (event.severity ?? '').slice(1);
+  
+  // const leftFadeStyle = getSeverityLeftFadeStyle(event.severity ?? '');
+  const ringStyle = getSeverityRingStyle(event.severity ?? '');
+  
   const start = event.start_time ? new Date(event.start_time) : null;
   const end = event.end_time ? new Date(event.end_time) : null;
   const hasValidDuration = !!(start && end && !isNaN(start.getTime()) && !isNaN(end.getTime()));
   const durationMin = hasValidDuration
     ? Math.max(0, Math.round((end!.getTime() - start!.getTime()) / 60000))
     : (event as any).estimated_duration_min ?? null;
-
-  const delayMin = event.impact?.estimated_delay_min ?? null;
+  
+  const delayMin = (event as any).impact?.estimated_delay_min ?? null;
   const authorities: string[] = (event as any).authorities ?? (event as any).authorities_notified ?? [];
-
+  
   // Primary highlight style (Date + Location) based on severity hue
-  const severityRgb = useMemo(() => getSeverityRgb(event.severity), [event.severity]);
-
+  const severityRgb = useMemo(() => getSeverityRgb(event.severity ?? ''), [event.severity]);
+  
   const primaryBlockStyle: React.CSSProperties = {
     border: `1px solid rgba(${severityRgb}, 0.18)`,
     background: `linear-gradient(180deg, rgba(${severityRgb}, 0.12) 0%, rgba(${severityRgb}, 0.06) 100%)`,
@@ -204,11 +206,11 @@ export default function EventCard({ event, className = '', index = 0 }: EventCar
 
             <div className="hidden sm:flex items-center gap-2 flex-shrink-0">
               <span className={`rounded-full px-3 py-1.5 text-sm font-semibold ${statusBadge}`}>
-                {event.status.charAt(0).toUpperCase() + event.status.slice(1)}
+                {(event.status ?? '').charAt(0).toUpperCase() + (event.status ?? '').slice(1)}
               </span>
 
               <span className={`rounded-full px-3 py-1.5 text-sm font-semibold ${sev.pillBg} ${sev.text}`}>
-                {event.severity.charAt(0).toUpperCase() + event.severity.slice(1)}
+                {severityLabel}
               </span>
             </div>
           </div>
@@ -233,7 +235,7 @@ export default function EventCard({ event, className = '', index = 0 }: EventCar
                   
                   {/* date + time, single-line ellipsis */}
                   <span className="text-theme-text/90 min-w-0 truncate">
-                    {formatDateTime(event.start_time)}
+                    {formatDateTime(event.start_time ?? '')}
                   </span>
                 </div>
 
@@ -241,7 +243,7 @@ export default function EventCard({ event, className = '', index = 0 }: EventCar
                   <MapPin className="mt-0.5 h-5 w-5 flex-shrink-0" style={{ color: `rgb(${severityRgb})` }} />
                   <span className="text-theme-text font-semibold flex-shrink-0">Location:</span>
                   <span className="text-theme-text/90 min-w-0 line-clamp-2">
-                    {event.location.description}
+                    {event.location?.description ?? '—'}
                   </span>
                 </div>
               </div>
@@ -272,13 +274,13 @@ export default function EventCard({ event, className = '', index = 0 }: EventCar
           {/* Mobile chips (unchanged) */}
           <div className="sm:hidden mt-4 flex items-center gap-2 flex-wrap">
             <span className={`rounded-full px-3 py-1.5 text-sm font-semibold ${statusBadge}`}>
-              {event.status.charAt(0).toUpperCase() + event.status.slice(1)}
+              {(event.status ?? '').charAt(0).toUpperCase() + (event.status ?? '').slice(1)}
             </span>
             <span className={`rounded-full px-3 py-1.5 text-sm font-semibold ${sev.pillBg} ${sev.text}`}>
-              {event.severity.charAt(0).toUpperCase() + event.severity.slice(1)}
+              {severityLabel}
             </span>
             <span className="rounded-full px-3 py-1.5 text-sm font-semibold bg-[var(--color-emergency-soft)] text-[var(--color-emergency)]">
-              {event.type.replace('_', ' ').substring(0, 16)}
+              {(event.type ?? '').replace('_', ' ').substring(0, 16)}
             </span>
           </div>
 

@@ -23,4 +23,5 @@ def get_all_vehicle_types():
         "pedestrian",
         "emergency",
         "delivery",
+      
     ]

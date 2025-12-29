@@ -64,9 +64,8 @@ def register_socketio_handlers(socketio, sumo_mgr, event_mgr, mode):
         # Resume simulation
         sumo_mgr.start_simulation()
 
-        # Reset events ONLY when starting fresh
-        event_mgr.events.clear()
-        event_mgr.event_id_counter = 1
+        # REMOVED: event_mgr.events.clear() - This was wiping events on every Pause/Play!
+        # REMOVED: event_mgr.event_id_counter = 1
 
         print("▶️ Simulation started")
 

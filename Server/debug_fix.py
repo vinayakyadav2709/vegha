@@ -31,7 +31,8 @@ class Debugger:
         
         relevant_classes = {
             "passenger", "bus", "truck", "trailer", 
-            "motorcycle", "moped", "delivery", "taxi"
+            "motorcycle", "moped", "delivery", "taxi",
+                   
         }
         
         for tl in targets:

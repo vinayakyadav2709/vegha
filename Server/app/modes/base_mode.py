@@ -217,7 +217,8 @@ class BaseMode:
                         processed_roads.add(road_id)
 
                         allowed_classes = traci.lane.getAllowed(lane_id)
-                        relevant_classes = {"passenger", "bus", "truck", "trailer", "motorcycle", "moped", "taxi"}
+                        relevant_classes = {"passenger", "bus", "truck", "trailer", "motorcycle", "moped", "taxi",
+                   }
                         if allowed_classes:
                             if not any(c in allowed_classes for c in relevant_classes): continue
 

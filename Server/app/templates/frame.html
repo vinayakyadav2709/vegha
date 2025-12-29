@@ -543,7 +543,7 @@
                         });
 
                         polyline.on('mouseout', function (e) {
-                            this.setStyle({ opacity: 0.6, weight: 4 });
+                            refreshMapVisuals();
                         });
 
                         polyline.on('click', function (e) {
@@ -715,7 +715,8 @@
 
                 // Clear previous selection
                 selectedEventStreets.clear();
-                updateSelectionVisuals();
+                document.getElementById('selectedCount').textContent = '0';
+
                 showStatus('success', 'Select streets on map, then confirm.');
 
                 // DISABLE POPUPS
@@ -781,26 +782,34 @@
         var activeEventsCache = [];
 
         function refreshMapVisuals() {
+            var normalizeId = (id) => id.replace(/^\+/, '');
+
             // 1. Reset all to default Base style
             for (var id in streetPolylines) {
                 var poly = streetPolylines[id];
-                // Default Blue (Opacity 0.6)
-                if (!closedStreets.includes(id)) {
+                var normId = normalizeId(id);
+
+                // Check if this map ID matches any ID in the closed list (normalized check)
+                var isClosed = closedStreets.some(c => normalizeId(c) === normId);
+
+                if (!isClosed) {
+                    // Default Blue (Opacity 0.6)
                     poly.setStyle({ color: '#4A90E2', opacity: 0.6, weight: 4 });
+                } else {
+                    // Default Closed (Dark Grey) - will be overridden by Event Styles if applicable
+                    poly.setStyle({ color: '#555555', opacity: 0.7, weight: 4 });
                 }
             }
 
             // 2. Apply Event Styles (Dark/Distinct)
             activeEventsCache.forEach(function (evt) {
                 evt.streets.forEach(streetId => {
-                    // Check if street exists (normalized ID handling if needed)
-                    // The backend returns IDs that should match our map keys.
-                    // We also normalize + prefix just in case.
-                    var normId = streetId.replace(/^\+/, '');
+                    // Try exact match first, then normalized
+                    var poly = streetPolylines[streetId] || streetPolylines[streetId.replace(/^\+/, '')];
 
-                    if (streetPolylines[normId]) {
+                    if (poly) {
                         // Apply event color
-                        streetPolylines[normId].setStyle({ color: evt.color, opacity: 0.9, weight: 6 });
+                        poly.setStyle({ color: evt.color, opacity: 0.9, weight: 6 });
                     }
                 });
             });
@@ -894,7 +903,14 @@
                 div.innerHTML = `
                     <div style="display:flex; justify-content:space-between; align-items:center;">
                         <strong>${evt.title} (${evt.id})</strong>
-                        <span style="font-size:10px; background:${evt.color}; padding:2px 6px; border-radius:4px; color:white;">${evt.status}</span>
+                        <div style="display:flex; gap:5px; align-items:center;">
+                            <!-- Removed redundant 'Active' badge -->
+                            <button onclick="removeEvent('${evt.id}')" 
+                                style="background:#ff4444; color:white; border:none; border-radius:4px; padding:4px 8px; font-size:11px; cursor:pointer;" 
+                                title="End Event">
+                                End Event
+                            </button>
+                        </div>
                     </div>
                     <div style="font-size:11px; margin-top:4px; opacity:0.8; word-break:break-all;">
                         ${evt.streets.length} streets: ${evt.streets.join(', ')}
@@ -904,11 +920,33 @@
             });
         }
 
+        function removeEvent(id) {
+            if (!confirm("Are you sure you want to END this event? Streets will be reopened.")) return;
+
+            fetch('/api/events/remove', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ id: id })
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.error) {
+                        alert(data.error);
+                    } else {
+                        showStatus('success', 'Event Removed');
+                        // fetchEvents will be triggered by socket 'event_removed'
+                    }
+                })
+                .catch(err => console.error(err));
+        }
+
         // --- Socket Listeners ---
         socket.on('event_created', function (evt) {
-            // Add to list or re-fetch? 
-            // Better to re-fetch all or just append. 
-            // For simplicity, let's fetch all events.
+            fetchEvents();
+        });
+
+        socket.on('event_removed', function (data) {
+            console.log('🗑️ Event Removed:', data.id);
             fetchEvents();
         });
 

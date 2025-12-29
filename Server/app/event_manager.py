@@ -22,6 +22,7 @@ class EventManager(BaseEventManager):
 
     def create_event(self, event_id, title, streets):
         """Create new event with detailed properties"""
+        print(f"DEBUG: Extended create_event called on instance {id(self)}")
         color = self.generate_color()
         
         event = {
@@ -30,7 +31,9 @@ class EventManager(BaseEventManager):
             'streets': streets,
             'color': color,
             'status': 'Active',
-            'type': 'manual_event'
+            'type': 'manual_event',
+            'start_time': 0,
+            'end_time': 99999999
         }
         self.events.append(event)
         return event

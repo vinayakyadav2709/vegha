@@ -95,4 +95,26 @@ def register_routes(app, sumo_mgr, event_mgr, socketio):
         })
         return jsonify({"success": True})
 
+    @app.route("/api/events/remove", methods=["POST"])
+    def remove_event():
+        event_id = request.json.get("id")
+        if not event_id:
+             return jsonify({"error": "Missing event id"}), 400
+             
+        success = event_mgr.remove_event(event_id)
+        if not success:
+            return jsonify({"error": "Event not found"}), 404
+            
+        # Emit update so all clients refresh
+        socketio.emit("event_removed", {"id": event_id})
+        
+        # Also emit street status to force map refresh if needed
+        socketio.emit("street_status", {
+            "success": True,
+            "action": "opened_bulk", 
+            "closed_streets": list(sumo_mgr.closed_streets)
+        })
+        
+        return jsonify({"success": True})
+
         

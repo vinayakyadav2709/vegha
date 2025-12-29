@@ -110,6 +110,7 @@ def register_socketio_handlers(socketio, sumo_mgr, event_mgr, mode):
     def handle_close_street(data):
         """Close a street immediately"""
         street = data.get("street")
+        print(f"DEBUG: handle_close_street received: {street}")
 
         if not street:
             socketio.emit(

@@ -1,29 +1,39 @@
-class EventManager:
-    """Manages scheduled traffic events"""
+from core.event_manager import EventManager as BaseEventManager
+import random
+
+class EventManager(BaseEventManager):
+    """Extended EventManager for Vegha Event Mode"""
     
-    def __init__(self, config):
-        self.events = []
-        self.event_id_counter = 1
+    def __init__(self, sumo_manager):
+        super().__init__(sumo_manager)
+        # Ensure events list exists if base didn't create it (it likely did)
+        if not hasattr(self, 'events'):
+             self.events = []
     
-    def create_event(self, streets, start_time, end_time):
-        """Create new event"""
+    def title_exists(self, title):
+        return any(e.get('title') == title for e in self.events)
+
+    def id_exists(self, event_id):
+        return any(e.get('id') == event_id for e in self.events)
+
+    def generate_color(self):
+        """Generate a random bright color for the event"""
+        return "#{:06x}".format(random.randint(0, 0xFFFFFF))
+
+    def create_event(self, event_id, title, streets):
+        """Create new event with detailed properties"""
+        color = self.generate_color()
+        
         event = {
-            'id': self.event_id_counter,
+            'id': event_id,
+            'title': title,
             'streets': streets,
-            'start_time': start_time,
-            'end_time': end_time,
-            'status': 'Pending'
+            'color': color,
+            'status': 'Active',
+            'type': 'manual_event'
         }
         self.events.append(event)
-        self.event_id_counter += 1
         return event
-    
-    def update_event_statuses(self, current_time):
-        """Update event statuses based on simulation time"""
-        for event in self.events:
-            if event['start_time'] <= current_time < event['end_time']:
-                event['status'] = 'Active'
-            elif current_time >= event['end_time']:
-                event['status'] = 'Finished'
-            else:
-                event['status'] = 'Pending'
+
+    def get_events(self):
+        return self.events

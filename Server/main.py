@@ -50,15 +50,7 @@ def get_mode():
     return {"mode": SUMO_MODE}, 200
 
 
-# ✅ ADD THESE ROUTES - LIKE DUMMY SERVER
-@app.route("/")
-def index():
-    return send_file("app/templates/frame.html")
 
-
-@app.route("/style.css")
-def serve_css():
-    return send_file("app/templates/style.css", mimetype="text/css")
 
 
 @app.route("/images/<filename>")
@@ -76,7 +68,7 @@ def serve_image(filename):
 
 # Import core modules
 from core.sumo_manager import SUMOManager
-from core.event_manager import EventManager
+# EventManager is imported later from app.event_manager
 from api import socketio_handlers
 
 # Select mode
@@ -95,15 +87,22 @@ elif MODE == "sumo_rl_events":
 else:
     raise ValueError(f"❌ Unknown mode: {MODE}")
 
+from app.api.routes import register_routes
+
 # Initialize managers
 sumo_manager = SUMOManager(CONFIG)
-event_manager = EventManager(CONFIG)
+# Use our Extended EventManager from app/
+from app.event_manager import EventManager
+event_manager = EventManager(sumo_manager)
 current_mode = mode_class(sumo_manager, event_manager, socketio, CONFIG)
 
 # Register SocketIO handlers
 socketio_handlers.register_socketio_handlers(
     socketio, sumo_manager, event_manager, current_mode
 )
+
+# Register API Routes
+register_routes(app, sumo_manager, event_manager, socketio)
 
 if __name__ == "__main__":
     print("=" * 60)

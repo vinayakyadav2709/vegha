@@ -27,21 +27,55 @@ def register_routes(app, sumo_mgr, event_mgr, socketio):
     @app.route("/api/events/create", methods=["POST"])
     def create_event():
         data = request.get_json()
-        streets = data.get("streets")
-        start_time = data.get("start_time")
-        end_time = data.get("end_time")
+        event_id = data.get("id")
+        title = data.get("title")
+        streets = list(data.get("streets")) # List of street IDs (COPY)
         
+        print(f"DEBUG: create_event received streets: {streets}")
+        
+        # Validate
+        if not streets or not title:
+             return jsonify({"error": "Missing required fields (title, streets)"}), 400
+
         if not sumo_mgr.simulation_running:
             return jsonify({"error": "Sim not running"}), 400
         
-        event = event_mgr.create_event(streets, start_time, end_time)
-        socketio.emit("event_update", event_mgr.events)
+        # Auto-generate ID if missing
+        if not event_id:
+            import time
+            event_id = f"evt_{int(time.time())}"
+        
+        # Check uniqueness
+        if event_mgr.id_exists(event_id):
+             return jsonify({"error": "Event ID already exists"}), 400
+
+        # Create Event
+        event = event_mgr.create_event(event_id, title, streets)
+        
+        # Functionally close the streets
+        # Functionally close the streets
+        for street_id in streets:
+            # Use force_close_street to avoid removing it from the event!
+            print(f"DEBUG: Closing street: {street_id}")
+            event_mgr.force_close_street(street_id)
+            
+        # Emit update
+        socketio.emit("event_created", event)
+        
+        # Also emit standard street status update
+        socketio.emit("street_status", {
+            "success": True,
+            "action": "closed_bulk",
+            "streets": streets,
+            "closed_streets": list(sumo_mgr.closed_streets)
+        })
         
         return jsonify({"message": "Event created", "event": event}), 201
     
     @app.route("/api/streets/close", methods=["POST"])
     def close_street():
         street = request.json.get("street")
+        print(f"DEBUG: Closing street: {street}")
         event_mgr.handle_manual_close(street)
         socketio.emit("street_status", {
             "action": "closed",

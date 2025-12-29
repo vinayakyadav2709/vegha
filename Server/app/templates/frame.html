@@ -29,32 +29,64 @@
 
 
     <div class="street-panel">
-        <h3>🚧 Event Management</h3>
-
-        <div class="street-section">
-            <label>Search Street</label>
-            <input type="text" id="streetSearch" placeholder="Type to search streets..." onkeyup="filterStreets()">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+            <h3 style="margin:0;">🚧 Management</h3>
+            <button id="createEventBtn" onclick="toggleEventMode()"
+                style="background:#2196F3; border:none; color:white; padding:5px 10px; border-radius:4px; cursor:pointer; font-size:12px;">📅
+                Create Event</button>
         </div>
 
-        <div class="street-section">
-            <label>Select Street / Edge</label>
-            <select id="streetSelect" size="8">
-                <option value="">-- Start simulation to load streets --</option>
-            </select>
-            <div class="street-count" id="streetCount">0 streets available</div>
+        <!-- Event Creation Panel (Hidden by default) -->
+        <div id="eventCreationPanel"
+            style="display:none; background:rgba(33, 150, 243, 0.1); padding:10px; border-radius:8px; border:1px solid #2196F3; margin-bottom:15px;">
+            <h4 style="color:#2196F3; margin-top:0;">New Event</h4>
+            <input type="text" id="eventIdInput" placeholder="Event ID (e.g. E1)"
+                style="width:100%; margin-bottom:5px; padding:5px; border-radius:4px; border:none;">
+            <input type="text" id="eventTitleInput" placeholder="Event Title (e.g. Rally)"
+                style="width:100%; margin-bottom:10px; padding:5px; border-radius:4px; border:none;">
+
+            <p style="font-size:11px; margin-bottom:5px;">Selected Streets: <strong id="selectedCount">0</strong></p>
+            <p style="font-size:10px; opacity:0.7; margin-bottom:10px;">Click streets on map to select.</p>
+
+            <button onclick="confirmEvent()"
+                style="width:100%; background:#4CAF50; color:white; border:none; padding:8px; border-radius:4px; cursor:pointer; font-weight:bold;">✅
+                Confirm Event</button>
         </div>
 
-        <div class="action-buttons">
-            <button class="action-btn close" onclick="closeStreet()">🚫 Close Street</button>
-            <button class="action-btn open" onclick="openStreet()">✅ Open Street</button>
-        </div>
+        <!-- Default Street Panel -->
+        <div id="defaultStreetPanel">
+            <div class="street-section">
+                <label>Search Street</label>
+                <input type="text" id="streetSearch" placeholder="Type to search streets..." onkeyup="filterStreets()">
+            </div>
 
-        <div class="status-message" id="statusMessage"></div>
+            <div class="street-section">
+                <label>Select Street / Edge</label>
+                <select id="streetSelect" size="8">
+                    <option value="">-- Start simulation to load streets --</option>
+                </select>
+                <div class="street-count" id="streetCount">0 streets available</div>
+            </div>
+
+            <div class="action-buttons">
+                <button class="action-btn close" onclick="closeStreet()">🚫 Close Street</button>
+                <button class="action-btn open" onclick="openStreet()">✅ Open Street</button>
+            </div>
+            <div class="status-message" id="statusMessage"></div>
+        </div>
 
         <div class="closed-list">
             <h4>🚫 Closed Streets (<span id="closedCount">0</span>)</h4>
             <div id="closedStreetsList">
                 <p style="font-size: 12px; color: rgba(255,255,255,0.5);">No closed streets</p>
+            </div>
+        </div>
+
+        <!-- Active Events List -->
+        <div class="closed-list" style="margin-top:20px; border-top:1px solid #555;">
+            <h4>📅 Active Events</h4>
+            <div id="activeEventsList">
+                <p style="font-size: 12px; color: rgba(255,255,255,0.5);">No active events</p>
             </div>
         </div>
     </div>
@@ -189,7 +221,7 @@
                 var polyline = L.polyline(streetData.coordinates, {
                     color: '#4A90E2',
                     weight: 4,
-                    opacity: 0.3,
+                    opacity: 0.6,
                     lineCap: 'round',
                     lineJoin: 'round',
                     className: 'clickable-street'
@@ -198,48 +230,89 @@
                 // Store reference
                 streetPolylines[streetId] = polyline;
 
-                // Add hover effect
+                // Re-add hover and click handlers
                 polyline.on('mouseover', function (e) {
+                    // 1. If currently selected for new event -> HIGH ORANGE
+                    if (selectedEventStreets.has(streetId)) {
+                        this.setStyle({ color: tempEventColor, opacity: 1.0, weight: 8 });
+                        return;
+                    }
+
+                    // 2. If part of an ACTIVE EVENT -> Keep event color, just bump weight/opacity slightly
+                    // We can check if the current color is NOT the default blue
+                    var currentColor = this.options.color; // Leaflet stores current options
+                    if (currentColor !== '#4A90E2') {
+                        // It's likely an event color. Keep it, just highlight a bit.
+                        this.setStyle({ opacity: 1.0, weight: 7 });
+                        return;
+                    }
+
+                    // 3. Normal Street -> Highlight
                     if (!closedStreets.includes(streetId)) {
                         this.setStyle({ opacity: 0.7, weight: 6 });
                     }
                 });
 
                 polyline.on('mouseout', function (e) {
+                    // 1. If currently selected -> Return to SELECTION style
+                    if (selectedEventStreets.has(streetId)) {
+                        this.setStyle({ color: tempEventColor, opacity: 1.0, weight: 8 });
+                        return;
+                    }
+
+                    // 2. If part of an ACTIVE EVENT -> Return to EVENT style
+                    var owningEvent = activeEventsCache.find(evt => evt.streets.some(s => idsMatch(s, streetId)));
+
+                    if (owningEvent) {
+                        this.setStyle({ color: owningEvent.color, opacity: 0.9, weight: 6 });
+                        return;
+                    }
+
+                    // 3. Normal Street -> Return to DEFAULT style (0.6 opacity)
                     if (!closedStreets.includes(streetId)) {
-                        this.setStyle({ opacity: 0.3, weight: 4 });
+                        this.setStyle({ color: '#4A90E2', opacity: 0.6, weight: 4 });
                     }
                 });
 
-                // Add click handler to block/unblock street
-                // ✅ NEW: Click street on map to select in dropdown
+                // Add click handler to block/unblock street or toggle event
                 polyline.on('click', function (e) {
                     L.DomEvent.stopPropagation(e);
 
-                    // Set dropdown to this street
-                    document.getElementById('streetSelect').value = streetId;
-
-                    console.log('📍 Selected street in dropdown:', streetId);
-
-                    // Auto-trigger close confirmation
-                    if (confirm('Block street: ' + streetId + '?')) {
-                        socket.emit('close_street', { street: streetId });
+                    if (isEventMode) {
+                        toggleStreetSelection(streetId);
+                        return;
                     }
+
+                    // Normal Mode: Show Popup Manually
+                    var popupContent = '<div style="text-align: center;">' +
+                        '<strong>🛣️ ' + streetId + '</strong><br>' +
+                        '<button onclick="socket.emit(\'close_street\', {street: \'' + streetId + '\'}); return false;" ' +
+                        'style="margin: 5px; padding: 5px 10px; background: #ff4444; color: white; border: none; border-radius: 4px; cursor: pointer;">' +
+                        '🚫 Block</button>' +
+                        '</div>';
+
+                    L.popup()
+                        .setLatLng(e.latlng)
+                        .setContent(popupContent)
+                        .openOn(map);
+
+                    // Set dropdown
+                    document.getElementById('streetSelect').value = streetId;
+                    console.log('📍 Selected street in dropdown:', streetId);
                 });
 
-
-                // Add popup with street info
-                polyline.bindPopup(
-                    '<div style="text-align: center;">' +
-                    '<strong>🛣️ ' + streetId + '</strong><br>' +
-                    '<button onclick="socket.emit(\'close_street\', {street: \'' + streetId + '\'}); return false;" ' +
-                    'style="margin: 5px; padding: 5px 10px; background: #ff4444; color: white; border: none; border-radius: 4px; cursor: pointer;">' +
-                    '🚫 Block</button>' +
-                    '</div>'
-                );
+                // NO bindPopup here - we handle it manually above!
             });
 
             console.log('✅ Drew', Object.keys(streetPolylines).length, 'clickable streets');
+        }
+
+        // Helper to match IDs (ignores leading +)
+        function idsMatch(id1, id2) {
+            if (!id1 || !id2) return false;
+            var n1 = id1.toString().replace(/^\+/, '');
+            var n2 = id2.toString().replace(/^\+/, '');
+            return n1 === n2;
         }
         function toggleMode() {
             var newMode = currentMode === "vegha" ? "fixed" : "vegha";
@@ -457,7 +530,7 @@
                         var polyline = L.polyline(streetCoordinates[streetId], {
                             color: '#4A90E2',
                             weight: 4,
-                            opacity: 0.3,
+                            opacity: 0.6,
                             lineCap: 'round',
                             lineJoin: 'round'
                         }).addTo(map);
@@ -470,7 +543,7 @@
                         });
 
                         polyline.on('mouseout', function (e) {
-                            this.setStyle({ opacity: 0.3, weight: 4 });
+                            this.setStyle({ opacity: 0.6, weight: 4 });
                         });
 
                         polyline.on('click', function (e) {
@@ -620,6 +693,235 @@
             document.getElementById('playBtn').textContent = '▶';
             document.getElementById('playBtn').classList.remove('active');
         }
+
+        // --- Event Mode Logic ---
+        var isEventMode = false;
+        var selectedEventStreets = new Set();
+        var tempEventColor = '#FFA500'; // Orange for selection
+
+        // Toggle Event Creation Mode
+        function toggleEventMode() {
+            isEventMode = !isEventMode;
+            var btn = document.getElementById('createEventBtn');
+            var panel = document.getElementById('eventCreationPanel');
+            var defaultPanel = document.getElementById('defaultStreetPanel');
+
+            if (isEventMode) {
+                // Determine visual state
+                btn.classList.add('active');
+                btn.textContent = '❌ Cancel Event';
+                panel.style.display = 'block';
+                defaultPanel.style.display = 'none';
+
+                // Clear previous selection
+                selectedEventStreets.clear();
+                updateSelectionVisuals();
+                showStatus('success', 'Select streets on map, then confirm.');
+
+                // DISABLE POPUPS
+                for (var id in streetPolylines) {
+                    streetPolylines[id].unbindPopup();
+                }
+
+                // Refresh visuals to show existing events + selection
+                refreshMapVisuals();
+
+            } else {
+                btn.classList.remove('active');
+                btn.textContent = '📅 Create Event';
+                panel.style.display = 'none';
+                defaultPanel.style.display = 'block';
+
+                // Reset selection visuals
+                selectedEventStreets.clear();
+                // updateSelectionVisuals(); // No longer needed, refreshMapVisuals does it
+
+                // Refresh visuals to return to normal
+                refreshMapVisuals();
+
+                // RE-ENABLE POPUPS
+                for (var id in streetPolylines) {
+                    var p = streetPolylines[id];
+                    if (p._popupContent) {
+                        p.bindPopup(p._popupContent);
+                    }
+                }
+            }
+        }
+
+        // --- Color Management ---
+        var eventColors = [
+            '#D32F2F', // Red 700
+            '#C2185B', // Pink 700
+            '#7B1FA2', // Purple 700
+            '#512DA8', // Deep Purple 700
+            '#303F9F', // Indigo 700
+            '#1976D2', // Blue 700
+            '#00796B', // Teal 700
+            '#388E3C', // Green 700
+            '#F57C00', // Orange 700
+            '#E64A19', // Deep Orange 700
+            '#5D4037', // Brown 700
+            '#455A64'  // Blue Grey 700
+        ];
+
+        function getEventColor(id) {
+            // Simple hash of string ID
+            var hash = 0;
+            var str = id.toString();
+            for (var i = 0; i < str.length; i++) {
+                hash = str.charCodeAt(i) + ((hash << 5) - hash);
+            }
+            // Positive mod
+            var index = Math.abs(hash) % eventColors.length;
+            return eventColors[index];
+        }
+
+        // --- Unified Map Visuals Logic ---
+        var activeEventsCache = [];
+
+        function refreshMapVisuals() {
+            // 1. Reset all to default Base style
+            for (var id in streetPolylines) {
+                var poly = streetPolylines[id];
+                // Default Blue (Opacity 0.6)
+                if (!closedStreets.includes(id)) {
+                    poly.setStyle({ color: '#4A90E2', opacity: 0.6, weight: 4 });
+                }
+            }
+
+            // 2. Apply Event Styles (Dark/Distinct)
+            activeEventsCache.forEach(function (evt) {
+                evt.streets.forEach(streetId => {
+                    // Check if street exists (normalized ID handling if needed)
+                    // The backend returns IDs that should match our map keys.
+                    // We also normalize + prefix just in case.
+                    var normId = streetId.replace(/^\+/, '');
+
+                    if (streetPolylines[normId]) {
+                        // Apply event color
+                        streetPolylines[normId].setStyle({ color: evt.color, opacity: 0.9, weight: 6 });
+                    }
+                });
+            });
+
+            // 3. Apply Current Selection (Override everything if creating event)
+            if (isEventMode) {
+                selectedEventStreets.forEach(function (streetId) {
+                    if (streetPolylines[streetId]) {
+                        streetPolylines[streetId].setStyle({ color: tempEventColor, opacity: 1.0, weight: 8 });
+                    }
+                });
+            }
+        }
+
+        // Toggle street selection for event
+        function toggleStreetSelection(streetId) {
+            if (selectedEventStreets.has(streetId)) {
+                selectedEventStreets.delete(streetId);
+            } else {
+                selectedEventStreets.add(streetId);
+            }
+            document.getElementById('selectedCount').textContent = selectedEventStreets.size;
+            refreshMapVisuals();
+        }
+
+        // Confirm and Create Event
+        function confirmEvent() {
+            var id = document.getElementById('eventIdInput').value.trim();
+            var title = document.getElementById('eventTitleInput').value.trim();
+
+            if (!title) {
+                alert("Please enter Event Title");
+                return;
+            }
+            if (selectedEventStreets.size === 0) {
+                alert("Please select at least one street.");
+                return;
+            }
+
+            var payload = {
+                id: id, // Can be empty
+                title: title,
+                streets: Array.from(selectedEventStreets)
+            };
+
+            fetch('/api/events/create', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.error) {
+                        alert(data.error);
+                    } else {
+                        showStatus('success', 'Event Created!');
+                        toggleEventMode(); // Exit mode
+                        // Clear inputs
+                        document.getElementById('eventIdInput').value = '';
+                        document.getElementById('eventTitleInput').value = '';
+                    }
+                })
+                .catch(err => console.error(err));
+        }
+
+        // Render Active Events
+        function renderEventsList(events) {
+
+            // Update Cache & Assign Colors
+            activeEventsCache = events.map(evt => {
+                evt.color = getEventColor(evt.id);
+                return evt;
+            });
+
+            // Refresh Map
+            refreshMapVisuals();
+
+            // Render Sidebar
+            var container = document.getElementById('activeEventsList');
+            container.innerHTML = '';
+
+            if (events.length === 0) {
+                container.innerHTML = '<p style="font-size: 12px; opacity:0.5;">No active events.</p>';
+                return;
+            }
+
+            activeEventsCache.forEach(function (evt) {
+                var div = document.createElement('div');
+                div.className = 'event-item';
+                div.style.borderLeft = `4px solid ${evt.color}`;
+                div.innerHTML = `
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <strong>${evt.title} (${evt.id})</strong>
+                        <span style="font-size:10px; background:${evt.color}; padding:2px 6px; border-radius:4px; color:white;">${evt.status}</span>
+                    </div>
+                    <div style="font-size:11px; margin-top:4px; opacity:0.8; word-break:break-all;">
+                        ${evt.streets.length} streets: ${evt.streets.join(', ')}
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        // --- Socket Listeners ---
+        socket.on('event_created', function (evt) {
+            // Add to list or re-fetch? 
+            // Better to re-fetch all or just append. 
+            // For simplicity, let's fetch all events.
+            fetchEvents();
+        });
+
+        function fetchEvents() {
+            fetch('/api/events')
+                .then(res => res.json())
+                .then(data => {
+                    renderEventsList(data.events);
+                });
+        }
+
+        // Modify init to fetch events
+        fetchEvents();
 
         function speedUp() {
             playSpeed = playSpeed >= 3 ? 0.5 : playSpeed + 0.5;

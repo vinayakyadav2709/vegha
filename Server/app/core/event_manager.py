@@ -39,42 +39,8 @@ class EventManager:
                 elif new_status == "Finished":
                     self._deactivate_event(event)
     
-    def _activate_event(self, event):
-        for street in event["streets"]:
-            if street not in self.sumo.closed_streets:
-                try:
-                    traci.edge.setDisallowed(street, ["all"])
-                    
-                    for veh in traci.edge.getLastStepVehicleIDs(street):
-                        try:
-                            traci.vehicle.remove(veh)
-                        except:
-                            pass
-                    
-                    print(f"🚫 Event {event['id']}: Closed {street}")
-                except Exception as e:
-                    print(f"⚠️ Error: {e}")
-    
-    def _deactivate_event(self, event):
-        all_vtypes = [
-            "passenger", "taxi", "bus", "truck", "trailer",
-            "motorcycle", "moped", "bicycle", "pedestrian",
-            "emergency", "delivery"
-        ]
-        
-        for street in event["streets"]:
-            if street not in self.sumo.closed_streets:
-                try:
-                    traci.edge.setAllowed(street, all_vtypes)
-                    print(f"✅ Event {event['id']}: Opened {street}")
-                except Exception as e:
-                    print(f"⚠️ Error: {e}")
-    
-    def handle_manual_close(self, street):
-        for event in self.events:
-            if street in event["streets"]:
-                event["streets"].remove(street)
-        
+    def _traci_close(self, street):
+        street = street.lstrip('+')
         try:
             traci.edge.setDisallowed(street, ["all"])
             for veh in traci.edge.getLastStepVehicleIDs(street):
@@ -83,24 +49,56 @@ class EventManager:
                 except:
                     pass
             self.sumo.closed_streets.add(street)
-            print(f"🚫 Manually closed: {street}")
+            print(f"🚫 Closed: {street}")
         except Exception as e:
-            print(f"⚠️ Error: {e}")
-    
-    def handle_manual_open(self, street):
+            print(f"⚠️ Error closing {street}: {e}")
+
+    def _traci_open(self, street):
+        street = street.lstrip('+')
         all_vtypes = [
             "passenger", "taxi", "bus", "truck", "trailer",
             "motorcycle", "moped", "bicycle", "pedestrian",
             "emergency", "delivery"
         ]
+        try:
+            traci.edge.setAllowed(street, all_vtypes)
+            self.sumo.closed_streets.discard(street)
+            print(f"✅ Opened: {street}")
+        except Exception as e:
+            print(f"⚠️ Error opening {street}: {e}")
+
+    def force_close_street(self, street):
+        """Closes a street physically without removing it from any event."""
+        self._traci_close(street)
+
+    def _activate_event(self, event):
+        for street in event["streets"]:
+            if street not in self.sumo.closed_streets:
+                print(f"🚫 Event {event['id']}: Closing {street}")
+                self._traci_close(street)
+    
+    def _deactivate_event(self, event):
+        for street in event["streets"]:
+            if street not in self.sumo.closed_streets:
+                print(f"✅ Event {event['id']}: Opening {street}")
+                self._traci_open(street)
+    
+    def handle_manual_close(self, street):
+        # Ensure no + prefix
+        street = street.lstrip('+')
+        
+        # MANUAL close removes it from events (override behavior)
+        for event in self.events:
+            if street in event["streets"]:
+                event["streets"].remove(street)
+        
+        self._traci_close(street)
+    
+    def handle_manual_open(self, street):
+        street = street.lstrip('+')
         
         for event in self.events:
             if street in event["streets"]:
                 event["streets"].remove(street)
         
-        try:
-            traci.edge.setAllowed(street, all_vtypes)
-            self.sumo.closed_streets.discard(street)
-            print(f"✅ Manually opened: {street}")
-        except Exception as e:
-            print(f"⚠️ Error: {e}")
+        self._traci_open(street)

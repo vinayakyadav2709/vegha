@@ -1,0 +1,38 @@
+<edges>
+    <!-- 1. CENTER (5-Way) CONNECTIONS -->
+    <edge id="N2C" from="N" to="C" priority="3" numLanes="1" speed="13.89"/> <edge id="C2N" from="C" to="N" priority="3" numLanes="1" speed="13.89"/>
+    <edge id="S2C" from="S" to="C" priority="3" numLanes="1" speed="13.89"/> <edge id="C2S" from="C" to="S" priority="3" numLanes="1" speed="13.89"/>
+    <edge id="E2C" from="E" to="C" priority="3" numLanes="1" speed="13.89"/> <edge id="C2E" from="C" to="E" priority="3" numLanes="1" speed="13.89"/>
+    <edge id="W2C" from="W" to="C" priority="3" numLanes="1" speed="13.89"/> <edge id="C2W" from="C" to="W" priority="3" numLanes="1" speed="13.89"/>
+
+    <!-- Center to X_NE -->
+    <edge id="C2X" from="C" to="X_NE" priority="3" numLanes="1" speed="13.89"/>
+    <edge id="X2C" from="X_NE" to="C" priority="3" numLanes="1" speed="13.89"/>
+
+    <!-- 2. THE NEW INTERSECTION (X_NE) SPLIT CONNECTIONS -->
+    <!-- X_NE <-> NE -->
+    <edge id="X2NE" from="X_NE" to="NE" priority="2" numLanes="1" speed="13.89"/>
+    <edge id="NE2X" from="NE" to="X_NE" priority="2" numLanes="1" speed="13.89"/>
+
+    <!-- X_NE <-> N (North) -->
+    <edge id="X2N" from="X_NE" to="N" priority="2" numLanes="1" speed="13.89"/>
+    <edge id="N2X" from="N" to="X_NE" priority="2" numLanes="1" speed="13.89"/>
+
+    <!-- X_NE <-> E (East) -->
+    <edge id="X2E" from="X_NE" to="E" priority="2" numLanes="1" speed="13.89"/>
+    <edge id="E2X" from="E" to="X_NE" priority="2" numLanes="1" speed="13.89"/>
+
+    <!-- 3. OUTER BOUNDARIES & EXITS -->
+    <edge id="In_S" from="Exit_S" to="S" priority="2" numLanes="1" speed="13.89"/> <edge id="Out_S" from="S" to="Exit_S" priority="2" numLanes="1" speed="13.89"/>
+    <edge id="S2W" from="S" to="W" priority="2" numLanes="1" speed="13.89"/> <edge id="W2S" from="W" to="S" priority="2" numLanes="1" speed="13.89"/>
+    <edge id="S2E" from="S" to="E" priority="2" numLanes="1" speed="13.89"/> <edge id="E2S" from="E" to="S" priority="2" numLanes="1" speed="13.89"/>
+
+    <edge id="In_N" from="Exit_N" to="N" priority="2" numLanes="1" speed="13.89"/> <edge id="Out_N" from="N" to="Exit_N" priority="2" numLanes="1" speed="13.89"/>
+
+    <edge id="In_E" from="Exit_E" to="E" priority="2" numLanes="1" speed="13.89"/> <edge id="Out_E" from="E" to="Exit_E" priority="2" numLanes="1" speed="13.89"/>
+
+    <edge id="In_W" from="Exit_W" to="W" priority="2" numLanes="1" speed="13.89"/> <edge id="Out_W" from="W" to="Exit_W" priority="2" numLanes="1" speed="13.89"/>
+
+    <edge id="In_NE" from="Exit_NE" to="NE" priority="2" numLanes="1" speed="13.89"/> <edge id="Out_NE" from="NE" to="Exit_NE" priority="2" numLanes="1" speed="13.89"/>
+
+</edges>

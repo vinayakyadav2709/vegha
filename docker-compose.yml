@@ -6,8 +6,7 @@ services:
       context: ./Server
       dockerfile: Dockerfile
     container_name: vegha-backend
-    ports:
-      - "3200:5000"
+    network_mode: host
     environment:
       - FLASK_ENV=production
       - MODE=sumo_events
@@ -21,8 +20,7 @@ services:
       context: ./Frontend
       dockerfile: Dockerfile
     container_name: vegha-frontend
-    ports:
-      - "3100:3100"
+    network_mode: host
     environment:
       - NEXT_PUBLIC_API_URL=https://vegha.vikasrajyadav.com
     restart: unless-stopped

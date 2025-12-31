@@ -22,4 +22,4 @@ COPY --from=base /app/.next/static ./.next/static
 
 EXPOSE 3100
 
-CMD ["bun", "run", "server.js"]
+CMD ["bun", "start"]

@@ -7,7 +7,7 @@ services:
       dockerfile: Dockerfile
     container_name: vegha-backend
     ports:
-      - "3200:5000"
+      - "3200:3200"
     environment:
       - FLASK_ENV=production
       - MODE=sumo_events

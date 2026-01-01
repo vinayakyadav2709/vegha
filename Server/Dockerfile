@@ -62,7 +62,7 @@ COPY --from=builder /app /app
 WORKDIR /app
 
 # Expose app port
-EXPOSE 5000
+EXPOSE 3200
 
 # Healthcheck (optional)
 HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \

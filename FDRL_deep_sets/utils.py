@@ -174,8 +174,8 @@ def compute_reward(lane_ids, normalizer):
     # stats = [queue, wait, speed, vol, occ] (normalized)
     
     # Heuristic weights for reward shaping
+    # Pure Flow: Ignore Wait Time, Focus on Queue and Speed
     r_queue = -1.0 * stats[0]
-    r_wait  = -0.5 * stats[1]
-    r_speed =  0.2 * stats[2]
+    r_speed =  0.5 * stats[2]
     
-    return r_queue + r_wait + r_speed
+    return r_queue + r_speed

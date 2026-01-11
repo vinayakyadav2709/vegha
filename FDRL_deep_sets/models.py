@@ -12,12 +12,12 @@ class TrafficSignalScorer(nn.Module):
     Takes ONE candidate edge + GLOBAL context, outputs scalar Q-value.
     """
 
-    def __init__(self, input_dim=11):
+    def __init__(self, input_dim=12):
         super(TrafficSignalScorer, self).__init__()
         self.network = nn.Sequential(
-            nn.Linear(input_dim, 128),
+            nn.Linear(input_dim, 256),
             nn.ReLU(),
-            nn.Linear(128, 128),
+            nn.Linear(256, 128),
             nn.ReLU(),
             nn.Linear(128, 1),
         )

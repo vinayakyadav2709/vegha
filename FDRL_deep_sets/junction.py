@@ -35,6 +35,7 @@ class JunctionAgent:
         self.is_yellow = False
         self.yellow_steps_left = 0
         self.last_switch_time = 0
+        self.last_decision_time = 0
         self.last_green_times = {edge: 0.0 for edge in self.unique_edges}
 
         # Experience Storage
@@ -108,10 +109,15 @@ class JunctionAgent:
                     print(f"[{self.tls_id}] Error setting state: {e}")
             return
 
-        # AI Decision (Min 10s between decision to reduce switching overhead)
+        # AI Decision (Min 10s Green, then check every 2s)
         time_in_phase = current_sim_time - self.last_switch_time
         if time_in_phase < 10.0:
             return
+            
+        # Continuous Control: Check only every 1.0s after min green
+        if current_sim_time - self.last_decision_time < 1.0:
+            return
+        self.last_decision_time = current_sim_time
 
         # 1. Gather Current State
         context_feats = utils.get_aggregated_features(self.all_lanes, self.normalizer)
@@ -124,6 +130,10 @@ class JunctionAgent:
             # Feature: Time Since Last Green (Normalized 1 = 100s)
             tslg = (current_sim_time - self.last_green_times[edge]) / 100.0
             feats.append(tslg)
+
+            # Feature: Is Currently Green? (Explicit State)
+            is_green = 1.0 if edge == self.unique_edges[self.current_edge_idx] else 0.0
+            feats.append(is_green)
             
             candidate_feats.append(feats)
 
@@ -132,7 +142,7 @@ class JunctionAgent:
         
         # Apply switching penalty to the reward for the *previous* action
         if hasattr(self, 'last_action_caused_switch') and self.last_action_caused_switch:
-             current_reward -= 0.05  # Penalty for switching (tunable)
+             current_reward -= 0.10  # Penalty for switching (tunable)
 
         # 3. Store Experience (S, A, R, S')
         if self.last_observation and train:
@@ -157,12 +167,13 @@ class JunctionAgent:
         action_idx = self.brain.predict(candidate_feats, context_feats, explore=train)
 
         # SAFETY: FORCE SWITCH if stuck too long (Max Red Starvation)
-        MAX_RED_TIME = 150.0
+        MAX_RED_TIME = 120.0
         for i, edge in enumerate(self.unique_edges):
             if current_sim_time - self.last_green_times[edge] > MAX_RED_TIME:
                  if i != self.current_edge_idx: # Only force if it's not currently green (which would be weird if red time is high)
                      action_idx = i
-                     # print(f"[{self.tls_id}] MAX RED EXCEEDED on {edge}. Forcing switch.")
+                     if self.step_counter % 100 == 0:
+                         print(f"[{self.tls_id}] MAX RED EXCEEDED on {edge}. Forcing switch.")
                      break
 
         # FORCE SWITCH if stuck too long (Max Green Safety)
@@ -198,6 +209,7 @@ class JunctionAgent:
         self.is_yellow = False
         self.yellow_steps_left = 0
         self.last_switch_time = 0
+        self.last_decision_time = 0
         self.last_observation = None
         self.last_action_caused_switch = False
 

@@ -3,7 +3,7 @@ import subprocess
 
 # --- CONFIGURATION ---
 DOCKER_IMAGE = "ghcr.io/eclipse-sumo/sumo:latest"
-PROJECT_DIR = os.path.expanduser("~/sumo-projs/single")
+PROJECT_DIR = os.path.expanduser("~/Workspace/vegha/FDRL_deep_sets")
 NET_NAME = "complex.net.xml"
 ROUTE_NAME = "complex.rou.xml"
 CFG_NAME = "complex.sumocfg"
@@ -93,7 +93,7 @@ def run_in_docker(command_list):
 
 
 # --- 3. GENERATE NETWORK (Force TLS) ---
-print(">> Generating Network...")
+print(">> Generating Network (Static/FDRL)...")
 run_in_docker(
     [
         "netconvert",
@@ -106,6 +106,28 @@ run_in_docker(
         "--tls.default-type",
         "static",
         # CRITICAL: Force guessing traffic lights if types are missed
+        "--tls.guess",
+        "true",
+        "--tls.guess.threshold",
+        "0",
+        "--no-turnarounds",
+        "--junctions.join",
+    ]
+)
+
+print(">> Generating Network (Actuated)...")
+NET_ACTUATED_NAME = "complex_actuated.net.xml"
+run_in_docker(
+    [
+        "netconvert",
+        "--node-files=complex.nod.xml",
+        "--edge-files=complex.edg.xml",
+        "--output-file=" + NET_ACTUATED_NAME,
+        "--lefthand",
+        "--tls.layout",
+        "incoming",
+        "--tls.default-type",
+        "actuated",  # Change to actuated
         "--tls.guess",
         "true",
         "--tls.guess.threshold",
@@ -135,9 +157,10 @@ run_in_docker(
 )
 
 # --- 4. CONFIG ---
-sumo_cfg = f"""<configuration>
+def create_config(cfg_filename, net_filename):
+    sumo_cfg = f"""<configuration>
     <input>
-        <net-file value="{NET_NAME}"/>
+        <net-file value="{net_filename}"/>
         <route-files value="{ROUTE_NAME}"/>
     </input>
     <time>
@@ -149,7 +172,12 @@ sumo_cfg = f"""<configuration>
         <ignore-junction-blocker value="1"/>
     </processing>
 </configuration>"""
+    
+    with open(os.path.join(PROJECT_DIR, cfg_filename), "w") as f:
+        f.write(sumo_cfg)
+    print(f">> Created Config: {cfg_filename}")
 
-with open(os.path.join(PROJECT_DIR, CFG_NAME), "w") as f:
-    f.write(sumo_cfg)
-print(f">> Setup Complete: {CFG_NAME}")
+create_config(CFG_NAME, NET_NAME)
+create_config("complex_actuated.sumocfg", "complex_actuated.net.xml")
+
+print(">> Setup Complete.")

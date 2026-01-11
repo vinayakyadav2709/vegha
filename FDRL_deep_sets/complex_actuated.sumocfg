@@ -1,0 +1,14 @@
+<configuration>
+    <input>
+        <net-file value="complex_actuated.net.xml"/>
+        <route-files value="complex.rou.xml"/>
+    </input>
+    <time>
+        <begin value="0"/>
+        <end value="3600"/>
+    </time>
+    <processing>
+        <time-to-teleport value="-1"/>
+        <ignore-junction-blocker value="1"/>
+    </processing>
+</configuration>

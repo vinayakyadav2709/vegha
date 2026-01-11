@@ -1,0 +1,22 @@
+<nodes>
+    <!-- MAIN INTERSECTIONS (All explicitly typed as traffic_light) -->
+    <node id="C" x="0" y="0" type="traffic_light"/>
+    <node id="N" x="0" y="400" type="traffic_light"/>
+    <node id="S" x="0" y="-400" type="traffic_light"/>
+    <node id="E" x="400" y="0" type="traffic_light"/>
+    <node id="W" x="-400" y="0" type="traffic_light"/>
+
+    <!-- THE CROSSING INTERSECTION (200, 200) -->
+    <!-- We MUST define this node to stop lines passing through each other -->
+    <node id="X_NE" x="200" y="200" type="traffic_light"/>
+    
+    <!-- End of Diagonal -->
+    <node id="NE" x="350" y="350" type="traffic_light"/>
+
+    <!-- EXITS (Sources/Sinks) -->
+    <node id="Exit_N" x="0" y="800"/>
+    <node id="Exit_S" x="0" y="-800"/>
+    <node id="Exit_E" x="800" y="0"/>
+    <node id="Exit_W" x="-800" y="0"/>
+    <node id="Exit_NE" x="600" y="600"/>
+</nodes>

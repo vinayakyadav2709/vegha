@@ -9,11 +9,11 @@ import models
 
 
 SUMO_PORT = 9999
-PROJECT_DIR = os.path.expanduser("~/sumo-projs/complex/sumo-files")
+PROJECT_DIR = os.path.expanduser("~/Workspace/vegha/FDRL_deep_sets")
 CONFIG_FILE = "complex.sumocfg"
 
 AGGREGATION_INTERVAL = 500
-LOCAL_WEIGHT_RETENTION = 0.3  # Keep 30% local, 70% global
+LOCAL_WEIGHT_RETENTION = 0.5  # Balanced local/global learning
 SAVE_PATH = "global_model.pth"
 
 
@@ -22,7 +22,7 @@ def parse_args():
     parser.add_argument(
         "--mode",
         type=str,
-        choices=["train", "test"],
+        choices=["train", "test", "actuated", "fixed_time"],
         default="train",
         help="'train' from scratch/pretrained or 'test' with frozen weights",
     )
@@ -31,6 +31,9 @@ def parse_args():
     )
     parser.add_argument(
         "--episodes", type=int, default=1, help="Number of simulation episodes"
+    )
+    parser.add_argument(
+        "--no-gui", action="store_true", help="Run SUMO in headless mode (no GUI)"
     )
     return parser.parse_args()
 
@@ -42,6 +45,10 @@ def run_simulation(args, server, agents, episode_num):
     train_mode = args.mode == "train"
 
     print(f"\n>> Episode {episode_num + 1}/{args.episodes} (Mode: {args.mode})...")
+    
+    # Print Table Header
+    print(f"{'Step':<8} | {'Total Wait':<12} | {'Avg Speed':<10} | {'Queue':<8} | {'Epsilon':<8}")
+    print("-" * 60)
 
     while traci.simulation.getMinExpectedNumber() > 0:
         traci.simulationStep()
@@ -58,9 +65,12 @@ def run_simulation(args, server, agents, episode_num):
 
         # Federated Aggregation (Only in training mode)
         if train_mode and step > 0 and step % AGGREGATION_INTERVAL == 0:
-            print(f"\n[Step {step}] >> Aggregation Round {aggregation_count + 1}...")
+            print() # Blank line
+            print(f"[Step {step}] >> Aggregation Round {aggregation_count + 1}...", flush=True)
 
-            client_weights = [agent.get_weights() for agent in agents.values()]
+            client_weights = [
+                agent.get_weights() for agent in agents.values() if agent.get_weights()
+            ]
             new_global_weights = server.aggregate(client_weights)
 
             for agent in agents.values():
@@ -71,17 +81,32 @@ def run_simulation(args, server, agents, episode_num):
 
         # Logging
         if step % 100 == 0:
-            total_wait = sum(
-                [
-                    utils.get_aggregated_features(agent.all_lanes)[1]
-                    for agent in agents.values()
-                ]
-            )
+            total_wait = 0
+            total_queue = 0
+            total_speed = 0
+            active_agents = 0
+
+            for agent in agents.values():
+                # raw features: [queue, wait, speed, vol, occ]
+                # We need raw values, so we pass None as normalizer
+                raw_stats = utils.get_aggregated_features(agent.all_lanes, normalizer=None)
+                total_queue += raw_stats[0]
+                total_wait += raw_stats[1]
+                total_speed += raw_stats[2]
+                active_agents += 1
+            
+            avg_system_speed = total_speed / max(1, active_agents)
+
             epsilon = (
-                agents[list(agents.keys())[0]].brain.epsilon if train_mode else 0.0
+                agents[list(agents.keys())[0]].brain.epsilon if train_mode and hasattr(agents[list(agents.keys())[0]], 'brain') and agents[list(agents.keys())[0]].brain else 0.0
             )
+            
+            # If agent doesn't have brain (e.g. Actuated), epsilon is 0 or N/A
+            eps_str = f"{epsilon:.3f}" if train_mode else "N/A"
+
             print(
-                f"   Step {step} | Total Wait: {total_wait:.1f}s | Epsilon: {epsilon:.3f}"
+                f"\r{step:<8} | {total_wait:<12.1f} | {avg_system_speed:<10.2f} | {total_queue:<8.0f} | {eps_str:<8}",
+                flush=True
             )
 
         step += 1
@@ -97,8 +122,13 @@ def main():
         print(f"Error: {CONFIG_FILE} not found. Run setup script first.")
         sys.exit(1)
 
+    # Choose config based on mode
+    current_config = "complex_actuated.sumocfg" if args.mode == "actuated" else CONFIG_FILE
+
     # Start SUMO
-    proc = utils.start_sumo_docker(PROJECT_DIR, CONFIG_FILE, port=SUMO_PORT)
+    # If no-gui is True, then gui=False
+    use_gui = not args.no_gui
+    proc = utils.start_sumo_docker(PROJECT_DIR, current_config, port=SUMO_PORT, gui=use_gui)
 
     try:
         traci.init(port=SUMO_PORT, host="localhost")
@@ -116,18 +146,23 @@ def main():
             sys.exit(1)
 
         # Initialize Agents
-        tls_ids = traci.trafficlight.getIDList()
+        tls_ids = traci.trafficlight.getIDList() # gets all junctions/controllers
         print(f">> Discovered {len(tls_ids)} Junctions: {tls_ids}")
 
         global_weights = server.get_global_weights()
         agents = {}
 
         for tid in tls_ids:
-            agent = junction.JunctionAgent(tid)
-            if args.load:
-                agent.brain.set_weights(global_weights)
-            if args.mode == "test":
-                agent.brain.epsilon = 0.0  # Disable exploration
+            if args.mode == "actuated":
+                agent = junction.ActuatedAgent(tid)
+            elif args.mode == "fixed_time":
+                agent = junction.FixedTimeAgent(tid)
+            else:
+                agent = junction.JunctionAgent(tid)
+                if args.load:
+                    agent.brain.set_weights(global_weights)
+                if args.mode == "test":
+                    agent.brain.epsilon = 0.0  # Disable exploration
             agents[tid] = agent
 
         # Run Episodes
@@ -138,7 +173,7 @@ def main():
             if ep < args.episodes - 1:
                 for agent in agents.values():
                     agent.reset()
-                traci.load(["-c", f"/sumo-projs/{CONFIG_FILE}"])
+                traci.load(["-c", f"/sumo-projs/{current_config}"])
 
     except traci.exceptions.FatalTraCIError as e:
         print(f"TraCI Error: {e}")

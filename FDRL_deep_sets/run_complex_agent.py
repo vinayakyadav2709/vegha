@@ -6,12 +6,14 @@ import os
 # --- CONFIGURATION ---
 SUMO_PORT = 9998
 DOCKER_IMAGE = "ghcr.io/eclipse-sumo/sumo:latest"
-PROJECT_DIR = os.path.expanduser("~/sumo-projs/complex/sumo-files")
+WORKING_DIR = os.getcwd()
+PROJECT_DIR = os.path.join(WORKING_DIR, "sumo-files")
 CONFIG_FILE = "complex.sumocfg"
 
 
 class JunctionAgent:
     """
+    Note: 1 TLS manages the entire junction
     Manages a single Traffic Light System (TLS) in the network.
     Optimized to pre-compute state strings and look them up in O(1).
     """
@@ -141,8 +143,11 @@ def start_sumo_docker():
         "docker",
         "run",
         "--rm",
-        "-p",
-        f"{SUMO_PORT}:{SUMO_PORT}",
+        # --network=host shares port of container and host
+        "--network=host",
+        # Below 2 lines map the host port to container port, but there is some issue hence we are using --network=host
+        # "-p",
+        # f"{SUMO_PORT}:{SUMO_PORT}",
         "-e",
         f"DISPLAY={os.environ.get('DISPLAY', '')}",
         "-v",
@@ -151,6 +156,7 @@ def start_sumo_docker():
         f"{os.environ.get('XAUTHORITY', '')}:/root/.Xauthority:rw",
         "-v",
         f"{PROJECT_DIR}:/sumo-projs",
+        "-it",
         DOCKER_IMAGE,
         "sumo-gui",  # sumo-gui
         "-c",

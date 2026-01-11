@@ -12,14 +12,14 @@ class TrafficSignalScorer(nn.Module):
     Takes ONE candidate edge + GLOBAL context, outputs scalar Q-value.
     """
 
-    def __init__(self, input_dim=10):
+    def __init__(self, input_dim=11):
         super(TrafficSignalScorer, self).__init__()
         self.network = nn.Sequential(
-            nn.Linear(input_dim, 64),
+            nn.Linear(input_dim, 128),
             nn.ReLU(),
-            nn.Linear(64, 64),
+            nn.Linear(128, 128),
             nn.ReLU(),
-            nn.Linear(64, 1),
+            nn.Linear(128, 1),
         )
 
     def forward(self, candidate_features, context_features):
@@ -117,7 +117,7 @@ class DQN_Agent:
                     max_next_q = max(next_scores) if next_scores else 0
                     target_q = reward + self.gamma * max_next_q
 
-            target_tensor = torch.tensor([target_q], dtype=torch.float32).to(
+            target_tensor = torch.tensor([[target_q]], dtype=torch.float32).to(
                 self.device
             )
             loss = self.loss_fn(current_q, target_tensor)

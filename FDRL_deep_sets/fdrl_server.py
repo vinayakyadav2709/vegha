@@ -7,7 +7,7 @@ class FDRLServer:
 
     def __init__(self, baseline_model):
         self.global_model = copy.deepcopy(baseline_model)
-        self.global_weights = self.global_model.state_dict()
+        self.global_weights = self.global_model.state_dict() # dictionary, which has all the layers' weights and biases
         self.round_count = 0
 
     def aggregate(self, client_weights_list):
@@ -27,25 +27,36 @@ class FDRLServer:
         # Adaptive threshold: Start strict, relax over time
         outlier_threshold = max(0.1, 0.3 - (self.round_count * 0.01))
 
+        # Stats tracking
+        total_outliers = 0
+        total_params = 0
+        
         for key in self.global_weights.keys():
             layer_stack = torch.stack(
                 [client[key].float() for client in client_weights_list]
             )
 
-            # Use median for robustness (better than mean for outliers)
+            # Use median for outliers
             median_w = torch.median(layer_stack, dim=0)[0]
             std_w = torch.std(layer_stack, dim=0)
 
             factors = []
+            layer_outliers = 0
+            
             for client_w in layer_stack:
                 distance = torch.abs(client_w - median_w)
                 outlier_mask = distance > (1.5 * (std_w + 1e-6))
+                
+                # Count significant outliers (if > 10% of params in layer are outliers)
                 outlier_ratio = torch.sum(outlier_mask).item() / torch.numel(client_w)
-
+                
                 if outlier_ratio > outlier_threshold:
                     factors.append(0.5)
+                    layer_outliers += 1
                 else:
                     factors.append(1.0)
+
+            total_outliers += layer_outliers
 
             # Normalize
             total_factor = sum(factors)
@@ -57,7 +68,10 @@ class FDRLServer:
                 weighted_sum += factors[i] * client_w
 
             new_weights[key] = weighted_sum
+            total_params += 1
 
+        print(f"   [Aggregation] Outliers detected: {total_outliers} (Threshold: {outlier_threshold:.2f})")
+        
         self.global_weights = new_weights
         self.round_count += 1
         return self.global_weights
